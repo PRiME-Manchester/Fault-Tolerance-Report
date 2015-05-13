@@ -1,0 +1,245 @@
+% *************** Document style definitions ***************
+
+% ******************************************************************
+% This file defines the document design.
+% Usually it is not necessary to edit this file, but you can change
+% the design if you want.
+% ******************************************************************
+
+% *************** Load packages ***************
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman,english]{babel}
+
+% Solves \MakeUppercase problem in the headers
+\makeatletter
+\adddialect\l@ENGLISH\l@english
+\makeatother
+
+\usepackage{amsmath}
+
+% Provides upright differential operators, such as in dy/dx
+% commath has to be defined before mdsymbol, because otherwise they conflict.
+\usepackage{commath}
+
+% SI units package
+\usepackage[squaren,thinspace,thinqspace]{SIunits}
+
+\usepackage[minionint, lf]{MinionPro}
+\usepackage[medfamily, sansmath, lf]{MyriadPro}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{sidecap}
+\usepackage[figuresright]{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{lipsum}
+\usepackage{longtable}
+\usepackage[round]{natbib}
+
+\fixpdflayout
+
+% *************** Enable index generation ***************
+\DeclareGraphicsExtensions{.pdf, .png, .jpg}
+
+% *************** Add reference to page number at which bibliography entry is cited ***************
+%\usepackage{citeref}
+%\renewcommand{\bibitempages}[1]{\newblock {\scriptsize [\mbox{cited at p.\ }#1]}}
+
+% *************** Caption font configuration ****************
+\captionstyle[\centering]{\raggedright}
+\captionnamefont{\sffamily\footnotesize\bfseries}
+\captiontitlefont{\sffamily\footnotesize\mathversion{sans}}
+\renewcommand{\parttitlefont}{\Huge\sffamily\bfseries}
+
+% *************** Section font configuration ****************
+%\newcommand{\ruledsec}[1]{%
+%\sffamily\Large\bfseries\raggedright #1 \vspace*{-0.5em} \rule{\textwidth}{1pt} }
+%\setsecheadstyle{\ruledsec}
+
+%\setsecheadstyle{\sffamily\Large\bfseries\hrule\vspace{2pt}}
+\setsecheadstyle{\sffamily\bfseries\Large}
+\setsubsecheadstyle{\sffamily\bfseries\large}
+\setsubsubsecheadstyle{\sffamily\bfseries\slshape\large}
+
+% *************** Some colour definitions ***************
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{soul}
+\sethlcolor{orange}
+\soulregister{\ref}{1}
+
+% Package that provides hyperlinks to (in this case) citations
+\usepackage[pdfauthor={Patrick Camilleri},
+            pdftitle={Bistable Attractor Dynamics in Neuromorphic aVLSI Chips},
+            pdfsubject={Attractor Dynamics},
+            pdfkeywords={attractors dynamics VLSI aVLSI neuromorphic}
+            ]{hyperref} % This loads package 'url'
+            
+\hypersetup{colorlinks=true,
+            citecolor=Sepia,
+            urlcolor=blue,
+            filecolor=black,
+            linkcolor=black,
+            breaklinks=true}
+\urlstyle{same}
+
+\usepackage{todonotes}
+
+% Adjustment for using hyperref in memoir documents
+\usepackage{memhfixc}
+
+%Define page and border dimensions
+\include{introstuff/pagelayout}
+
+% Set section heading spacing
+\setaftersecskip{0.4\baselineskip}
+
+\setbeforesubsecskip{-\baselineskip}
+\setaftersubsecskip{0.2\baselineskip}
+
+\setbeforesubsubsecskip{-\baselineskip}
+\setaftersubsubsecskip{0.2\baselineskip}
+
+
+% *********** 1.5 line spacing ***********
+\OnehalfSpacing
+\setFloatSpacing{1.05}
+
+% *************** Chapter and section style ***************
+\input{chap_styles/bluebox.tex}
+%\input{chap_styles/bluebox2.tex}
+%\input{chap_styles/blackbox.tex}
+%\input{chap_styles/default.tex}
+%\input{chap_styles/vz43.tex}
+%\input{chap_styles/jenor.tex}
+%\input{chap_styles/greynum.tex}
+%\input{chap_styles/hansen.tex}
+%\chapterstyle{madsen}
+%\chapterstyle{veelo}
+%\chapterstyle{bianchi}
+%\chapterstyle{ell}
+
+% *************** Table of contents style ***************
+\renewcommand{\cftchapterfont}{\sffamily\large\bfseries}
+\renewcommand{\cftchapterpagefont}{\bfseries}
+\renewcommand*{\cftsectionleader}{\hfill}
+
+%\renewcommand{\cftsectionfont}{\sffamily}
+%\renewcommand{\cftsectionpagefont}{\sffamily}
+%
+%\renewcommand{\cftsubsectionfont}{\sffamily\small}
+%\renewcommand{\cftsubsectionpagefont}{\sffamily}
+%\cftpagenumbersoff{subsection}
+\renewcommand{\cftsubsectionfont}{\small}
+\renewcommand*{\cftsubsectionleader}{\hfill}
+\renewcommand*{\cftfigureleader}{\hfill}
+
+\settocdepth{subsection}
+\maxtocdepth{subsection}
+
+\setsecnumdepth{subsection}
+\maxsecnumdepth{subsection}
+
+% *************** Header and page numbering style style ***************
+% Single page manuscript (sans serif)
+%\copypagestyle{headings_supplement}{headings}
+%\makeevenhead{headings_supplement}{\sffamily\small\MakeUppercase\leftmark}{}{\sffamily\bfseries\thepage}
+%\makeoddhead{headings_supplement}{\sffamily\small\MakeUppercase\leftmark}{}{\sffamily\bfseries\thepage}
+%
+%\copypagestyle{headings_main}{headings}
+%\makeevenhead{headings_main}{\sffamily\small\MakeUppercase\leftmark}{}{\sffamily\bfseries\thepage}
+%\makeoddhead{headings_main}{\sffamily\small\rightmark}{}{\sffamily\bfseries\thepage}
+
+% Single page manuscript (serif)
+%\copypagestyle{headings_supplement}{headings}
+%\makeevenhead{headings_supplement}{\leftmark}{}{\thepage}
+%\makeoddhead{headings_supplement}{\leftmark}{}{\thepage}
+%
+%\copypagestyle{headings_main}{headings}
+%\makeevenhead{headings_main}{\scshape\leftmark}{}{\thepage}
+%\makeoddhead{headings_main}{\slshape\rightmark}{}{\thepage}
+
+% Single page manuscript (ruled)
+\copypagestyle{headings_supplement}{ruled}
+\makeevenhead{headings_supplement}{\scshape\leftmark}{}{}
+\makeoddhead{headings_supplement}{}{}{\scshape\leftmark}
+\makeevenfoot{headings_supplement}{\thepage}{}{}
+\makeoddfoot{headings_supplement}{}{}{\thepage}
+
+%\copypagestyle{headings_main}{ruled}
+%\makeevenhead{headings_main}{\scshape\leftmark}{}{}
+%\makeoddhead{headings_main}{}{}{\rightmark}
+%\makeevenfoot{headings_main}{\thepage}{}{}
+%\makeoddfoot{headings_main}{}{}{\thepage}
+
+
+%% Two page manuscript
+%\copypagestyle{headings_supplement2}{headings}
+%\makeevenhead{headings_supplement2}{\sffamily\large\bfseries\thepage}{}{\sffamily\leftmark}
+%\makeoddhead{headings_supplement2}{\sffamily\leftmark}{}{\sffamily\bfseries\thepage}
+%
+%\copypagestyle{headings_main2}{headings}
+%\makeevenhead{headings_main2}{\sffamily\large\bfseries\thepage}{}{\sffamily\MakeUppercase\leftmark}
+%\makeoddhead{headings_main2}{\sffamily\rightmark}{}{\sffamily\large\bfseries\thepage}
+
+% *************** Other ***************
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+
+% ***********New figure environment ***************
+%\newenvironment{figure_frame}[3][htb]
+%{	\begin{figure}[#1]
+%	\centering		
+%	\hrule\vspace{\onelineskip}
+%	\ifthenelse{\equal{#2}{0}}
+%		{\includegraphics{#3}}
+%		{\includegraphics[width=#2\linewidth]{#3}}
+%%	\vspace{\onelineskip}
+%	\vspace{5pt}
+%}
+%{	
+%	\hrule %\vspace{8pt}
+%	\end{figure}
+%}
+
+\newenvironment{figure_frame}[3][htbp]
+{	\begin{figure}[#1]	
+		\centering
+
+		\ifthenelse{\equal{#2}{0}}
+			{\includegraphics{#3}}
+			{\includegraphics[width=#2\linewidth]{#3}}
+}
+{	
+	\end{figure}
+}
+
+\newenvironment{figure_frame_r}[3][htbp]
+{	\begin{sidewaysfigure}[#1]
+		\centering
+
+		\ifthenelse{\equal{#2}{0}}
+			{\includegraphics{#3}}
+			{\includegraphics[width=#2\linewidth]{#3}}
+}
+{	
+	\end{sidewaysfigure}
+}
+
+\newenvironment{figure_frame2}[5][htbp]
+{	\begin{figure}[#1]
+	\centering		
+%	\hrule\vspace{\onelineskip}
+	\ifthenelse{\equal{#2}{0}}
+		{\includegraphics{#3}}
+		{\includegraphics[width=#2\linewidth]{#3}}
+	\ifthenelse{\equal{#4}{0}}
+		{\includegraphics{#5}}
+		{\includegraphics[width=#4\linewidth]{#5}}
+%	\vspace{\onelineskip}
+%	\hrule\vspace{8pt}
+}
+{	\end{figure} }
+
+% *************** End of document style definition ***************
+
+

@@ -1,0 +1,270 @@
+% LaTeX file for a 1 page document
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage[ngerman,english]{babel}
+
+\usepackage{amsmath}
+\usepackage[squaren,thinspace,thinqspace]{SIunits}
+\usepackage[minionint, lf]{MinionPro}
+\usepackage[medfamily, sansmath, lf]{MyriadPro}
+
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+\usepackage{lipsum}
+\usepackage[round]{natbib}
+
+\usepackage{titlesec}
+\titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0.3\baselineskip}
+
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={210mm,297mm},
+	left=30mm,
+	right=30mm,
+	top=20mm,
+	bottom=30mm,
+}
+
+\newenvironment{itmz}{
+	\begin{itemize}
+		\setlength{\itemsep}{0pt}
+		\setlength{\parskip}{0pt}
+	}{\end{itemize}}
+
+%\fixpdflayout
+
+% *************** Caption font configuration ****************
+%\captionstyle[\centering]{\raggedright}
+%\captionnamefont{\sffamily\footnotesize\bfseries}
+%\captiontitlefont{\sffamily\footnotesize\mathversion{sans}}
+%\renewcommand{\parttitlefont}{\Huge\sffamily\bfseries}
+
+%\setsecheadstyle{\sffamily\Large\bfseries\hrule\vspace{2pt}}
+%\setsecheadstyle{\sffamily\bfseries\Large}
+%\setsubsecheadstyle{\sffamily\bfseries\large}
+%\setsubsubsecheadstyle{\sffamily\bfseries\slshape\large}
+
+\title{Fault tolerance mechanisms on SpiNNaker}
+
+%\author{Patrick Camilleri}\\
+%\small APT Group\\[-0.8ex]
+%\small University of Manchester\\
+%\small \texttt{patrick.camilleri@manchester.ac.uk}\\
+%}
+%
+%\date{\dateline{May 12, 2015}
+
+\begin{document}
+\maketitle
+
+%\begin{abstract}
+%The reconstruction conjecture states that the multiset of unlabeled
+%vertex-deleted subgraphs of a graph determines the graph, provided it
+%has at least 3 vertices.  A version of the problem was first stated
+%by Stanis\l aw Ulam.  In this paper, we show that the conjecture can
+%be proved by elementary methods.  It is only necessary to integrate
+%the Lenkle potential of the Broglington manifold over the quantum
+%supervacillatory measure in order to reduce the set of possible
+%counterexamples to a small number (less than a trillion).  A simple
+%computer program that implements Pipletti's classification theorem
+%for torsion-free Aramaic groups with simplectic socles can then
+%finish the remaining cases.
+%\end{abstract}
+
+%\mainmatter
+\chapter{Fault tolerance mechanisms}
+
+\section{Introduction}
+%\lipsum[1]
+
+\section{SpiNNaker Fault tolerance info from datasheet}
+\subsection{ARM 968 (4.3)}
+\subsubsection*{Fault insertion}
+\begin{itmz}
+\item ARM9TDMI can be disabled.
+\item Software can corrupt I-RAM and D-RAM to model soft errors.
+\end{itmz}
+\subsubsection*{Fault detection}
+\begin{itmz}
+\item Self-test routines, run at start-up and during normal operation, can detect faults.
+\item A chip-wide watchdog timer catches runaway software.
+\end{itmz}
+\subsubsection*{Fault isolation}
+\begin{itmz}
+\item Defective locations in the I-RAM and D-RAM can be mapped out of use by software.
+\item The ARM968 unit can be disabled from the System Controller.
+\end{itmz}
+\subsubsection*{Reconfiguration}
+\begin{itmz}
+\item Software will avoid using defective I-RAM and D-RAM locations.
+\item Functionality will migrate to an alternative Processor in the case of permanent faults that go
+beyond the failure of one or two memory locations.
+\end{itmz}
+
+\subsection{Vector interrupt controller (5.5)}
+\subsubsection*{Fault insertion}
+It is fairly easy to mess up vector locations, and to fake interrupt sources.
+\subsubsection*{Fault detection}
+A failed vector location effectively causes a jump to a random location; this would be messy!
+\subsubsection*{Fault isolation}
+\subsubsection*{Reconfiguration}
+A failed vector location can be removed from service (provided there are enough vector locations
+available without it). Alternatively, the entire vector system could be shut down and interrupts run
+by software inspection of the IRQ and FIQ status registers.
+
+\subsection{Counter/timer (6.4)}
+\subsubsection*{Fault insertion}
+Disabling a counter (by clearing the E bit in its control register) will cause it to fail in its function.
+\subsubsection*{Fault detection}
+Use the second counter/timer with a longer period to check the calibration of the first?
+\subsubsection*{Fault isolation}
+Disable the counter/timer with the E bit in the control register; disable its interrupt output; disable
+the interrupt in the interrupt controller.
+\subsubsection*{Reconfiguration}
+If one counter fails then a system that requires only one counter can use the other one.
+
+\subsection{DMA controller (7.5)}
+Software can introduce errors in data blocks in SDRAM which should be trapped by the CRC
+hardware.
+\subsubsection*{Fault insertion}
+The CRC unit can detect errors in the data transferred by the DMA controller.
+\subsubsection*{Fault detection}
+The DMA controller will time-out if a transaction takes too long.
+\subsubsection*{Reconfiguration}
+The local processing subsystem is shut down and its functions migrated to another subsystem on
+this or another chip. It should be possible to recover all of the subsystem state and to migrate it, via
+the SDRAM, to a functional alternative.
+
+\subsection{Communications controller (8.7)}
+\subsubsection*{Fault insertion}
+Software can cause the Communications Controller to misbehave in several ways including
+inserting dodgy routing keys, source IDs, destination IDs.
+\subsubsection*{Fault detection}
+Parity of received packet; received packet framing error; transmit buffer overrun.
+\subsubsection*{Fault isolation}
+The Communications Controller is mission-critical to the local processing subsystem, so if it fails
+the subsystem should be disabled and isolated.
+\subsubsection*{Reconfiguration}
+The local processing subsystem is shut down and its functions migrated to another subsystem on
+this or another chip. It should be possible t
+
+\subsection{Router (10.12)}
+The Communications Router has some internal fault-tolerance capacity, in particular it is possible
+to map out a failed multicast router entry. This is a useful mechanism as the multicast router
+dominates the silicon area of the Communications Router.
+There is also capacity to cope with external failures. Emergency routing will attempt to bypass a
+faulty or blocked link. In the event of a node (or larger) failure this will not be sufficient. In order to
+tolerate a chip failure several expedients can be employed on a local basis:
+\begin{itmz}
+\item P2P packets can be routed around the obstruction;
+\item MC packets with a router entry can be redirected appropriately.
+\end{itmz}
+In most cases, default MC packets cannot sensibly be trapped by adding table entries due to their
+(almost) infinite variety. To allow rerouting, these packets can be dropped to the Monitor Processor
+on a link-by-link basis using the diversion register. In principle they can then be routed around the
+obstruction as P2P payloads before being resurrected at the opposite side.
+Should the Monitor Processor become overwhelmed, it is also possible to use the diversion register
+to eliminate these packets in the Router; this prevents them blocking the Router pipeline whilst
+waiting for a timeout and thus delaying viable traffic.
+\subsubsection*{Fault detection}
+\begin{itmz}
+\item packet parity errors.
+\item packet time-phase errors.
+\item packet unroutable errors (e.g. a locally-sourced multicast packet which doesn’t match any entry
+in the multicast router).
+\item wrong packet length.
+\end{itmz}
+\subsubsection*{Fault isolation}
+\begin{itmz}
+\item a multicast router entry can be disabled if it fails - see initialisation guidance above.
+\end{itmz}
+\subsubsection*{Reconfiguration}
+\begin{itmz}
+\item since all multicast router entries are identical the function of any entry can be relocated to a spare
+entry.
+\item if a router becomes full a global reallocation of resources can move functionality to a different
+router.
+\end{itmz}
+
+\subsection{Inter-chip transmit and receive interfaces (11.3)}
+The fault inducing, detecting and resetting functions are controlled from the System Controller (see
+`System Controller' on page 66). The interfaces are `glitch hardened' to greatly reduce the
+probability of a link deadlock arising as a result of a glitch on one of the inter-chip wires. Such a
+glitch may introduce packet errors, which will be detected and handled elsewhere, but it is very
+unlikely to cause deadlock. It is expected that the link reset function will not be required often.
+Fault insertion
+The only programmer-accessible features implemented in these interfaces are software reset and a
+disable control, both accessed via the System Controller. In normal operation these interfaces
+provide transparent connectivity between the routing network on one chip and those on its
+neighbours.
+\subsubsection*{Fault detection}
+\begin{itmz}
+\item Monitor Processors should regularly test link functionality.
+\item an input controlled by the System Controller causes the interface to deadlock (by disabling it).
+\item the interface can be disabled to isolate the chip-to-chip link. This input from the System Control-
+ler is also used to create a fault.
+\end{itmz}
+\subsubsection*{Reconfiguration}
+\begin{itmz}
+\item the link interface can be reset by the System Controller to attempt recovery from a fault.
+\item the link interface can be isolated and an alternative route used.
+\end{itmz}
+
+\subsection{SDRAM interface (13.5)}
+\subsubsection*{Fault insertion}
+The DLL can be driven by software into pretty much any defective state.
+\subsubsection*{Fault detection}
+The DLL delay lines can be tested for stuck-at faults and relative timing accuracy.
+\subsubsection*{Fault isolation}
+A defective or out-or-spec delay line can be isolated.
+\subsubsection*{Reconfiguration}
+A defective or out-or-spec delay line can be isolated and replaced by using the spare delay line.
+
+\subsection{System controller}
+15.5 Fault-tolerance
+The Ethernet interface will only be used on a small number of nodes; most nodes are insensitive to
+faults in its functionality as they will not attempt to use it.
+
+\subsection{System RAM (17.3)}
+\subsubsection*{Fault insertion}
+\begin{itmz}
+\item It is straightforward to corrupt the contents of the System RAM to model a soft error -- any processor can do this. It is not clear how this would be detected.
+\end{itmz}
+\subsubsection*{Fault detection}
+\begin{itmz}
+\item The Monitor Processor may perform a System RAM test at start-up, and periodically thereafter.
+\item It is not clear how soft errors can be detected without some sort of parity or ECC system.
+\end{itmz}
+\subsubsection*{Fault isolation}
+\begin{itmz}
+\item Faulty words in the System SRAM can be mapped out of use.
+\end{itmz}
+\subsubsection*{Reconfiguration}
+\begin{itmz}
+\item For hard failure of a single bit, avoid using the word containing the failed bit.
+\item If the System RAM fails completely the only option is to use the SDRAM instead, which will
+probably result in compromised performance for the fascicle processors due to loss of SDRAM
+bandwidth. An option then would be to relocate some of the fascicle processors' workload to
+another chip.
+\end{itmz}
+
+\subsection{Boot ROM (18.3)}
+\subsubsection*{Fault insertion}
+Switch the `Boot area switch' to remove the Boot ROM from the reset location.
+\subsubsection*{Fault detection}
+If the Boot ROM fails the boot process will also fail, which will be detected at start-up.
+\subsubsection*{Fault isolation}
+Switching the Boot ROM out of the boot area should render it harmless.
+\subsubsection*{Reconfiguration}
+When the Boot ROM is switched out of the boot area the System RAM is switched into the boot
+area. A neighbour `nurse' chip can initialise the System RAM with the boot code and retry
+initialisation.
+
+\section{Methods}
+
+\section{Examples}
+
+\end{document}
