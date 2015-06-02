@@ -1,5 +1,5 @@
 % LaTeX file for a 1 page document
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 %\usepackage[ngerman,english]{babel}
@@ -75,10 +75,17 @@
 %\end{abstract}
 
 %\mainmatter
-\chapter{Fault tolerance mechanisms}
+%\chapter{Fault tolerance mechanisms}
 
 \section{Introduction}
-%\lipsum[1]
+The three fault-tolerant mechanisms that will be dealt with in this report are:
+\begin{itemize}
+\item Dumped packet re-insertion
+\item Process migration -- currently implemented on the heat demo, where a core fault is simulated by intentionally reset a core. Currently if core 1 on core (0,0) is reset or disabled no communication is possible with the host PC.
+\item CRC error detection/correction of SDRAM blocks
+\end{itemize}
+	
+
 
 \section{SpiNNaker Fault tolerance info from datasheet}
 \subsection{ARM 968 (4.3)}
