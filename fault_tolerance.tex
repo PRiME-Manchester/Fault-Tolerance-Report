@@ -1,5 +1,5 @@
 % LaTeX file for a 1 page document
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 %\usepackage[ngerman,english]{babel}
@@ -14,6 +14,7 @@
 \usepackage[normalem]{ulem}
 \usepackage{lipsum}
 \usepackage[round]{natbib}
+\usepackage{url}
 
 \usepackage{titlesec}
 \titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0.3\baselineskip}
@@ -85,8 +86,16 @@ The three fault-tolerant mechanisms that will be dealt with in this report are:
 \item CRC error detection/correction of SDRAM blocks
 \end{itemize}
 	
+\subsection{Useful books and links}
+\begin{itemize}
+\item Sorin, Fault tolerant computer architecture. Ch. 3 Error recovery (FER and BER).
+\item Avresky, Fault-tolerant Parallel and Distributed Systems. Part II.4 Fault-tolerant distributed systems. Part IV (all).
+\item Abd-El-Barr, Design and analysis of reliable and fault-tolerant computer systems. Seems to treat fault tolerance of networks in depth. Chps. 1, 2, 3, 4, Ch. 13 Algorithm-Based Fault tolerance.
+\item Goloubeva, Software-Implemented Hardware Fault tolerance. Ch1. Background and Ch. 4 Achieving fault tolerance.
+\item Checkpointing and recovery, \url{http://srel.ee.duke.edu/sw_ft/node9.html}
+\end{itemize}
 
-
+\newpage
 \section{SpiNNaker Fault tolerance info from datasheet}
 \subsection{ARM 968 (4.3)}
 \subsubsection*{Fault insertion}
