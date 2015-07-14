@@ -1,0 +1,17 @@
+sudo: false
+language: python
+python:
+        - 2.7
+        - 3.4
+install:
+        - python setup.py develop
+        - pip install -r requirements-test.txt
+        - pip install python-coveralls
+        - pip install flake8
+script:
+        - py.test tests --cov network_tester --durations=10
+        - flake8 network_tester tests
+after_success:
+        - coveralls
+notifications:
+        email: false
