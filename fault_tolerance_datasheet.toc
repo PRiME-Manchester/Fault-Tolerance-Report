@@ -1,0 +1,13 @@
+\contentsline {chapter}{Contents}{i}
+\contentsline {chapter}{\chapternumberline {1}SpiNNaker Fault tolerance info from datasheet}{1}
+\contentsline {section}{\numberline {1.1}ARM 968 (4.3)}{1}
+\contentsline {section}{\numberline {1.2}Vector interrupt controller (5.5)}{1}
+\contentsline {section}{\numberline {1.3}Counter/timer (6.4)}{2}
+\contentsline {section}{\numberline {1.4}DMA controller (7.5)}{2}
+\contentsline {section}{\numberline {1.5}Communications controller (8.7)}{2}
+\contentsline {section}{\numberline {1.6}Router (10.12)}{3}
+\contentsline {section}{\numberline {1.7}Inter-chip transmit and receive interfaces (11.3)}{4}
+\contentsline {section}{\numberline {1.8}SDRAM interface (13.5)}{4}
+\contentsline {section}{\numberline {1.9}System controller}{4}
+\contentsline {section}{\numberline {1.10}System RAM (17.3)}{5}
+\contentsline {section}{\numberline {1.11}Boot ROM (18.3)}{5}

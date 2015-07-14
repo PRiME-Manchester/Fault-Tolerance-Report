@@ -9,6 +9,9 @@
 \usepackage[minionint, lf]{MinionPro}
 \usepackage[medfamily, sansmath, lf]{MyriadPro}
 
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning,shadows,trees}
+
 \usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{lipsum}
@@ -20,6 +23,12 @@
 \usepackage{verbments}
 \usepackage{minted}
 \usepackage{multicol}
+%\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{color,soul}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 %\titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0.3\baselineskip}
 
@@ -59,6 +68,30 @@
 	}{\end{itemize}}
 
 %\fixpdflayout
+
+%\tikzset{
+%	treenode/.style = {align=center, inner sep=3pt, text centered},
+%	arn/.style = {treenode, rectangle, draw=black, rounded corners=4pt, fill=blue!20, text width=10em},
+%	arn_lev1/.style = {treenode, rectangle, draw=black, rounded corners=3pt, fill=pink!60, text width=6em},
+%	arn_lev2/.style = {treenode, rectangle, draw=black, rounded corners=3pt, fill=pink!60, text width=6em},
+%	arn_lev2a/.style = {treenode, rectangle, draw=black, rounded corners=3pt, fill=pink!60, text width=5em}
+%}
+
+%\tikzset{
+%	treenode/.style = {align=center, inner sep=3pt, text centered},
+%	arn/.style = {treenode, rectangle, draw=black, rounded corners=4pt, fill=blue!20, font=\sffamily\bfseries, text width=10em},
+%	arn_lev1/.style = {treenode, font=\sffamily, text width=6em},
+%	arn_lev2/.style = {treenode, font=\sffamily, text width=6em},
+%	arn_lev2a/.style = {treenode, font=\sffamily, text width=5em}
+%}
+
+\tikzset{
+	treenode/.style = {align=center, inner sep=3pt, text centered},
+	arn/.style = {treenode, rectangle, draw=black, rounded corners=4pt, fill=blue!20, font=\sffamily\bfseries, text width=10em},
+	arn_lev1/.style = {treenode, text width=6em},
+	arn_lev2/.style = {treenode, text width=6em},
+	arn_lev2a/.style = {treenode, text width=5em}
+}
 
 % *************** Caption font configuration ****************
 %\captionstyle[\centering]{\raggedright}
@@ -198,11 +231,11 @@ Demands on software reliability and availability have increased tremendously due
 \subsubsection{What is a software failure?}
 According to Laprie et al. [20], ``a system failure occurs when the delivered service no longer complies with the specifications, the latter being an agreed description of the system's expected function and/or service''. This definition applies to both hardware and software system failures. Faults or bugs in a hardware or a software component cause errors. An error is defined by Laprie et al. [20] as that part of the system which is liable to lead to subsequent failure, and an error affecting the service is an indication that a failure occurs or has occurred. If the system comprises of multiple components, errors can lead to a component failure. As various components in the system interact, failure of one component might introduce one or more faults in another. Figure 1 shows this cyclic behavior.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.6\linewidth]{images/img1.png}
-	\caption{Fault behaviour}
-\end{figure}
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=0.6\linewidth]{images/img1.png}
+%	\caption{Fault behaviour}
+%\end{figure}
 
 \subsubsection{Classification of software faults}
 Some studies have suggested that since software is not a physical entity and hence not subject to transient physical phenomena (as opposed to hardware), software faults are permanent in nature [15]. Some other studies classify software faults as both permanent and transient. Gray [11] classifies software faults into Bohrbugs and Heisenbugs. Bohrbugs are essentially permanent design faults and hence almost deterministic in nature. They can be identified easily and weeded out during the testing and debugging phase (or early deployment phase) of the software life cycle. Heisenbugs, on the other hand, belong to the class of temporary internal faults and are intermittent. They are essentially permanent faults whose conditions of activation occur rarely or are not easily reproducible. Hence these faults result in transient failures, i.e., failures which may not recur if the software is restarted. Some typical situations in which Heisenbugs might surface are boundaries between various software components, improper or insufficient exception handling and interdependent timing of various events. It is for this reason that Heisenbugs are extremely difficult to identify through testing. Hence a mature piece of software in the operational phase, released after its development and testing stage, is more likely to experience failures caused by Heisenbugs than due to Bohrbugs. Most recent studies on failure data have reported that a large proportion of software failures are transient in nature [11,12], caused by phenomena such as overloads or timing and exception errors [7,27]. The study of failure data from Tandem's fault tolerant computer system indicated that 70\%. of the failures were transient failures, caused by faults like race conditions and timing problems [21,22].
@@ -221,15 +254,24 @@ Most Bohrbugs, which are deterministic and repeatable, can be removed through ri
 There are two strategies for software fault tolerance - error processing and fault treatment. Error processing aims to remove errors from the software state and can be implemented by substituting an error-free state in place of the erroneous state, called error recovery, or by compensating for the error by providing redundancy, called error compensation. Error recovery can be achieved by either forward or backward error recovery. The second strategy, fault treatment, aims to prevent activation of faults and so action is taken before the error creeps in. The two steps in this strategy are fault diagnosis and fault passivation. Figure 2 shows this classification. The nature of faults which typically occur in software has to be thoroughly understood in order to apply these strategies effectively. Techniques for tolerating faults in software have been divided into three classes - design diversity, data diversity and environment diversity. Table 1 shows the fault tolerance strategies used by these classes. All these classes are discussed briefly in the following sections.
 
 \begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.6\linewidth]{images/img3.png}
-	\caption{Means of software fault tolerance}
-\end{figure}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.6\linewidth]{images/table1.png}
-	\caption{Strategies used by different fault tolerance methods}
+\centering
+\begin{tikzpicture}[->,>=stealth',
+	level 1/.style={sibling distance = 5cm, level distance = 2.2cm},
+	level 2/.style={sibling distance = 3.5cm}
+%	level 3/.style={sibling distance = 3.5cm}
+	] 
+\node [arn] {Means for Software Fault tolerance}
+child{ node [arn_lev1] {Error Processing} 
+	child{ node [arn_lev2] {Error Compensation} }
+	child{ node [arn_lev2] {Error Recovery}
+		child{ node [arn_lev2a] {Forward Error Recovery}}
+		child{ node [arn_lev2] {Backward Error Recovery}}
+	}                            
+}
+child{ node [arn_lev1] {Fault Treatment} }
+; 
+\end{tikzpicture}
+\caption{Means of software fault tolerance}
 \end{figure}
 
 \subsubsection{Design diversity}
@@ -240,6 +282,21 @@ Design diversity techniques are specifically developed to tolerate design faults
 \item Recovery block: Recovery blocks were first introduced by Horning et. al. [14]. This scheme is analogous to the cold standby scheme for hardware fault tolerance. Basically, in this approach, multiple variants of a software which are functionally equivalent are deployed in a time redundant fashion. An acceptance test is used to test the validity of the result produced by the primary version. If the result from the primary version passes the acceptance test, this result is reported and execution stops. If, on the other hand, the result from the primary version fails the acceptance test, another version from among the multiple versions is invoked and the result produced is checked by the acceptance test. The execution of the structure does not stop until the acceptance test is passed by one of the multiple versions or until all the versions have been exhausted. The significant differences in the recovery block approach from N-version programming are that only one version is executed at a time and the acceptability of results is decided by a test rather than by majority voting. The recovery block technique has been applied to real life systems and has been the basis for the distributed recovery block structure for integrating hardware and software fault tolerance and the extended distributed recovery block structure for command and control applications. Modeling and analysis of recovery blocks are desribed by Tomek et al. [28,29].
 \item N-self checking programming: In N-self checking programming, multiple variants of a software are used in a hot-standby fashion as opposed to the recovery block technique in which the variants are used in the cold-standby mode. A self-checking software component is a variant with an acceptance test or a pair of variants with an associated comparison test [19]. Fault tolerance is achieved by executing more than one self-checking component in parallel. These components can also be used to tolerate one or more hardware faults.
 \end{itemize}
+
+\begin{table}[h]
+\centering
+\caption{Strategies used by different fault tolerance methods}
+\begin{tabular}{l c c c c }
+\toprule
+                   & Design    & Data      & Environment & Checkpointing \\
+                   & diversity & diversity & diversity   & \& recovery   \\
+\midrule
+Error compensation & \cmark    & \cmark    &             &               \\
+Error recovery     &           &           &             & \cmark        \\
+Fault treatment    &           &           & \cmark      &               \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 The design diversity approach was developed mainly to deal with Bohrbugs. It relies on the assumption of independence of between multiple variants of software. However, as some studies have shown, this assumption may not always be valid. Design diversity can also be used to treat Heisenbugs. Since there are multiple versions of software operating, it not likely that all of them will experience the same transient failure. On the disadvantages of design diversity is the high cost involved in developing multiple variants of software. However, as we shall see in Section 3.3, there are another approaches which are more efficient and better suited to deal with Heisenbugs.
 
@@ -273,76 +330,131 @@ Checkpointing involves occasionally saving the state of a process in stable stor
 
 \newpage
 \subsection{SpiNNaker architecture}
+
+\subsubsection{Short description of the SpiNNaker chip}
+\emph{\lipsum[2]}
+
+Figure~\ref{fig:spin5} shows a photograph of the basic building block (a 48-chip SpiNNaker board) for the million-core machine.
+
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.6\linewidth]{images/spin5.jpg}
+	\includegraphics[width=0.4\linewidth]{images/spin5.jpg}
 	\caption{48-chip Spin5 board}
+	\label{fig:spin5}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.5\linewidth]{images/spin2_labelled.jpg}
-	\caption{Labelled SpiNNaker die}
+	\includegraphics[width=0.2\linewidth]{images/arm968.png}
+	\caption{ARM968 architecture}
+	\label{fig:spin5}
 \end{figure}
+
+\subsubsection{Hardware fault tolerance mechanisms in the SpiNNaker chip}
+The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker chip is made up of various blocks, most of which have a certain degree of hardware fault tolerance in place. The blocks in questions are: the ARM968, the vector interrupt controller, the counter/timer, the DMA controller, the communications controller, the router, the inter-chip transmit and receiver interfaces, the SDRAM interface, the Ethernet interface, the system RAM and the boot ROM. A schematic representation of all these sub systems is shown in \textbf{Figure~\ref{fig:spin_arch}} and \textbf{Figure~\ref{fig:arm968}}.
+
+\hl{Short description of each block??}
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.8\linewidth]{images/arm968_subsystem.pdf}
-	\caption{ARM 968 subsystem}
-\end{figure}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.8\linewidth]{images/spinnaker_architecture.pdf}
+	\includegraphics[width=0.6\linewidth]{images/spinnaker_architecture.pdf}
 	\caption{SpiNNaker architecture}	
+	\label{fig:spin_arch}
 \end{figure}
+
+Starting by describing the fault tolerance detection mechanisms of the \textbf{ARM968} processor core, self-test routines are run at start-up and during normal operation. A chip-wide watchdog timer catches runaway software. In addition the ARM968 is able to isolate defective instruction and data RAM locations and can be mapped out by software. The system controller can also disable any incorrectly operating ARM968 cores. These detection and fault isolation mechanisms help to reconfigure the system in case a fault is detected. In the case of faulty instruction and data RAM, software can be written to avoid such locations. If on the other hand, the self-test and start-up routines detect a failure, the processor core functionality can be migrated to a neighbouring processor.
+
+Currently the \textbf{vector interrupt controller} does not provide a high degree of fault tolerance. In the case of a failed vector location, the vector interrupt controller effectively jumps to a random location. If a software mechanism was devised to detect these kind of faults, a failed vector location could be removed from service (provided there are enough vector locations available). Another solution would be to shut down the entire vector system and the interrupts run by software inspection of the IRQ and FIQ status registers.
+
+In order to detect faults in \textbf{counter/timer}, the second counter/timer could be configured with a longer period to check the calibration of the first. Assuming that the system only requires one counter/timer, and a fault is detected, the faulty counter could be disabled, with the operational counter/timer taking over.
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.4\linewidth]{images/system_architecture.pdf}
-	\caption{System architecture}	
+	\includegraphics[width=0.55\linewidth]{images/arm968_subsystem.pdf}
+	\caption{ARM 968 subsystem}
+	\label{fig:arm968}
 \end{figure}
+
+The \textbf{DMA controller} has a CRC unit (more on this in the \hl{Section~X}) which can be used to detect errors in the data transferred by the DMA controller. If an error is detected by means of the CRC unit, the data block could be retransmitted. The DMA controller will also time-out if a transaction takes too long. If if the error rate is consistently high, fault tolerant software could be written to shut down te local processing subsystem and its functions migrated to another subsystem on the current or to another chip.
+
+The \textbf{communications controller} is able to detect the following kinds of faults:
+parity of received packet; received packet framing error; transmit buffer overrun. Since the communications controller is mission-critical to the local processing subsystem, is should be disabled and isolated and its functions migrated to another subsystem on the current on onto another chip if a failure is detected.
+
+The \textbf{router}
+
+The \textbf{inter-chip transmit and receive interfaces} (See \textbf{Figure~\ref{fig:interchip_links}}).
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.6\linewidth]{images/router_organization.pdf}
-	\caption{Router organization}	
+	\includegraphics[width=0.35\linewidth]{images/system_architecture.pdf}
+	\caption{SpiNNaker inter-links.}
+	\label{fig:interchip_links}	
 \end{figure}
+
+The \textbf{SDRAM interface} is endowed with Delay-Locked Loop (DLL) delay lines (including a spare) which can be tested for stuck-at faults and relative timing accuracy. If a fault in the timing is detected, the SDRAM interface can be isolated and replaced by using the spare delay line.
+
+The \textbf{Ethernet MII interface} is only used in a small number of nodes, specifically one for each group of 48 chips and thus most nodes are insensitive to faults in nuts functionality as they will not attempt to use it.
+
+To detect faults in the \textbf{system RAM}, the monitor processor could perform a system RAM test at start-up, and also periodically during the course of the system operation. Since the system RAM does not employ any kind of parity or ECC system, it is not clear at this point to detect soft errors. If an error is detected through the start-up test, fault words could be mapped out of use. If the system RAM is deemed unusable, the only other option (short of completely disabling the entire chip) would be to use the SDRAM instead. This will probably result in compromised performance for the fascicle processors due to loss of SDRAM bandwidth.
+
+A fault in the \textbf{boot ROM} can be easily detected during start-up if the boot ROM fails the boot process. One can easily switch the boot ROM out of the boot area rendering it harmless. When the boor ROM is switched out of the boot area the system RAM is switched in the boot area and a neighbour chip can initialise the system RAM with the boot code and retry initialisation.
+
+
+
+
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=0.6\linewidth]{images/router_organization.pdf}
+%	\caption{Router organization}	
+%\end{figure}
 
 \clearpage
 \section{Dumped packet reinsertion}
+\hl{Jonathan's documentation}
+`Network Tester' is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network. In particular, network tester is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) which produce SpiNNaker packets which are then multicast to a fixed set of vertices.
+The following is a (non-exhaustive) list of the kinds of experiments which can be performed with `Network Tester':
+\begin{itemize}
+\item Determining how a network copes with different rates and patterns of packet generation. For example to determining the maximum speed at which a particular neural simulation may run on SpiNNaker without dropping
+packets.
+\item Determining the effectiveness of place and route algorithms by finding `hot-spots' in the network.
+\item Characterising the behaviour of the network in the presence of locally and globally synchronised bursting traffic.
+\end{itemize}
+
+\hl{Jonathan's email} Clearly with packet reinjection, nearly all packets which are actually sent arrive at their destination, without reinjection, things aren't so great.
+
+Fun things to try: Uncomment lines 23--24 and the random network will get placed by what PACMAN calls ``connectivity-aware placement,'' rather than simulated annealing (the default). Interestingly, on my system this results in reinjection no-longer helping and the whole thing being even worse under bursty packets.
+
+Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is called and the packet generators will still generate bursts but they'll be at random phases to each other (i.e., not bursting all at the same time). This normally eliminates packet dropping for all but the most extreme burstiness.
+
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.6\linewidth]{images/backpressure.pdf}
+	\includegraphics[width=0.65\linewidth]{images/backpressure.pdf}
 	\caption{Backpressure}	
+	\label{fig:backpressure}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/bursting.pdf}
-	\caption{Bursting}	
+	\caption{Bursting}
+	\label{fig:bursting}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/bursting_random.pdf}
 	\caption{Bursting (Random)}	
+	\label{fig:bursting_random}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/bursting_connaware.pdf}
 	\caption{Bursting Connection-aware}	
+	\label{fig:bursting_aware}
 \end{figure}
 
-%\begin{figure}[htbp]
-%	\centering
-%	\includegraphics[width=0.6\linewidth]{images/bursting_connaware_random.pdf}
-%	\caption{Bursting Connection-aware (Random)}	
-%\end{figure}
-
-
-\newpage
+\clearpage
 \section{Process migration}
 
 To test out the \verb|heat_demo_ft| functionality, start the \verb|heat_demo_ft.aplx|
@@ -373,12 +485,12 @@ Computing discrete logarithms is believed to be difficult. No efficient general 
 \subsubsection{Example}
 Discrete logarithms are perhaps simplest to understand in the group $(\mathbf{Z}_p)^\times$. This is the group of multiplication modulo the prime $p$. Its elements are congruence classes modulo $p$, and the group product of two elements may be obtained by ordinary integer multiplication of the elements followed by reduction modulo $p$.
 
-The $k$th power of one of the numbers in this group may be computed by finding its $k$th power as an integer and then finding the remainder after division by $p$. When the numbers involved are large, it is more efficient to reduce modulo $p$ multiple times during the computation. Regardless of the specific algorithm used, this operation is called modular exponentiation. For example, consider $(\mathbf{Z}_{17})^\times$. To compute 34 in this group, compute $34 = 81$, and then divide 81 by 17, obtaining a remainder of 13. Thus $34 = 13$ in the group $(\mathbf{Z}_{17})^\times$.
+The $k$th power of one of the numbers in this group may be computed by finding its $k$th power as an integer and then finding the remainder after division by $p$. When the numbers involved are large, it is more efficient to reduce modulo $p$ multiple times during the computation. Regardless of the specific algorithm used, this operation is called modular exponentiation. For example, consider $(\mathbf{Z}_{17})^\times$. To compute $3^4$ in this group, compute $3^4 = 81$, and then divide 81 by 17, obtaining a remainder of 13. Thus $3^4 = 13$ in the group $(\mathbf{Z}_{17})^\times$.
 
-The discrete logarithm is just the inverse operation. For example, consider the equation $3k \equiv 13$ (mod 17) for $k$. From the example above, one solution is $k = 4$, but it is not the only solution. Since $316 \equiv 1$ (mod 17)---as follows from Fermat's little theorem---it also follows that if $n$ is an integer then $34+16n \equiv 34 \times (316)n \equiv 13 \times 1^n \equiv 13$ (mod 17). Hence the equation has infinitely many solutions of the form $4 + 16n$. Moreover, since 16 is the smallest positive integer $m$ satisfying $3m \equiv 1$ (mod 17), i.e. 16 is the order of 3 in $(\mathbf{Z}_{17})^\times$, these are the only solutions. Equivalently, the set of all possible solutions can be expressed by the constraint that $k \equiv 4$ (mod 16).
+The discrete logarithm is just the inverse operation. For example, consider the equation $3^k \equiv 13$ (mod 17) for $k$. From the example above, one solution is $k = 4$, but it is not the only solution. Since $3^{16} \equiv 1$ (mod 17)---as follows from Fermat's little theorem---it also follows that if $n$ is an integer then $3^{4+16n} \equiv 3^4 \times (3^{16})^n \equiv 13 \times 1^n \equiv 13 $ (mod 17). Hence the equation has infinitely many solutions of the form $4 + 16n$. Moreover, since 16 is the smallest positive integer $m$ satisfying $3m \equiv 1$ (mod 17), i.e. 16 is the order of 3 in $(\mathbf{Z}_{17})^\times$, these are the only solutions. Equivalently, the set of all possible solutions can be expressed by the constraint that $k \equiv 4 $  (mod 16).
 
 \subsubsection{Algorithms}
-No efficient classical algorithm for computing general discrete logarithms logb g is known. The naive algorithm is to raise b to higher and higher powers k until the desired g is found; this is sometimes called trial multiplication. This algorithm requires running time linear in the size of the group G and thus exponential in the number of digits in the size of the group. There exists an efficient quantum algorithm due to Peter Shor.[1]
+No efficient classical algorithm for computing general discrete logarithms $\log _b g$ is known. The naive algorithm is to raise $b$ to higher and higher powers $k$ until the desired $g$ is found; this is sometimes called trial multiplication. This algorithm requires running time linear in the size of the group $G$ and thus exponential in the number of digits in the size of the group. There exists an efficient quantum algorithm due to Peter Shor.[1]
 
 More sophisticated algorithms exist, usually inspired by similar algorithms for integer factorization. These algorithms run faster than the naive algorithm, some of them linear in the square root of the size of the group, and thus exponential in half the number of digits in the size of the group. However none of them runs in polynomial time (in the number of digits in the size of the group).
 
@@ -420,9 +532,7 @@ Data reliability can be enhanced through the employment of error-control codes,w
 
 Cyclic codes form an important class of error-control code offering powerful error detection and correction capabilities. At the same time, their algebraic properties permit the use of simplified processing procedures when compared to non-cyclic codes. For instance, the encoding of data into cyclic code words can easily be achieved in hardware using a simple linear feedback shift register. Likewise, the same circuit can be used to validate code words, and thus detect errors. For these reasons, cyclic codes have been widely adopted as error-detecting codes and commonly deployed in combination with ARQ schemes. This thesis concentrates on cyclic codes with symbols from the binary field.
 
-If error correction is desired, the most basic case concerns the localisation of a single erroneous bit. It can be shown that for cyclic codes this problem is equivalent to the computation of the discrete logarithm in finite cyclic groups, for which it is
-
-widely believed that for the general case no efficient classical algorithm is devisable. This is one reason why the discrete logarithm forms the basis for many cryptographic applications such as the Diffie-Hellman-Merkle key exchange. However, it has not been proven that the computation of the discrete logarithm is hard for all groups of practical interest.
+If error correction is desired, the most basic case concerns the localisation of a single erroneous bit. It can be shown that for cyclic codes this problem is equivalent to the computation of the discrete logarithm in finite cyclic groups, for which it is widely believed that for the general case no efficient classical algorithm is devisable. This is one reason why the discrete logarithm forms the basis for many cryptographic applications such as the Diffie-Hellman-Merkle key exchange. However, it has not been proven that the computation of the discrete logarithm is hard for all groups of practical interest.
 
 Cyclic codes are characterised by an underlying generator polynomial. Different generator polynomials exhibit different capabilities in regard to the detection and correction of errors. Certain polynomials, for example,may be particularly well suited to the practical realisation of the error correction process. The selection of polynomial is also dependent on the length of the data that is to be protected and the anticipated error patterns. In systems where diverse applications may favour different cyclic codes, and where the requirements may change over time or be unknown at the design stage, it may be advantageous to provide full flexibility in regard to the usable cyclic code generator polynomials. Efficient cyclic code processing relies on dedicated cyclic code hardware circuits, which may be programmable if the underlying generator polynomial is adaptable. Such a programmable circuit has been created for the SpiNNaker project, a massively parallel spiking neural network simulator.
 
@@ -500,17 +610,16 @@ A cyclic code is characterised through its generator polynomial which influences
 With an efficient programmable cyclic code circuit that can reconfigure rapidly to new generator polynomials, it is feasible to change the polynomial after each processed word of a data stream. The calculation of the next polynomial can be made dependent on factors including the current input data word and the current state of the circuit, i.e. the calculated redundancy and the polynomial. It would be interesting to investigate if a polynomial adjustment algorithm can be devised that has advantages over fixed cyclic code generator polynomials, from both error detection and correction points of view.
 
 \subsubsection{Error Correction}
-The correction of a single-bit error on the basis of a cyclic code requires the computa-tion of the discrete logarithm in finite cyclic groups, represented as the polynomial ring over the binary field modulo the cyclic code generator polynomial, as outlined in Chapter 2. No efficient algorithm is known for the evaluation of the discrete logarithm in these groups and, moreover, it is also widely believed that no such algorithm can be devised as described in Chapter 3. Nonetheless, this work focused on the exploration of new algorithms in the quest for an efficient calculation of discrete logarithms in relevant groups.
+The correction of a single-bit error on the basis of a cyclic code requires the computation of the discrete logarithm in finite cyclic groups, represented as the polynomial ring over the binary field modulo the cyclic code generator polynomial, as outlined in Chapter 2. No efficient algorithm is known for the evaluation of the discrete logarithm in these groups and, moreover, it is also widely believed that no such algorithm can be devised as described in Chapter 3. Nonetheless, this work focused on the exploration of new algorithms in the quest for an efficient calculation of discrete logarithms in relevant groups.
 
 A new approach was developed for calculating discrete logarithms in Chapter 6. For groups that have an order equal to a Mersenne number with an exponent of a power of two, a deterministic generic algorithm was devised based on size differences of cyclotomic cosets. The algorithm requires only constant space and exhibits a worst-case asymptotic running time of the square root of the group order. It was shown that the average- and worst-case running times of the algorithm can be improved for certain cases where the discrete logarithm values occur with unequal probabilities. Furthermore, properties were developed or highlighted for relevant sequences that are considered by the algorithm.
 
 For finite fields with binary characteristic, represented as the polynomial ring over the binary field modulo a primitive polynomial, new properties were developed in Chapter 7. On the basis of a subset of these properties, a novel approach was proposed for computing discrete logarithms in the cyclic multiplicative groups of these fields. It resulted in a deterministic algorithm with linear space and linearithmic time requirements in the degree of the defining polynomial, for at least all polynomials up to degree 12 and the first polynomials of degree 13 and 14. The algorithm requires a set of parameters in the order of the polynomial degree, where the parameter search space grows exponentially in the polynomial degree. For this reason partial results on the running time for single polynomials of higher degrees up to 32 were provided.
 
 \subsubsubsection*{Future work in programmable CRC}
+The research conducted on discrete logarithm algorithms generated a number of open questions that present potential future research opportunities:
 \begin{itemize}
-\item The research conducted on discrete logarithm algorithms generated a number of open questions that present potential future research opportunities:
-
-\item Under the assumption of the existence of an efficient algorithm for the compu-tation of the discrete logarithm in finite cyclic groups represented in the ring of polynomials modulo a polynomial, the efficient correction of single-bit errors based on cyclic code is feasible. It needs to be investigated further to determine to what extent this assumption would also enable the efficient correction of multi-bit errors.
+\item Under the assumption of the existence of an efficient algorithm for the computation of the discrete logarithm in finite cyclic groups represented in the ring of polynomials modulo a polynomial, the efficient correction of single-bit errors based on cyclic code is feasible. It needs to be investigated further to determine to what extent this assumption would also enable the efficient correction of multi-bit errors.
 
 \item For the proposed algorithm for discrete logarithms for group orders that equal Mersenne numbers with an exponent of a power of two, it may be possible to use the developed sequence properties to improve the algorithm. It may also be the case that new properties can be found that will enable a speed-up of the algorithm. In particular, it needs to be investigated if the proposed algorithm reduces the initial discrete logarithm problem into smaller subgroups, similar to the Silver-Pohlig-Hellman algorithm, as this permits alternative algorithms to be employed in those subgroups.
 
@@ -526,7 +635,7 @@ For finite fields with binary characteristic, represented as the polynomial ring
 
 \item It was conjectured that, for a defining primitive polynomial of degree m and a parity level l with *** linear transformations of the form T x exist such that each odd parity block of size one on level l is mapped by one of the transformations onto an even parity block element on the same level. It would be interesting to investigate whether, for every level l, a set of these 2l-1 transformations exists, such that the transformations can easily be computed from each other. In particular, it is an open question if the displacement r between the two transformations L2a and L2b for level two can easily be determined, such that L2a = Tr L2b.
 
-\item It is currently unknown if a simple correlation exists between the displacements of equally-sized blocks on a certain parity level. If the displacements can easily be computed, alignments of different parity vector spaces can simply be obtained and therefore also transformations such as E0 and E1.
+\item It is currently unknown if a simple correlation exists between the displacements of equally-sized blocks on a certain parity level. If the displacements can be easily computed, alignments of different parity vector spaces can simply be obtained and therefore also transformations such as E0 and E1.
 \end{itemize}
 
 \subsection{Summary}
