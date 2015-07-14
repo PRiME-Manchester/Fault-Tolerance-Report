@@ -15,9 +15,12 @@
 \usepackage{lipsum}
 \usepackage[round]{natbib}
 \usepackage{url}
-\usepackage{verbments}
+\usepackage{minted}
+\usepackage{multicol}
+%\usepackage{verbments}
+\usepackage{titlesec}
+\usepackage{geometry}
 
-%\usepackage{titlesec}
 %\titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0.3\baselineskip}
 
 % *************** Page layout ***************
@@ -37,7 +40,7 @@
 \geometry{
 	a4paper,
 	total={210mm,297mm},
-	left=35mm,
+	left=30mm,
 	right=30mm,
 	top=30mm,
 	bottom=30mm,
@@ -68,10 +71,43 @@
 %\setsubsecheadstyle{\sffamily\bfseries\large}
 %\setsubsubsecheadstyle{\sffamily\bfseries\slshape\large}
 
-\title{Fault tolerance mechanisms on SpiNNaker}
+\makeatletter
+\newlength\drop
+\newcommand*{\titleGM}{%
+\thispagestyle{empty}
+\begingroup% Gentle Madness
+\drop = 0.1\textheight
+\vspace*{\baselineskip}
+\vfill
+\hbox{%
+  \hspace*{0.2\textwidth}%
+  \rule{1pt}{\dimexpr\textheight-28pt\relax}%
+  \hspace*{0.05\textwidth}% 
+  \parbox[b]{0.75\textwidth}{%
+    \vbox{%
+      \vspace{\drop}
+      {\Huge\bfseries\raggedright\@title\par}\vskip2.37\baselineskip
+      {\Large\itshape PRiME Project }\\[4\baselineskip]
+      {\Large\bfseries\@author\par}
+      \vspace{0.5\textheight}
+    }% end of vbox
+  }% end of parbox
+}% end of hbox
+\vfill
+\cleardoublepage % this clears the page number from the second (empty) title page
+\null % this creates a second blank page (with page number)
+\endgroup}
+\makeatother
+
+\title{Fault tolerance mechanism implementations in SpiNNaker}
+\author{Patrick Camilleri}
 
 \begin{document}
-\maketitle
+
+\begin{titlingpage}
+%\maketitle
+\titleGM
+\end{titlingpage}
 
 %\begin{abstract}
 %The reconstruction conjecture states that the multiset of unlabeled
@@ -87,8 +123,12 @@
 %finish the remaining cases.
 %\end{abstract}
 
-%\mainmatter
 %\chapter{Fault tolerance mechanisms}
+\frontmatter
+\tableofcontents
+
+\mainmatter
+\chapterstyle{hangnum}
 
 \chapter{Introduction}
 The three fault-tolerant mechanisms that will be dealt with in this report are:
@@ -107,6 +147,95 @@ The three fault-tolerant mechanisms that will be dealt with in this report are:
 \item Checkpointing and recovery, \url{http://srel.ee.duke.edu/sw_ft/node9.html}
 \end{itemize}
 
+\newpage
+\chapter{Software fault tolerance}
+\textit{Copied from:} \url{http://srel.ee.duke.edu/sw_ft/node9.html}
+\section{Introduction}
+With the explosive growth in Internet technology and the emergence of a number of new and advanced applications, assured availability of computer systems has become a critical issue. The challenge is to provide the desired availability and performance at a low cost.
+Outages in computer systems consist of both hardware and software failures. While hardware failures have been studied extensively and varied mechanisms have been presented to increase the system availability with regard to such failures, software failures and the corresponding reliability/availability analysis has not drawn much attention from researchers. The study of software failures has now become more important since it has been recognized that computer systems outages are more due to software faults than to hardware faults [13,27].
+
+It was long assumed that concepts of reliability and failure rate do not apply to software since software does not degrade physically as a function of time or environmental stresses. But it is not reasonable to expect a software system to be operating on the same input data, user requirements and computing environment constantly. These changes must be accommodated in most applications and so a history of fault-free behavior cannot be taken as an indication of fault-free behavior in the future. Many studies have shown that even for applications which have relatively less complex software, many failures in computer systems are due to software bugs [26]. Therefore, software reliability is one of the weakest links in system reliability.
+
+Demands on software reliability and availability have increased tremendously due to the nature of present day applications. There are stringent requirements in terms of cumulative down time and failure free operation of software. In many cases, there are serious consequences like huge economic losses or risk to human life if the software is faulty. In spite of using the best available software development techniques, there have been many instances of spectacular system failures due to software errors like the crash of the Ariane 5 launcher in June 1996 which was attributed to specification and design errors in the software of the inertial reference system [23]. Also, increasing complexity and proliferation of real-time software have led to a resultant increase in software failures. A major limitation in developing reliable software is the test and verification process. It is almost impossible to fully test and verify if a software is bug-free. Formal verification techniques such as proof of correctness cannot be applied to large programs. Furthermore, the shortcomings in the mathematical induction process on which proof of correctness is based and the difficulties in verifying adherence to timing constraints for real-time systems make the software testing and verification process harder. This limitation coupled with the very stringent requirements for fault-free operation of the software form the basis for the need for fault tolerance in software.
+
+\section{Software Failure and Classification of Software Faults}
+\subsection{What is a software failure?}
+According to Laprie et al. [20], ``a system failure occurs when the delivered service no longer complies with the specifications, the latter being an agreed description of the system's expected function and/or service''. This definition applies to both hardware and software system failures. Faults or bugs in a hardware or a software component cause errors. An error is defined by Laprie et al. [20] as that part of the system which is liable to lead to subsequent failure, and an error affecting the service is an indication that a failure occurs or has occurred. If the system comprises of multiple components, errors can lead to a component failure. As various components in the system interact, failure of one component might introduce one or more faults in another. Figure 1 shows this cyclic behavior.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/img1.png}
+	\caption{Fault behaviour}
+\end{figure}
+
+\subsection{Classification of software faults}
+Some studies have suggested that since software is not a physical entity and hence not subject to transient physical phenomena (as opposed to hardware), software faults are permanent in nature [15]. Some other studies classify software faults as both permanent and transient. Gray [11] classifies software faults into Bohrbugs and Heisenbugs. Bohrbugs are essentially permanent design faults and hence almost deterministic in nature. They can be identified easily and weeded out during the testing and debugging phase (or early deployment phase) of the software life cycle. Heisenbugs, on the other hand, belong to the class of temporary internal faults and are intermittent. They are essentially permanent faults whose conditions of activation occur rarely or are not easily reproducible. Hence these faults result in transient failures, i.e., failures which may not recur if the software is restarted. Some typical situations in which Heisenbugs might surface are boundaries between various software components, improper or insufficient exception handling and interdependent timing of various events. It is for this reason that Heisenbugs are extremely difficult to identify through testing. Hence a mature piece of software in the operational phase, released after its development and testing stage, is more likely to experience failures caused by Heisenbugs than due to Bohrbugs. Most recent studies on failure data have reported that a large proportion of software failures are transient in nature [11,12], caused by phenomena such as overloads or timing and exception errors [7,27]. The study of failure data from Tandem's fault tolerant computer system indicated that 70\%. of the failures were transient failures, caused by faults like race conditions and timing problems [21,22].
+
+\section{Techniques for Fault Tolerance in Software}
+Means to cope with the existence and manifestation of faults in software are divided into three main categories:
+
+\begin{itemize}
+\item Fault avoidance/prevention: This include design methodologies which attempt to make software provably fault-free
+\item Fault removal: These methods aim to remove faults after the development stage is completed. This is done by exhaustive and rigorous testing of the final product.
+\item Fault tolerance: This methods makes the assumption that the system has unavoidable and undetectable faults and aims to make provisions for the system to operate correctly even in the presence of faults.
+\end{itemize}
+
+Most Bohrbugs, which are deterministic and repeatable, can be removed through rigorous and extensive testing and debugging. But, as argued in the previous sections, no amount of testing can certify software as fault-free, i.e. fault avoidance and fault removal cannot ensure the absence of faults. Therefore, any practical piece of software can be presumed to contain faults in the operational phase and designers must deal with these faults if the software failure has serious consequences. The remaining faults in software after testing and debugging are usually Heisenbugs which eluded detection during the testing. Hence, fault tolerance, is the only remaining hope to achieve dependable software. Fault tolerance makes is possible for the software system to provide service even in the presence of faults. This means that an imminent failure needs to be prevented or recovered from. In this paper, we will only discuss methods to deal with software in the operational phase, i.e., methods to provide fault tolerance.
+
+There are two strategies for software fault tolerance - error processing and fault treatment. Error processing aims to remove errors from the software state and can be implemented by substituting an error-free state in place of the erroneous state, called error recovery, or by compensating for the error by providing redundancy, called error compensation. Error recovery can be achieved by either forward or backward error recovery. The second strategy, fault treatment, aims to prevent activation of faults and so action is taken before the error creeps in. The two steps in this strategy are fault diagnosis and fault passivation. Figure 2 shows this classification. The nature of faults which typically occur in software has to be thoroughly understood in order to apply these strategies effectively. Techniques for tolerating faults in software have been divided into three classes - design diversity, data diversity and environment diversity. Table 1 shows the fault tolerance strategies used by these classes. All these classes are discussed briefly in the following sections.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/img3.png}
+	\caption{Means of software fault tolerance}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/table1.png}
+	\caption{Strategies used by different fault tolerance methods}
+\end{figure}
+
+\subsection{Design diversity}
+Design diversity techniques are specifically developed to tolerate design faults in software arising out of wrong specifications and incorrect coding. Two or more variants of a software developed by different teams but to a common specification are used. These variants are then used in a time or space redundant manner to achieve fault tolerance. Popular techniques which are based on the design diversity concept for fault tolerance in software are:
+
+\begin{itemize}
+\item N-version programming: First introduced by Avizienis et. al. [2] in 1977, this concept is similar to the NMR (N-modular programming) approach in hardware fault tolerance. In this technique, N (N>=2) independently generated functionally equivalent programs called versions, are executed in parallel. A majority voting logic is used to compare the results produced by all the versions and report one of the results which is presumed correct. The ability to tolerate faults here depends on how ``independent'' the different versions of the program are. This technique has been applied to a number of real-life systems like railroad traffic control and flight control, even though the overhead involved in generating different versions and implementing the voting logic may be high.
+\item Recovery block: Recovery blocks were first introduced by Horning et. al. [14]. This scheme is analogous to the cold standby scheme for hardware fault tolerance. Basically, in this approach, multiple variants of a software which are functionally equivalent are deployed in a time redundant fashion. An acceptance test is used to test the validity of the result produced by the primary version. If the result from the primary version passes the acceptance test, this result is reported and execution stops. If, on the other hand, the result from the primary version fails the acceptance test, another version from among the multiple versions is invoked and the result produced is checked by the acceptance test. The execution of the structure does not stop until the acceptance test is passed by one of the multiple versions or until all the versions have been exhausted. The significant differences in the recovery block approach from N-version programming are that only one version is executed at a time and the acceptability of results is decided by a test rather than by majority voting. The recovery block technique has been applied to real life systems and has been the basis for the distributed recovery block structure for integrating hardware and software fault tolerance and the extended distributed recovery block structure for command and control applications. Modeling and analysis of recovery blocks are desribed by Tomek et al. [28,29].
+\item N-self checking programming: In N-self checking programming, multiple variants of a software are used in a hot-standby fashion as opposed to the recovery block technique in which the variants are used in the cold-standby mode. A self-checking software component is a variant with an acceptance test or a pair of variants with an associated comparison test [19]. Fault tolerance is achieved by executing more than one self-checking component in parallel. These components can also be used to tolerate one or more hardware faults.
+\end{itemize}
+
+The design diversity approach was developed mainly to deal with Bohrbugs. It relies on the assumption of independence of between multiple variants of software. However, as some studies have shown, this assumption may not always be valid. Design diversity can also be used to treat Heisenbugs. Since there are multiple versions of software operating, it not likely that all of them will experience the same transient failure. On the disadvantages of design diversity is the high cost involved in developing multiple variants of software. However, as we shall see in Section 3.3, there are another approaches which are more efficient and better suited to deal with Heisenbugs.
+
+\subsection{Data diversity}
+Data diversity, a technique for fault tolerance in software, was introduced by Amman and Knight [3]. While the design diversity approaches to provide fault tolerance rely on multiple versions of the software written to the same specifications, the data diversity approach uses only one version of the software. This approach relies on the observation that a software sometime fails for certain values in the input space and this failure could be averted if there is a minor perturbation of input data which is acceptable to the software. N-copy programming, based on data diversity, has N copies of a program executing in parallel, but each copy running on a different input set produced by a diverse-data system. The diverse-data system produces a related set of points in the data space. Selection of the system output is done using an enhanced voting scheme which may not be a majority voting mechanism. This technique might not be acceptable to all programs since equivalent input data transformations might not be acceptable by the specification. However, in some cases like a real time control program, a minor perturbation in sensor values may be able to prevent a failure since sensor values are usually noisy and inaccurate.
+Data diversity can work well with Bohrbugs and is cheaper to implement than design diversity techniques. To some extent, data diversity can also deal with Heisenbugs since different input data is presented and by definition, these bugs are non-deterministic and non-repeatable.
+
+\subsection{Environment diversity}
+Environment diversity is the newest approach to fault tolerance in software. Although this technique has been used for long in an ad-hoc manner, only recently has it gained recognition and importance. Having its basis on the observation that most software failures are transient in nature, the environment diversity approach requires reexecuting the software in a different environment [17]. Environment diversity deals effectively with Heisenbugs by exploiting their definition and nature.
+
+Adams [1] has proposed restarting the system as the best approach to masking software faults. Environment diversity is a generalization of restart. This has been proposed in [15,17] as a cheap but effective technique for fault tolerance in software. There are three components which determine the behavior of a process or executing software [32]:
+
+\begin{itemize}
+\item The volatile state: This consists of the program stack and static and dynamic data segments.
+\item The persistent state: This state refers to all the user files related to a program's execution.
+\item The operating system (OS) environment: This refers to all the resources the program accesses through the operating system like swap space, file systems, communication channels, keyboard and monitors.
+\end{itemize}
+
+Transient faults typically occur in computer systems due to design faults in software which result in unacceptable and erroneous states in the OS environment. Therefore environment diversity attempts to provide a new or modified operating environment for the running software. Usually, this is done at the instance of a failure in the software. When the software fails, it is restarted in a different, error-free OS environment state which is achieved by some clean up operations.
+
+Examples of environment diversity techniques include retry operation, restart application and rebooting the node. The retry and restart operations can be done on the same node or on another spare (cold/warm/hot) node.
+
+Tandem's fault tolerant computer system [22] is based on the process pair approach. It was noted that these failures did not recur once the application was restarted on the second processor. This was due to the fact that the second processor provided a different environment which did not trigger the same error conditions which led to the failure of the application on the first processor. Hence, in this case, hardware redundancy was used to tolerate most of the software faults. The basic observation in all these transient failures is that the same error condition is unlikely to occur if the software is reexecuted in a different environment.
+
+A specific form of environment diversity, called software rejuvenation [5,10,16,30,31] is the crux of our research..
+
+\subsection{Checkpointing and Recovery}
+Checkpointing and recovery [6,18,24,25] belongs to the category of error recovery for fault tolerance, as opposed to design diversity which belongs to error compensation, and data and environment diversities which belong to the fault treatment category. Error compensation, error recovery and fault treatment are complementary to one another and fault tolerance in software can be increased by deploying a combination of these techniques. The recovery block uses checkpoints in its implementation. Garg [8,9] proposes and analyzes the combination of software rejuvenation (preventive fault treatment) with checkpointing and recovery to reduce the chances of activating a fault and simultaneously minimizing the loss of computation when there is a failure.
+
+Checkpointing involves occasionally saving the state of a process in stable storage during normal execution. Upon failure, the process is restarted in the saved state (last saved checkpoint). This thus reduces the amount of lost work. Checkpointing and recovery was mainly intended to tolerate transient hardware failures, where the application is restarted upon repair of a hardware unit after failure. This technique has been implemented in both software and hardware. Checkpointing and restart was used as early as 1948 when the ENIAC was used to solve a two point boundary value problem with known conditions, although the computation was marred by a very high tube error rate [4]. Checkpointing has also been used as a backward error recovery technique for handling intermittent software faults since then. For instance, the progressive retry technique [32] employs checkpointing along with message logs.
+
+\newpage
 \section{SpiNNaker architecture}
 \begin{figure}[htbp]
 	\centering
@@ -144,21 +273,60 @@ The three fault-tolerant mechanisms that will be dealt with in this report are:
 	\caption{Router organization}	
 \end{figure}
 
+\clearpage
 \chapter{Dumped packet reinsertion}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/backpressure.pdf}
+	\caption{Backpressure}	
+\end{figure}
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/bursting.pdf}
+	\caption{Bursting}	
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/bursting_random.pdf}
+	\caption{Bursting (Random)}	
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/bursting_connaware.pdf}
+	\caption{Bursting Connection-aware}	
+\end{figure}
+
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=0.6\linewidth]{images/bursting_connaware_random.pdf}
+%	\caption{Bursting Connection-aware (Random)}	
+%\end{figure}
+
+
+\newpage
 \chapter{Process migration}
-\begin{verbatim}
-To test out the heat_demo_ft functionality, start the heat_demo_ft.aplx
-by running (from ybug) @ heat_demo_ft_1board.ybug
+
+To test out the \verb|heat_demo_ft| functionality, start the \verb|heat_demo_ft.aplx|
+by running (from ybug) \verb|@ heat_demo_ft_1board.ybug|
 
 Then start resetting cores one-by-one by writing directly to the system
-controller register (0xe2000000:r1 = 0xe2000004)
-command: sw 0xe2000004 0x5ec00002
+controller register \verb|(0xe2000000:r1 = 0xe2000004)|\\
+Command: \verb|sw 0xe2000004 0x5ec00002|
 
-Note: The core you reset happens to be the leadAp, the application will
+Note: If the core you reset happens to be the leadAp, the application will
 crash.
-\end{verbatim}
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/heatmap2x2.png}
+	\caption{Heat map demo visualisation on a 4 chip SpiNNaker board.}	
+\end{figure}
+
+
+\newpage
 \chapter{CRC error correction}
 
 \section{Wikipedia description of discrete logarithm}
@@ -236,7 +404,7 @@ The contributions of this thesis are summarised as follows:
 \item A set of new relationships is developed for the field elements of the ring of polynomials over the binary field modulo a primitive polynomial. Based on a subset of these properties, a novel approach is proposed for the computation of discrete logarithms in the cyclic multiplicative group of the finite field. For at least all primitive polynomials up to degree 12 and the first evaluated primitive polynomials of degree 13 and 14, a deterministic algorithm with linear space and linearithmic time requirements in the degree of the polynomial results.
 \end{itemize}
 
-\section{Thesis overview}
+\section{Overview}
 \subsection{Chapter 4}
 This chapter presents an overview of the SpiNNaker project which targets the large-scale simulation of spiking neural networks. The SpiNNaker architecture facilitates a massively-parallel supercomputer with a million processors, which supports these neural simulations. The issue of anticipated memory faults in a SpiNNaker system of this scale is highlighted, and the usage of cyclic codes as a layer of protection against many of these errors is explained.
 
@@ -276,7 +444,7 @@ To improve the reliability of memory transfers, SpiNNaker employs cyclic codes f
 The optimal choice of cyclic code to employ is influenced by many factors including the length of the data that is to be protected and the desired error control capabilities. Therefore, programmable cyclic code circuits are employed within SpiNNaker to maximise flexibility in the choice of cyclic code for different scenarios. A novel method for the generation of efficient programmable cyclic code circuits is proposed in Chapter 5.
 
 \newpage
-\section{Ecerpts from Chapter 5 -- Programmable CRC hardware}
+\section{Excerpts from Chapter 5 -- Programmable CRC hardware}
 Cyclic codes constitute a powerful class of error-control code as set out in Section 2.3. They offer effective error detection and can easily be realised in hardware, which makes them a popular choice for many applications that require the detection of errors, including Ethernet [TW11]. In the context of pure error detection, a cyclic code is often referred to as a Cyclic Redundancy Checksum (CRC) and the popularity of cyclic codes has led to a number of different software and hardware implementations [LC83; RG88].Speed requirements usually make software schemes impractical and dedicated hardware is needed. The generic hardware approach uses an inexpensive Linear Feedback Shift Register (LFSR), which assumes serial data input. In the presence of wide data buses, the serial computation has been extended to parallel versions that process whole data words based on derived equations and on cascading the LFSR [Spr01]. Various optimisation techniques have been developed that target resource reduction [Bra+96] and speed increase [Der01; CP06; KRM08; KRM09].
 
 A wide range of factors influence the selection of an appropriate CRC generator polynomial for a particular application as outlined in Subsection 2.3.4. This range includes the error detection and correction capabilities of a generator polynomial, which depend on the length of the data that is to be protected. For instance, in scenarios where data blocks of different length are used, or where the final requirements of the generator polynomial are not known at the time of the hardware implementation, it is beneficial to employ programmable CRC circuits that can be configured to different generator polynomials.
@@ -286,7 +454,7 @@ This applies precisely to the SpiNNaker project, whose target is to provide a re
 With the design of a circuit, there is usually a tradeoff between speed and area. In this particular scenario, there are two dimensions to the speed of a programmable CRC circuit: the time necessary to process a data word, and the time required to reconfigure to a new polynomial. This chapter directly extends the parallel CRC circuit by Campobello et al. [CPR03] based on state space representation in several ways. On the one hand, restrictions between the width of the data processed in parallel and the order of the polynomial are lifted. On the other hand, a novel scheme is presented allowing the inexpensive computation of the CRC transition and control matrix in hardware. This leads to a programmable parallel CRC implementation that offers an improved balance between area and both dimensions of speed.
 
 \newpage
-\section{Excerpts from Chapter 8 Conclucion -- Cyclic codes}
+\section{Excerpts from Chapter 8 Conclusion -- Cyclic codes}
 Cyclic codes have gained wide popularity as error-detecting codes due to their inherent algebraic properties that permit easy implementation and effective detection of errors. This thesis supports the position of cyclic codes as a powerful class of error-control code whose properties extend beyond simple error detection. The thesis demonstrates contributions in the generation of efficient, programmable, parallel cyclic code circuits, and in the potential of cyclic codes for efficient error correction. These contributions are described in more detail, together with highlighting possible areas for future exploration within this concluding chapter.
 
 \subsection{Programmable CRC}
@@ -340,534 +508,20 @@ The first approach is generic in nature leading to a deterministic algorithm for
 
 The second approach for the computation of discrete logarithms is based on a subset of newly developed properties for finite fields of binary characteristic represented as the polynomial ring over the binary field modulo a primitive polynomial. For evaluated small fields, a deterministic efficient algorithm with linear space and linearithmic time requirements in the degree of the defining polynomial was devised.
 
-\chapter{SpiNNaker Fault tolerance info from datasheet}
-\section{ARM 968 (4.3)}
-\subsection*{Fault insertion}
-\begin{itmz}
-\item ARM9TDMI can be disabled.
-\item Software can corrupt I-RAM and D-RAM to model soft errors.
-\end{itmz}
-\subsection*{Fault detection}
-\begin{itmz}
-\item Self-test routines, run at start-up and during normal operation, can detect faults.
-\item A chip-wide watchdog timer catches runaway software.
-\end{itmz}
-\subsection*{Fault isolation}
-\begin{itmz}
-\item Defective locations in the I-RAM and D-RAM can be mapped out of use by software.
-\item The ARM968 unit can be disabled from the System Controller.
-\end{itmz}
-\subsection*{Reconfiguration}
-\begin{itmz}
-\item Software will avoid using defective I-RAM and D-RAM locations.
-\item Functionality will migrate to an alternative Processor in the case of permanent faults that go
-beyond the failure of one or two memory locations.
-\end{itmz}
-
-\section{Vector interrupt controller (5.5)}
-\subsection*{Fault insertion}
-It is fairly easy to mess up vector locations, and to fake interrupt sources.
-\subsection*{Fault detection}
-A failed vector location effectively causes a jump to a random location; this would be messy!
-\subsection*{Fault isolation}
-\subsection*{Reconfiguration}
-A failed vector location can be removed from service (provided there are enough vector locations
-available without it). Alternatively, the entire vector system could be shut down and interrupts run
-by software inspection of the IRQ and FIQ status registers.
-
-\section{Counter/timer (6.4)}
-\subsection*{Fault insertion}
-Disabling a counter (by clearing the E bit in its control register) will cause it to fail in its function.
-\subsection*{Fault detection}
-Use the second counter/timer with a longer period to check the calibration of the first?
-\subsection*{Fault isolation}
-Disable the counter/timer with the E bit in the control register; disable its interrupt output; disable
-the interrupt in the interrupt controller.
-\subsection*{Reconfiguration}
-If one counter fails then a system that requires only one counter can use the other one.
-
-\section{DMA controller (7.5)}
-Software can introduce errors in data blocks in SDRAM which should be trapped by the CRC
-hardware.
-\subsection*{Fault insertion}
-The CRC unit can detect errors in the data transferred by the DMA controller.
-\subsection*{Fault detection}
-The DMA controller will time-out if a transaction takes too long.
-\subsection*{Reconfiguration}
-The local processing subsystem is shut down and its functions migrated to another subsystem on
-this or another chip. It should be possible to recover all of the subsystem state and to migrate it, via
-the SDRAM, to a functional alternative.
-
-\section{Communications controller (8.7)}
-\subsection*{Fault insertion}
-Software can cause the Communications Controller to misbehave in several ways including
-inserting dodgy routing keys, source IDs, destination IDs.
-\subsection*{Fault detection}
-Parity of received packet; received packet framing error; transmit buffer overrun.
-\subsection*{Fault isolation}
-The Communications Controller is mission-critical to the local processing subsystem, so if it fails
-the subsystem should be disabled and isolated.
-\subsection*{Reconfiguration}
-The local processing subsystem is shut down and its functions migrated to another subsystem on
-this or another chip. It should be possible t
-
-\section{Router (10.12)}
-The Communications Router has some internal fault-tolerance capacity, in particular it is possible
-to map out a failed multicast router entry. This is a useful mechanism as the multicast router
-dominates the silicon area of the Communications Router.
-There is also capacity to cope with external failures. Emergency routing will attempt to bypass a
-faulty or blocked link. In the event of a node (or larger) failure this will not be sufficient. In order to
-tolerate a chip failure several expedients can be employed on a local basis:
-\begin{itmz}
-\item P2P packets can be routed around the obstruction;
-\item MC packets with a router entry can be redirected appropriately.
-\end{itmz}
-In most cases, default MC packets cannot sensibly be trapped by adding table entries due to their
-(almost) infinite variety. To allow rerouting, these packets can be dropped to the Monitor Processor
-on a link-by-link basis using the diversion register. In principle they can then be routed around the
-obstruction as P2P payloads before being resurrected at the opposite side.
-Should the Monitor Processor become overwhelmed, it is also possible to use the diversion register
-to eliminate these packets in the Router; this prevents them blocking the Router pipeline whilst
-waiting for a timeout and thus delaying viable traffic.
-\subsection*{Fault detection}
-\begin{itmz}
-\item packet parity errors.
-\item packet time-phase errors.
-\item packet unroutable errors (e.g. a locally-sourced multicast packet which doesn’t match any entry
-in the multicast router).
-\item wrong packet length.
-\end{itmz}
-\subsection*{Fault isolation}
-\begin{itmz}
-\item a multicast router entry can be disabled if it fails - see initialisation guidance above.
-\end{itmz}
-\subsection*{Reconfiguration}
-\begin{itmz}
-\item since all multicast router entries are identical the function of any entry can be relocated to a spare
-entry.
-\item if a router becomes full a global reallocation of resources can move functionality to a different
-router.
-\end{itmz}
-
-\section{Inter-chip transmit and receive interfaces (11.3)}
-The fault inducing, detecting and resetting functions are controlled from the System Controller (see
-`System Controller' on page 66). The interfaces are `glitch hardened' to greatly reduce the
-probability of a link deadlock arising as a result of a glitch on one of the inter-chip wires. Such a
-glitch may introduce packet errors, which will be detected and handled elsewhere, but it is very
-unlikely to cause deadlock. It is expected that the link reset function will not be required often.
-Fault insertion
-The only programmer-accessible features implemented in these interfaces are software reset and a
-disable control, both accessed via the System Controller. In normal operation these interfaces
-provide transparent connectivity between the routing network on one chip and those on its
-neighbours.
-\subsection*{Fault detection}
-\begin{itmz}
-\item Monitor Processors should regularly test link functionality.
-\item an input controlled by the System Controller causes the interface to deadlock (by disabling it).
-\item the interface can be disabled to isolate the chip-to-chip link. This input from the System Control-
-ler is also used to create a fault.
-\end{itmz}
-\subsection*{Reconfiguration}
-\begin{itmz}
-\item the link interface can be reset by the System Controller to attempt recovery from a fault.
-\item the link interface can be isolated and an alternative route used.
-\end{itmz}
-
-\section{SDRAM interface (13.5)}
-\subsection*{Fault insertion}
-The DLL can be driven by software into pretty much any defective state.
-\subsection*{Fault detection}
-The DLL delay lines can be tested for stuck-at faults and relative timing accuracy.
-\subsection*{Fault isolation}
-A defective or out-or-spec delay line can be isolated.
-\subsection*{Reconfiguration}
-A defective or out-or-spec delay line can be isolated and replaced by using the spare delay line.
-
-\section{System controller}
-15.5 Fault-tolerance
-The Ethernet interface will only be used on a small number of nodes; most nodes are insensitive to
-faults in its functionality as they will not attempt to use it.
-
-\section{System RAM (17.3)}
-\subsection*{Fault insertion}
-\begin{itmz}
-\item It is straightforward to corrupt the contents of the System RAM to model a soft error -- any processor can do this. It is not clear how this would be detected.
-\end{itmz}
-\subsection*{Fault detection}
-\begin{itmz}
-\item The Monitor Processor may perform a System RAM test at start-up, and periodically thereafter.
-\item It is not clear how soft errors can be detected without some sort of parity or ECC system.
-\end{itmz}
-\subsection*{Fault isolation}
-\begin{itmz}
-\item Faulty words in the System SRAM can be mapped out of use.
-\end{itmz}
-\subsection*{Reconfiguration}
-\begin{itmz}
-\item For hard failure of a single bit, avoid using the word containing the failed bit.
-\item If the System RAM fails completely the only option is to use the SDRAM instead, which will
-probably result in compromised performance for the fascicle processors due to loss of SDRAM
-bandwidth. An option then would be to relocate some of the fascicle processors' workload to
-another chip.
-\end{itmz}
-
-\section{Boot ROM (18.3)}
-\subsection*{Fault insertion}
-Switch the `Boot area switch' to remove the Boot ROM from the reset location.
-\subsection*{Fault detection}
-If the Boot ROM fails the boot process will also fail, which will be detected at start-up.
-\subsection*{Fault isolation}
-Switching the Boot ROM out of the boot area should render it harmless.
-\subsection*{Reconfiguration}
-When the Boot ROM is switched out of the boot area the System RAM is switched into the boot
-area. A neighbour `nurse' chip can initialise the System RAM with the boot code and retry
-initialisation.
-
-\chapter*{Appendix - Dumpbounce.c}
-\begin{pyglist}[language=c]
-// SARK-based program
-#include <sark.h>
-
-// ------------------------------------------------------------------------
-// constants
-// ------------------------------------------------------------------------
-#define TICK_PERIOD        10      // attempt to bounce dumped packets
-#define PKT_QUEUE_SIZE     256     // dumped packet queue length
-
-#define ROUTER_SLOT        SLOT_0  // router VIC slot -- not used currently!
-#define CC_SLOT            SLOT_1  // comms. cont. VIC slot
-#define TIMER_SLOT         SLOT_2  // timer VIC slot
-
-#define RTR_BLOCKED_BIT    25
-#define RTR_DOVRFLW_BIT    30
-#define RTR_DENABLE_BIT    2
-
-#define RTR_BLOCKED_MASK   (1 << RTR_BLOCKED_BIT)   // router blocked
-#define RTR_DOVRFLW_MASK   (1 << RTR_DOVRFLW_BIT)   // router dump overflow
-#define RTR_DENABLE_MASK   (1 << RTR_DENABLE_BIT)   // enable dump interrupts
-
-#define PKT_CONTROL_SHFT   16
-#define PKT_PLD_SHFT       17
-#define PKT_TYPE_SHFT      22
-#define PKT_ROUTE_SHFT     24
-
-#define PKT_CONTROL_MASK   (0xff << PKT_CONTROL_SHFT)
-#define PKT_PLD_MASK       (1 << PKT_PLD_SHFT)
-#define PKT_TYPE_MASK      (3 << PKT_TYPE_SHFT)
-#define PKT_ROUTE_MASK     (7 << PKT_ROUTE_SHFT)
-
-#define PKT_TYPE_MC        (0 << PKT_TYPE_SHFT)
-#define PKT_TYPE_PP        (1 << PKT_TYPE_SHFT)
-#define PKT_TYPE_NN        (2 << PKT_TYPE_SHFT)
-#define PKT_TYPE_FR        (3 << PKT_TYPE_SHFT)
-
-#define TIMER2_CONF        0x82
-#define TIMER2_LOAD        0
-// ------------------------------------------------------------------------
-
-
-// ------------------------------------------------------------------------
-// types
-// ------------------------------------------------------------------------
-typedef struct  // dumped packet type
-{
-uint hdr;
-uint key;
-uint pld;
-} packet_t;
-
-
-typedef struct  // packet queue type
-{
-uint head;
-uint tail;
-packet_t queue[PKT_QUEUE_SIZE];
-} pkt_queue_t;
-// ------------------------------------------------------------------------
-
-
-// ------------------------------------------------------------------------
-// global variables
-// ------------------------------------------------------------------------
-uint coreID;
-
-uint rtr_control;
-uint cc_sar;
-
-uint pkt_ctr0;
-uint pkt_ctr1;
-uint pkt_ctr2;
-uint pkt_ctr3;
-
-uint max_time;
-
-pkt_queue_t pkt_queue;  // dumped packet queue
-// ------------------------------------------------------------------------
-
-
-// ------------------------------------------------------------------------
-// functions
-// ------------------------------------------------------------------------
-INT_HANDLER timer_int_han (void)
-{
-#ifdef DEBUG
-// count entries //##
-sark.vcpu->user2++;
-#endif
-
-// clear interrupt in timer,
-tc[T1_INT_CLR] = (uint) tc;
-
-// check if router not blocked
-if ((rtr[RTR_STATUS] & RTR_BLOCKED_MASK) == 0)
-{
-// access packet queue with fiq disabled,
-uint cpsr = cpu_fiq_disable ();
-
-// if queue not empty turn on packet bouncing,
-if (pkt_queue.tail != pkt_queue.head)
-{
-// restore fiq after queue access,
-cpu_int_restore (cpsr);
-
-// enable comms. cont. interrupt to bounce packets
-vic[VIC_ENABLE] = 1 << CC_TNF_INT;
-}
-else
-{
-// restore fiq after queue access,
-cpu_int_restore (cpsr);
-}
-}
-
-#ifdef DEBUG
-// update packet counters,
-//##  sark.vcpu->user0 = pkt_ctr0;
-sark.vcpu->user1 = pkt_ctr1;
-//##  sark.vcpu->user2 = pkt_ctr2;
-//##  sark.vcpu->user3 = pkt_ctr3;
-#endif
-
-// and tell VIC we're done
-vic[VIC_VADDR] = (uint) vic;
-}
-
-
-INT_HANDLER router_int_han (void)
-{
-#ifdef DEBUG
-// count entries //##
-sark.vcpu->user0++;
-#endif
-
-#ifdef DEBUG
-// profiling
-uint start_time = tc[T2_COUNT];
-#endif
-
-// get packet from router,
-uint hdr = rtr[RTR_DHDR];
-uint pld = rtr[RTR_DDAT];
-uint key = rtr[RTR_DKEY];
-
-#ifdef DEBUG
-// profiling -- T2 is a down counter!
-uint run_time = start_time - tc[T2_COUNT];
-#endif
-
-// clear dump status and interrupt in router,
-uint rtr_dstat = rtr[RTR_DSTAT];
-
-#ifdef DEBUG
-// check for overflow -- non-recoverable error!,
-if (rtr_dstat & RTR_DOVRFLW_MASK)
-pkt_ctr1++;
-#endif
-
-// bounce mc packets only
-if ((hdr & PKT_TYPE_MASK) == PKT_TYPE_MC)
-{
-// try to insert dumped packet in the queue,
-uint new_tail = (pkt_queue.tail + 1) % PKT_QUEUE_SIZE;
-
-// check for space in the queue
-if (new_tail != pkt_queue.head)
-{
-// queue packet,
-pkt_queue.queue[pkt_queue.tail].hdr = hdr;
-pkt_queue.queue[pkt_queue.tail].key = key;
-pkt_queue.queue[pkt_queue.tail].pld = pld;
-
-// update queue pointer,
-pkt_queue.tail = new_tail;
-
-#ifdef DEBUG
-// and count packet
-//# pkt_ctr0++;
-#endif
-
-}
-#ifdef DEBUG
-else
-{
-// full queue -- non-recoverable error!
-//# pkt_ctr2++;
-}
-#endif
-}
-
-#ifdef DEBUG
-// profiling -- keep track of maximum
-if (run_time > max_time)
-max_time = run_time;
-#endif
-}
-
-
-INT_HANDLER cc_int_han (void)
-{
-//TODO: may need to deal with packet timestamp.
-
-// check if router not blocked
-if ((rtr[RTR_STATUS] & RTR_BLOCKED_MASK) == 0)
-{
-// access packet queue with fiq disabled,
-uint cpsr = cpu_fiq_disable ();
-
-// if queue not empty bounce packet,
-if (pkt_queue.tail != pkt_queue.head)
-{
-// dequeue packet,
-uint hdr = pkt_queue.queue[pkt_queue.head].hdr;
-uint pld = pkt_queue.queue[pkt_queue.head].pld; 
-uint key = pkt_queue.queue[pkt_queue.head].key;
-
-// update queue pointer,
-pkt_queue.head = (pkt_queue.head + 1) % PKT_QUEUE_SIZE;
-
-// restore fiq after queue access,
-cpu_int_restore (cpsr);
-
-// write header and route,
-cc[CC_TCR] = hdr & PKT_CONTROL_MASK;
-cc[CC_SAR] = cc_sar | (hdr & PKT_ROUTE_MASK);
-
-// maybe write payload,
-if (hdr & PKT_PLD_MASK)
-{
-cc[CC_TXDATA] = pld; 
-}
-
-// write key to fire packet,
-cc[CC_TXKEY] = key;
-
-#ifdef DEBUG
-// count entries //##
-sark.vcpu->user3++;
-
-// and count packet
-//# pkt_ctr3++;
-#endif
-}
-else
-{
-// restore fiq after queue access,
-cpu_int_restore (cpsr);
-
-// and disable comms. cont. interrupts
-vic[VIC_DISABLE] = 1 << CC_TNF_INT;
-}
-}
-else
-{
-// disable comms. cont. interrupts
-vic[VIC_DISABLE] = 1 << CC_TNF_INT;
-}
-
-// and tell VIC we're done
-vic[VIC_VADDR] = (uint) vic;
-}
-
-
-void timer_init (uint period)
-{
-// set up count-down mode,
-tc[T1_CONTROL] = 0xe2;
-
-// load time in microsecs,
-tc[T1_LOAD] = sark.cpu_clk * period;
-
-// and configure VIC slot
-sark_vic_set (TIMER_SLOT, TIMER1_INT, 1, timer_int_han);
-}
-
-
-void router_init ()
-{
-// re-configure wait values in router
-rtr[RTR_CONTROL] = (rtr[RTR_CONTROL] & 0x0000ffff) | 0x004f0000;
-
-// configure fiq vector,
-sark_vec->fiq_vec = router_int_han;
-
-// configure as fiq,
-vic[VIC_SELECT] = 1 << RTR_DUMP_INT;
-
-// enable interrupt,
-vic[VIC_ENABLE] = 1 << RTR_DUMP_INT;
-
-// clear router interrupts,
-(void) rtr[RTR_STATUS];
-
-// clear router dump status,
-(void) rtr[RTR_DSTAT];
-
-// and enable router interrupts when dumping packets
-rtr[RTR_CONTROL] |= (1 << RTR_DENABLE_BIT);
-}
-
-
-void cc_init ()
-{
-// remember SAR register contents (p2p source ID)
-cc_sar = cc[CC_SAR] & 0x0000ffff;
-
-// configure VIC slot -- don't enable yet!
-sark_vic_set (CC_SLOT, CC_TNF_INT, 0, cc_int_han);
-}
-
-
-void timer2_init ()
-{
-// configure timer 2 for profiling
-// enabled, 32 bit, free running, 1x pre-scaler
-tc[T2_CONTROL] = TIMER2_CONF;
-tc[T2_LOAD] = TIMER2_LOAD;
-}
-// ------------------------------------------------------------------------
-
-
-// ------------------------------------------------------------------------
-// main
-// ------------------------------------------------------------------------
-void c_main()
-{
-io_printf (IO_STD, "starting dumped packet bouncer\n");
-
-timer_init (TICK_PERIOD);  // setup timer to maybe turn on bouncing
-
-cc_init ();                // setup comms. cont. interrupt when not full
-
-router_init ();            // setup router to interrupt when dumping
-
-#ifdef DEBUG
-timer2_init ();          // setup timer2 for profiling
-#endif
-
-cpu_sleep ();		     // Send core to sleep
-}
-// ------------------------------------------------------------------------
-\end{pyglist}
-
+\newpage
+\chapter*{Appendix}
+\section*{Appendix - Code listings}
+\usemintedstyle{vs}
+\begin{multicols}{2}
+\inputminted[fontsize=\tiny]{c}{code/dumpBounce.c}
+\end{multicols}
+
+\begin{multicols}{2}
+\inputminted[fontsize=\tiny]{python}{code/backpressure.py}
+\end{multicols}
+
+\begin{multicols}{2}
+\inputminted[fontsize=\tiny]{python}{code/bursting.py}
+\end{multicols}
 
 \end{document}

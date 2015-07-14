@@ -1,31 +1,41 @@
-This is pdfTeX, Version 3.1415926-2.6-1.40.14 (TeX Live 2014/dev) (format=pdflatex 2015.5.12)  4 JUN 2015 19:15
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  10 JUL 2015 14:26
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
 **fault_tolerance.tex
 (./fault_tolerance.tex
 LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 76 languages loaded.
-(/usr/share/texlive/texmf-dist/tex/latex/memoir/memoir.cls
-Document Class: memoir 2013/05/30 v3.7b configurable book, report, article docu
+Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, friulan, galician, german, ngerman, swissgerman, monogreek, greek, h
+ungarian, icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, ma
+rathi, oriya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, 
+kurmanji, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk,
+ polish, portuguese, romanian, romansh, russian, sanskrit, serbian, serbianc, s
+lovak, slovenian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, 
+welsh, loaded.
+(/usr/local/texlive/2012/texmf-dist/tex/latex/memoir/memoir.cls
+Document Class: memoir 2011/03/06 v3.6j configurable book, report, article docu
 ment class
 \onelineskip=\skip41
 \lxvchars=\skip42
 \xlvchars=\skip43
 \@memcnta=\count79
 \c@@memmarkcntra=\count80
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/ifetex/ifetex.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/ifetex/ifetex.sty
 Package: ifetex 2011/12/15 v1.2 ifetex
 
-(/usr/share/texlive/texmf-dist/tex/plain/ifetex/ifetex.tex))
-(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+(/usr/local/texlive/2012/texmf-dist/tex/plain/ifetex/ifetex.tex))
+(/usr/local/texlive/2012/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
@@ -34,11 +44,11 @@ Package ifluatex Info: LuaTeX not detected.
 \trimtop=\skip46
 \trimedge=\skip47
 
-(/usr/share/texlive/texmf-dist/tex/latex/etex-pkg/etex.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/etex-pkg/etex.sty
 Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
 \et@xins=\count81
 )
-(/usr/share/texlive/texmf-dist/tex/latex/memoir/mem11.clo
+(/usr/local/texlive/2012/texmf-dist/tex/latex/memoir/mem11.clo
 File: mem11.clo 2008/01/30 v0.3 memoir class 11pt size option
 )
 \binding=\skip48
@@ -191,8 +201,8 @@ File: mem11.clo 2008/01/30 v0.3 memoir class 11pt size option
 \afterepigraphskip=\skip125
 \epigraphwidth=\skip126
 \epigraphrule=\skip127
-LaTeX Info: Redefining \em on input line 7492.
-LaTeX Info: Redefining \emph on input line 7500.
+LaTeX Info: Redefining \em on input line 7377.
+LaTeX Info: Redefining \emph on input line 7385.
 \tocentryskip=\skip128
 \tocbaseline=\skip129
 \cftparskip=\skip130
@@ -275,8 +285,8 @@ LaTeX Info: Redefining \emph on input line 7500.
 \FrameRule=\dimen145
 \FrameSep=\dimen146
 \c@cp@cntr=\count119
-LaTeX Info: Redefining \: on input line 11958.
-LaTeX Info: Redefining \! on input line 11960.
+LaTeX Info: Redefining \: on input line 11807.
+LaTeX Info: Redefining \! on input line 11809.
 \c@ism@mctr=\count120
 \c@xsm@mctr=\count121
 \c@csm@mctr=\count122
@@ -303,7 +313,7 @@ LaTeX Info: Redefining \! on input line 11960.
 \cfttablenumwidth=\skip184
 Package abstract [2008/07/23] emulated by memoir.
 Package appendix [2008/07/23] emulated by memoir.
-Package array [2008/09/09] emulated by memoir.
+Package array [2008/07/23] emulated by memoir.
 Package booktabs [2008/07/23] emulated by memoir.
 Package ccaption [2008/07/23] emulated by memoir.
 Package changepage [2008/07/23] emulated by memoir.
@@ -337,22 +347,22 @@ Package tocvsec2 [2008/07/23] emulated by memoir.
 Package verbatim [2008/07/23] emulated by memoir.
 Package verse [2008/07/23] emulated by memoir.
 
-(/usr/share/texlive/texmf-dist/tex/latex/memoir/mempatch.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/memoir/mempatch.sty
 Package: mempatch 2009/07/24 v6.0f Patches for memoir class v1.6180339
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks22
 \inpenc@posthook=\toks23
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/t1enc.dfu
 File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -502,7 +512,7 @@ File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/ot1enc.dfu
 File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -533,7 +543,7 @@ File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/omsenc.dfu
 File: omsenc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
@@ -557,48 +567,48 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2013/01/14 v2.14 AMS math features
+(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
 \@mathmargin=\skip185
 
 For additional information on amsmath, use the `?' option.
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks24
 \ex@=\dimen147
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen148
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count138
-LaTeX Info: Redefining \frac on input line 210.
+LaTeX Info: Redefining \frac on input line 211.
 \uproot@=\count139
 \leftroot@=\count140
-LaTeX Info: Redefining \overline on input line 306.
+LaTeX Info: Redefining \overline on input line 307.
 \classnum@=\count141
 \DOTSCASE@=\count142
-LaTeX Info: Redefining \ldots on input line 378.
-LaTeX Info: Redefining \dots on input line 381.
-LaTeX Info: Redefining \cdots on input line 466.
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
 \Mathstrutbox@=\box29
 \strutbox@=\box30
 \big@size=\dimen149
-LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
 \macc@depth=\count143
 \c@MaxMatrixCols=\count144
 \dotsspace@=\muskip10
@@ -619,10 +629,10 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \multlinegap=\skip186
 \multlinetaggap=\skip187
 \mathdisplay@stack=\toks28
-LaTeX Info: Redefining \[ on input line 2665.
-LaTeX Info: Redefining \] on input line 2666.
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/SIunits/SIunits.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/SIunits/SIunits.sty
 Package: SIunits 2007/12/02 v1.36 Support for the International System of units
  (MH)
 
@@ -630,7 +640,7 @@ Package: SIunits 2007/12/02 v1.36 Support for the International System of units
 \@qskwidth=\skip188
 Now handling font encoding TS1 ...
 ... processing UTF-8 mapping file for font encoding TS1
-(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/ts1enc.dfu
 File: ts1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A2 (decimal 162)
    defining Unicode char U+00A3 (decimal 163)
@@ -704,33 +714,64 @@ File: ts1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 )
 \symgreek=\mathgroup4
 
-(/usr/share/texlive/texmf-dist/tex/latex/SIunits/SIunits.cfg)
+(/usr/local/texlive/2012/texmf-dist/tex/latex/SIunits/SIunits.cfg)
 LaTeX Info: Redefining \usk on input line 576.
 
 Option `thinspace' provided!
 LaTeX Info: Redefining \@qsk on input line 576.
 Option `thinqspace' provided!
 Option `squaren' provided!
-) (/usr/share/texlive/texmf-local/tex/latex/MinionPro/MinionPro.sty
-Package: MinionPro 2007/03/15 v2.1 MinionPro support for LaTeX
+) (/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/MinionPro.sty
+Package: MinionPro 2011/12/19 v2.2 MinionPro support for LaTeX
 
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/MinionPro-FontDef.sty
-File: MinionPro-FontDef.sty 2007/02/01 v2.2 font definition macros
+(/usr/local/texlive/2012/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/otfontdef.sty
-Package: otfontdef 2005/06/04 v0.1e OpenType font definition
-
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks29
-))
+)
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/MinionPro-FontDef.s
+ty
+File: MinionPro-FontDef.sty 2007/02/01 v2.2 font definition macros
+ (/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/otfontdef.sty
+Package: otfontdef 2005/06/04 v0.1e OpenType font definition
+)
 \Mn@option@normalsize=\dimen156
 Package MinionPro-FontDef Info: Configuration: smallfamily, noopticals, normals
 ize=10.95pt on input line 52.
 \Mn@config@cnt=\count150
+
+(/usr/local/texlive/2012/texmf-dist/tex/generic/fltpoint/fltpoint.sty
+Package: fltpoint 2004/11/12 v1.1b floating point arithmetic
+
+(/usr/local/texlive/2012/texmf-dist/tex/generic/fltpoint/fltpoint.tex
+\fp@loopcount=\count151
+\fp@loopcountii=\count152
+\fp@result=\count153
+\fp@carryover=\count154
+\fp@tempcount=\count155
+\fp@tempcountii=\count156
+))
 \Mn@fontdimen=\dimen157
 )
-(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -745,7 +786,7 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             See the documentation for details.
 Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 71.
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding TS1 on input line 42.
 )
@@ -812,10 +853,10 @@ Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 338.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 339.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 340.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/mnsymbol/MnSymbol.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/mnsymbol/MnSymbol.sty
 Package: MnSymbol 2007/01/21 v1.4 support for the MnSymbol font
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/eufrak.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/eufrak.sty
 Package: eufrak 2009/06/22 v3.00 Euler Fraktur fonts
 LaTeX Font Info:    Overwriting math alphabet `\EuFrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 39.
@@ -884,205 +925,174 @@ LaTeX Font Info:    Redeclaring math accent \widehat on input line 1845.
 LaTeX Font Info:    Redeclaring math accent \widetilde on input line 1846.
 LaTeX Font Info:    Redeclaring math accent \vec on input line 1848.
 )
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 163.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 169.
 LaTeX Font Info:    Encoding `OT1' has changed to `T1' for symbol font
-(Font)              `operators' in the math version `normal' on input line 163.
+(Font)              `operators' in the math version `normal' on input line 169.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> T1/MinionPro-LF/m/n on input line 163.
+(Font)                  OT1/cmr/m/n --> T1/MinionPro-LF/m/n on input line 169.
 LaTeX Font Info:    Encoding `OT1' has changed to `T1' for symbol font
-(Font)              `operators' in the math version `bold' on input line 163.
+(Font)              `operators' in the math version `bold' on input line 169.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> T1/MinionPro-LF/m/n on input line 163.
+(Font)                  OT1/cmr/bx/n --> T1/MinionPro-LF/m/n on input line 169.
 
-LaTeX Font Info:    Redeclaring symbol font `letters' on input line 164.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 170.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
 (Font)                  OML/cmm/m/it --> OML/MinionPro-TOsF/m/it on input line 
-164.
+170.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
 (Font)                  OML/cmm/b/it --> OML/MinionPro-TOsF/m/it on input line 
-164.
+170.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  T1/MinionPro-LF/m/n --> T1/MinionPro-LF/eb/n on input l
-ine 165.
+ine 171.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
 (Font)                  OML/MinionPro-TOsF/m/it --> OML/MinionPro-TOsF/eb/it on
- input line 166.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 167.
+ input line 172.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 173.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> T1/MinionPro-LF/eb/n on input line 167
+(Font)                  OT1/cmr/bx/n --> T1/MinionPro-LF/eb/n on input line 173
 .
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> T1/MinionPro-LF/eb/n on input line 167
+(Font)                  OT1/cmr/bx/n --> T1/MinionPro-LF/eb/n on input line 173
 .
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 168.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 174.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> T1/MinionPro-LF/m/it on input line 168
+(Font)                  OT1/cmr/m/it --> T1/MinionPro-LF/m/it on input line 174
 .
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> T1/MinionPro-LF/m/it on input line 16
-8.
+(Font)                  OT1/cmr/bx/it --> T1/MinionPro-LF/m/it on input line 17
+4.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  T1/MinionPro-LF/m/it --> T1/MinionPro-LF/eb/it on input
- line 169.
-\c@mv@tabular=\count151
+ line 175.
+\c@mv@tabular=\count157
 LaTeX Font Info:    Overwriting symbol font `operators' in version `tabular'
 (Font)                  T1/MinionPro-LF/m/n --> T1/MinionPro-TLF/m/n on input l
-ine 171.
+ine 177.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `tabular'
 (Font)                  OML/MinionPro-TOsF/m/it --> OML/MinionPro-TOsF/m/it on 
-input line 172.
+input line 178.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `tabular'
 (Font)                  OT1/cmr/m/it --> T1/MinionPro-TLF/m/it on input line 17
-3.
-\c@mv@boldtabular=\count152
+9.
+\c@mv@boldtabular=\count158
 LaTeX Font Info:    Overwriting symbol font `operators' in version `boldtabular
 '
 (Font)                  T1/MinionPro-LF/m/n --> T1/MinionPro-TLF/eb/n on input 
-line 176.
+line 182.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `boldtabular'
 (Font)                  OML/MinionPro-TOsF/m/it --> OML/MinionPro-TOsF/eb/it on
- input line 177.
+ input line 183.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `boldtabular
 '
 (Font)                  OT1/cmr/m/it --> T1/MinionPro-TLF/eb/it on input line 1
-78.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 179.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 180.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 181.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 182.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 183.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 184.
-LaTeX Font Info:    Redeclaring math accent \check on input line 185.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 186.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 187.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 188.
+84.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 185.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 186.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 187.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 188.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 189.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 190.
+LaTeX Font Info:    Redeclaring math accent \check on input line 191.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 192.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 193.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 194.
 
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/fontaxes.sty
-Package: fontaxes 2007/03/31 v0.2b Font selection axes
-LaTeX Info: Redefining \upshape on input line 26.
-LaTeX Info: Redefining \itshape on input line 28.
-LaTeX Info: Redefining \slshape on input line 30.
-LaTeX Info: Redefining \scshape on input line 34.
+(/usr/local/texlive/2012/texmf-dist/tex/latex/fontaxes/fontaxes.sty
+Package: fontaxes 2011/12/16 v1.0c Font selection axes
+LaTeX Info: Redefining \upshape on input line 29.
+LaTeX Info: Redefining \itshape on input line 31.
+LaTeX Info: Redefining \slshape on input line 33.
+LaTeX Info: Redefining \scshape on input line 37.
 )
-LaTeX Font Info:    Redeclaring math symbol \upmu on input line 233.
-LaTeX Font Info:    Redeclaring math symbol \partial on input line 499.
-LaTeX Font Info:    Redeclaring math symbol \ell on input line 501.
+LaTeX Font Info:    Redeclaring math symbol \upmu on input line 239.
+LaTeX Font Info:    Redeclaring math symbol \partial on input line 505.
+LaTeX Font Info:    Redeclaring math symbol \ell on input line 507.
 Package textcomp Info: Setting MinionPro-LF sub-encoding to TS1/1 on input line
- 521.
+ 527.
 Package textcomp Info: Setting MinionPro-TLF sub-encoding to TS1/1 on input lin
-e 522.
+e 528.
 Package textcomp Info: Setting MinionPro-OsF sub-encoding to TS1/1 on input lin
-e 523.
+e 529.
 Package textcomp Info: Setting MinionPro-TOsF sub-encoding to TS1/1 on input li
-ne 524.
-LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 589.
+ne 530.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 595.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  U/MnSymbolF/m/n --> U/MnSymbolFI/m/it on input line 589
+(Font)                  U/MnSymbolF/m/n --> U/MnSymbolFI/m/it on input line 595
 .
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  U/MnSymbolF/b/n --> U/MnSymbolFI/m/it on input line 589
+(Font)                  U/MnSymbolF/b/n --> U/MnSymbolFI/m/it on input line 595
 .
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `tabular'
-(Font)                  U/MnSymbolF/m/n --> U/MnSymbolFI/m/it on input line 589
+(Font)                  U/MnSymbolF/m/n --> U/MnSymbolFI/m/it on input line 595
 .
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `boldtabular'
-(Font)                  U/MnSymbolF/m/n --> U/MnSymbolFI/m/it on input line 589
+(Font)                  U/MnSymbolF/m/n --> U/MnSymbolFI/m/it on input line 595
 .
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  U/MnSymbolFI/m/it --> U/MnSymbolFI/b/it on input line 5
-89.
-LaTeX Font Info:    Redeclaring math symbol \tint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \tiint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \tiiint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \tiiiint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \tidotsint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \tlandupint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \tlanddownint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \tstrokedint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \toint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \toiint on input line 589.
-LaTeX Font Info:    Redeclaring math symbol \trcirclerightint on input line 589
+95.
+LaTeX Font Info:    Redeclaring math symbol \tint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \tiint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \tiiint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \tiiiint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \tidotsint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \tlandupint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \tlanddownint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \tstrokedint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \toint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \toiint on input line 595.
+LaTeX Font Info:    Redeclaring math symbol \trcirclerightint on input line 595
 .
-LaTeX Font Info:    Redeclaring math symbol \tlcirclerightint on input line 589
+LaTeX Font Info:    Redeclaring math symbol \tlcirclerightint on input line 595
 .
-LaTeX Font Info:    Redeclaring math symbol \trcircleleftint on input line 589.
+LaTeX Font Info:    Redeclaring math symbol \trcircleleftint on input line 595.
 
-LaTeX Font Info:    Redeclaring math symbol \tlcircleleftint on input line 589.
+LaTeX Font Info:    Redeclaring math symbol \tlcircleleftint on input line 595.
 
-LaTeX Font Info:    Redeclaring math symbol \tsumint on input line 589.
-LaTeX Info: Redefining \LaTeX on input line 596.
+LaTeX Font Info:    Redeclaring math symbol \tsumint on input line 595.
+LaTeX Info: Redefining \LaTeX on input line 602.
 LaTeX Font Info:    Try loading font information for T1+MinionPro-LF on input l
-ine 628.
+ine 634.
 
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/T1MinionPro-LF.fd
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/T1MinionPro-LF.fd
 File: T1MinionPro-LF.fd 2005/01/23 v2.0 font definitions for T1/MinionPro-LF.
 
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/MinionPro-FontDef.sty
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/MinionPro-FontDef.s
+ty
 File: MinionPro-FontDef.sty 2007/02/01 v2.2 font definition macros
-)))
-(/usr/share/texlive/texmf-local/tex/latex/MyriadPro/MyriadPro.sty
-Package: MyriadPro 2013/04/20 v0.5 MyriadPro support for LaTeX
-
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
-Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
-Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
-Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
-Package etexcmds Info: Could not find \expanded.
-(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
-(etexcmds)             that some package has redefined \expanded.
-(etexcmds)             In the latter case, load this package earlier.
-)))
-(/usr/share/texlive/texmf-dist/tex/generic/fltpoint/fltpoint.sty
-Package: fltpoint 2004/11/12 v1.1b floating point arithmetic
-
-(/usr/share/texlive/texmf-dist/tex/generic/fltpoint/fltpoint.tex
-\fp@loopcount=\count153
-\fp@loopcountii=\count154
-\fp@result=\count155
-\fp@carryover=\count156
-\fp@tempcount=\count157
-\fp@tempcountii=\count158
-))
-(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+))) (/usr/local/texlive/2012/../texmf-local/tex/latex/MyriadPro/MyriadPro.sty
+Package: MyriadPro 2012/02/17 v0.3 MyriadPro support for LaTeX
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
-(/usr/share/texlive/texmf-local/tex/latex/MyriadPro/MyriadPro-FontDef.sty
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MyriadPro/MyriadPro-FontDef.s
+ty
 File: MyriadPro-FontDef.sty 2012/02/17 v0.3 font definition macros
 \My@option@normalsize=\dimen158
 Package MyriadPro-FontDef Info: Configuration: medfamily, noopticals, normalsiz
 e=10.95pt on input line 48.
 \My@config@cnt=\count159
 \My@fontdimen=\dimen159
-)
-(/usr/share/texlive/texmf-dist/tex/latex/mdsymbol/mdsymbol.sty
-Package: mdsymbol 2012/11/18 v0.5 MdSymbol support package
+) (/usr/local/texlive/2012/texmf-dist/tex/latex/mdsymbol/mdsymbol.sty
+Package: mdsymbol 2012/01/07 v0.3 MdSymbol support package
 
-(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2012/10/14 v2.6b package option processing (HA)
+(/usr/local/texlive/2012/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2008/08/13 v2.6a package option processing (HA)
 
-(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2012/texmf-dist/tex/generic/xkeyval/xkeyval.tex
 \XKV@toks=\toks30
 \XKV@tempa@toks=\toks31
 \XKV@depth=\count160
-File: xkeyval.tex 2012/10/14 v2.6b key=value parser (HA)
+File: xkeyval.tex 2008/08/13 v2.6a key=value parser (HA)
 ))
 \c@mv@sans=\count161
 \c@mv@sansbold=\count162
 \c@mv@sanstabular=\count163
 \c@mv@sansboldtabular=\count164
 
-(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2011/01/03 v2.1 e-TeX tools for LaTeX
 \etb@tempcnta=\count165
 )
@@ -1150,256 +1160,230 @@ LaTeX Font Info:    Overwriting symbol font `delimiters' in version `sansbold'
 LaTeX Font Info:    Overwriting symbol font `delimiters' in version `sansboldta
 bular'
 (Font)                  U/MdSymbolF/m/n --> U/MdSymbolF/b/n on input line 409.
-
-(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
-Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count166
-\calc@Bcount=\count167
-\calc@Adimen=\dimen160
-\calc@Bdimen=\dimen161
-\calc@Askip=\skip189
-\calc@Bskip=\skip190
-LaTeX Info: Redefining \setlength on input line 76.
-LaTeX Info: Redefining \addtolength on input line 77.
-\calc@Ccount=\count168
-\calc@Cskip=\skip191
 )
-\overliningbox=\box31
-)
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 372.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 369.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 372.
+(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 369.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/MyriadPro-LF/m/n on input line 372
+(Font)                  OT1/cmss/bx/n --> T1/MyriadPro-LF/m/n on input line 369
 .
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `tabular'
-(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 372.
+(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 369.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `boldtabular
 '
-(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 372.
+(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 369.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `sans'
-(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 372.
+(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 369.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `sansbold'
-(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 372.
+(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 369.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `sanstabular
 '
-(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 372.
+(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 369.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `sansboldtab
 ular'
-(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 372.
+(Font)                  OT1/cmss/m/n --> T1/MyriadPro-LF/m/n on input line 369.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 (Font)                  T1/MyriadPro-LF/m/n --> T1/MyriadPro-LF/b/n on input li
-ne 373.
+ne 370.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `sansbold'
 (Font)                  T1/MyriadPro-LF/m/n --> T1/MyriadPro-LF/b/n on input li
-ne 374.
+ne 371.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `sanstabular
 '
 (Font)                  T1/MyriadPro-LF/m/n --> T1/MyriadPro-TLF/m/n on input l
-ine 375.
+ine 372.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `sansboldtab
 ular'
 (Font)                  T1/MyriadPro-LF/m/n --> T1/MyriadPro-TLF/b/n on input l
-ine 376.
+ine 373.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `sans'
-(Font)                  OT1/cmr/m/it --> T1/MyriadPro-LF/m/it on input line 378
+(Font)                  OT1/cmr/m/it --> T1/MyriadPro-LF/m/it on input line 375
 .
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `sansbold'
-(Font)                  OT1/cmr/m/it --> T1/MyriadPro-LF/b/it on input line 379
+(Font)                  OT1/cmr/m/it --> T1/MyriadPro-LF/b/it on input line 376
 .
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `sanstabular
 '
-(Font)                  OT1/cmr/m/it --> T1/MyriadPro-TLF/m/it on input line 38
-0.
+(Font)                  OT1/cmr/m/it --> T1/MyriadPro-TLF/m/it on input line 37
+7.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `sansboldtab
 ular'
-(Font)                  OT1/cmr/m/it --> T1/MyriadPro-TLF/b/it on input line 38
-1.
+(Font)                  OT1/cmr/m/it --> T1/MyriadPro-TLF/b/it on input line 37
+8.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `sans'
-(Font)                  OT1/cmr/bx/n --> T1/MyriadPro-LF/b/n on input line 383.
+(Font)                  OT1/cmr/bx/n --> T1/MyriadPro-LF/b/n on input line 380.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `sanstabular
 '
-(Font)                  OT1/cmr/bx/n --> T1/MyriadPro-TLF/b/n on input line 384
+(Font)                  OT1/cmr/bx/n --> T1/MyriadPro-TLF/b/n on input line 381
 .
 LaTeX Font Info:    Overwriting symbol font `operators' in version `sans'
 (Font)                  T1/MinionPro-LF/m/n --> T1/MyriadPro-LF/m/n on input li
-ne 390.
+ne 387.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `sansbold'
 (Font)                  T1/MinionPro-LF/m/n --> T1/MyriadPro-LF/b/n on input li
-ne 391.
+ne 388.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `sanstabular
 '
 (Font)                  T1/MinionPro-LF/m/n --> T1/MyriadPro-TLF/m/n on input l
-ine 392.
+ine 389.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `sansboldtab
 ular'
 (Font)                  T1/MinionPro-LF/m/n --> T1/MyriadPro-TLF/b/n on input l
-ine 393.
+ine 390.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `sans'
-(Font)                  OML/MinionPro-TOsF/m/it --> OML/MyriadPro-OsF/m/it on i
-nput line 399.
+(Font)                  OML/MinionPro-TOsF/m/it --> OML/MyriadPro-OsF/r/it on i
+nput line 396.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `sansbold'
 (Font)                  OML/MinionPro-TOsF/m/it --> OML/MyriadPro-OsF/b/it on i
-nput line 400.
+nput line 397.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `sanstabular'
 (Font)                  OML/MinionPro-TOsF/m/it --> OML/MyriadPro-TOsF/m/it on 
-input line 401.
+input line 398.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `sansboldtabul
 ar'
 (Font)                  OML/MinionPro-TOsF/m/it --> OML/MyriadPro-TOsF/b/it on 
-input line 402.
+input line 399.
 LaTeX Font Info:    Overwriting math alphabet `\mathcal' in version `sans'
-(Font)                  OMS/MnSymbolS/m/n --> OMS/mdcmsy/m/n on input line 405.
+(Font)                  OMS/MnSymbolS/m/n --> OMS/mdcmsy/m/n on input line 402.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathcal' in version `sansbold'
-(Font)                  OMS/MnSymbolS/m/n --> OMS/mdcmsy/b/n on input line 405.
+(Font)                  OMS/MnSymbolS/m/n --> OMS/mdcmsy/b/n on input line 402.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathcal' in version `sanstabula
 r'
-(Font)                  OMS/MnSymbolS/m/n --> OMS/mdcmsy/m/n on input line 405.
+(Font)                  OMS/MnSymbolS/m/n --> OMS/mdcmsy/m/n on input line 402.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathcal' in version `sansboldta
 bular'
-(Font)                  OMS/MnSymbolS/m/n --> OMS/mdcmsy/b/n on input line 405.
+(Font)                  OMS/MnSymbolS/m/n --> OMS/mdcmsy/b/n on input line 402.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathbb' in version `sans'
-(Font)                  U/msb/m/n --> U/mdmsb/m/n on input line 407.
+(Font)                  U/msb/m/n --> U/mdmsb/m/n on input line 404.
 LaTeX Font Info:    Overwriting math alphabet `\mathbb' in version `sansbold'
-(Font)                  U/msb/m/n --> U/mdmsb/m/n on input line 407.
+(Font)                  U/msb/m/n --> U/mdmsb/m/n on input line 404.
 LaTeX Font Info:    Overwriting math alphabet `\mathbb' in version `sanstabular
 '
-(Font)                  U/msb/m/n --> U/mdmsb/m/n on input line 407.
+(Font)                  U/msb/m/n --> U/mdmsb/m/n on input line 404.
 LaTeX Font Info:    Overwriting math alphabet `\mathbb' in version `sansboldtab
 ular'
-(Font)                  U/msb/m/n --> U/mdmsb/m/n on input line 407.
+(Font)                  U/msb/m/n --> U/mdmsb/m/n on input line 404.
 LaTeX Font Info:    Overwriting math alphabet `\EuFrak' in version `sans'
-(Font)                  U/euf/m/n --> U/mdeuf/m/n on input line 409.
+(Font)                  U/euf/m/n --> U/mdeuf/m/n on input line 406.
 LaTeX Font Info:    Overwriting math alphabet `\EuFrak' in version `sansbold'
-(Font)                  U/euf/m/n --> U/mdeuf/b/n on input line 409.
+(Font)                  U/euf/m/n --> U/mdeuf/b/n on input line 406.
 LaTeX Font Info:    Overwriting math alphabet `\EuFrak' in version `sanstabular
 '
-(Font)                  U/euf/m/n --> U/mdeuf/m/n on input line 409.
+(Font)                  U/euf/m/n --> U/mdeuf/m/n on input line 406.
 LaTeX Font Info:    Overwriting math alphabet `\EuFrak' in version `sansboldtab
 ular'
-(Font)                  U/euf/m/n --> U/mdeuf/b/n on input line 409.
-LaTeX Info: Redefining \Re@sans on input line 409.
-LaTeX Info: Redefining \Im@sans on input line 409.
-\MdSlantfracSpacingBeforeSlash=\skip192
-\MdSlantfracSpacingAfterSlash=\skip193
+(Font)                  U/euf/m/n --> U/mdeuf/b/n on input line 406.
+LaTeX Info: Redefining \Re@sans on input line 406.
+LaTeX Info: Redefining \Im@sans on input line 406.
+\MdSlantfracSpacingBeforeSlash=\skip189
+\MdSlantfracSpacingAfterSlash=\skip190
 
 Using the configuration file MyriadPro.cfg
-(/usr/share/texlive/texmf-local/tex/latex/MyriadPro/MyriadPro.cfg)
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MyriadPro/MyriadPro.cfg)
 Package textcomp Info: Setting MyriadPro-LF sub-encoding to TS1/1 on input line
- 758.
+ 755.
 Package textcomp Info: Setting MyriadPro-TLF sub-encoding to TS1/1 on input lin
-e 759.
+e 756.
 Package textcomp Info: Setting MyriadPro-OsF sub-encoding to TS1/1 on input lin
-e 760.
+e 757.
 Package textcomp Info: Setting MyriadPro-TOsF sub-encoding to TS1/1 on input li
-ne 761.
-LaTeX Info: Redefining \LaTeX on input line 830.
+ne 758.
+LaTeX Info: Redefining \LaTeX on input line 827.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2013/05/23 v2.5a Micro-typographical refinements (RS)
+(/usr/local/texlive/2012/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2010/01/10 v2.4 Micro-typography with pdfTeX (RS)
 \MT@toks=\toks32
-\MT@count=\count169
-LaTeX Info: Redefining \textls on input line 766.
-\MT@outer@kern=\dimen162
-LaTeX Info: Redefining \textmicrotypecontext on input line 1285.
-\MT@listname@count=\count170
-
-(/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype-pdftex.def
-File: microtype-pdftex.def 2013/05/23 v2.5a Definitions specific to pdftex (RS)
-
-LaTeX Info: Redefining \lsstyle on input line 915.
-LaTeX Info: Redefining \lslig on input line 915.
-\MT@outer@space=\skip194
-)
+\MT@count=\count166
+LaTeX Info: Redefining \lsstyle on input line 1597.
+LaTeX Info: Redefining \lslig on input line 1597.
+\MT@outer@space=\skip191
+LaTeX Info: Redefining \textls on input line 1605.
+\MT@outer@kern=\dimen160
+LaTeX Info: Redefining \textmicrotypecontext on input line 2156.
 Package microtype Info: Loading configuration file microtype.cfg.
 
-(/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2013/05/23 v2.5a microtype main configuration file (RS)
+(/usr/local/texlive/2012/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2010/01/10 v2.4 microtype main configuration file (RS)
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+(/usr/local/texlive/2012/texmf-dist/tex/latex/latexconfig/graphics.cfg
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/local/texlive/2012/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-\Gread@gobject=\count171
+\Gread@gobject=\count167
 ))
-\Gin@req@height=\dimen163
-\Gin@req@width=\dimen164
+\Gin@req@height=\dimen161
+\Gin@req@width=\dimen162
 )
-(/usr/share/texlive/texmf-dist/tex/generic/ulem/ulem.sty
-\UL@box=\box32
-\UL@hyphenbox=\box33
-\UL@skip=\skip195
+(/usr/local/texlive/2012/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box31
+\UL@hyphenbox=\box32
+\UL@skip=\skip192
 \UL@hook=\toks33
-\UL@height=\dimen165
-\UL@pe=\count172
-\UL@pixel=\dimen166
-\ULC@box=\box34
+\UL@height=\dimen163
+\UL@pe=\count168
+\UL@pixel=\dimen164
+\ULC@box=\box33
 Package: ulem 2012/05/18
-\ULdepth=\dimen167
+\ULdepth=\dimen165
 )
-(/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/lipsum/lipsum.sty
 Package: lipsum 2011/04/14 v1.2 150 paragraphs of Lorem Ipsum dummy text
-\c@lips@count=\count173
+\c@lips@count=\count169
 )
-(/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip196
-\bibsep=\skip197
+\bibhang=\skip193
+\bibsep=\skip194
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count174
+\c@NAT@ctr=\count170
 )
-(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
 Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/verbments/verbments.sty
-Package: verbments 2011/08/20 v1.2 Pygments/fancyvrb source code highlighting f
-or LaTeX
+(/usr/local/texlive/2012/texmf-dist/tex/latex/minted/minted.sty
+Package: minted 2011/09/17 v1.7 Yet another Pygments shim for LaTeX
 
-(/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
 <2008/02/07> (tvz)
-\FV@CodeLineNo=\count175
+\FV@CodeLineNo=\count171
 \FV@InFile=\read2
-\FV@TabBox=\box35
-\c@FancyVerbLine=\count176
-\FV@StepNumber=\count177
+\FV@TabBox=\box34
+\c@FancyVerbLine=\count172
+\FV@StepNumber=\count173
 \FV@OutFile=\write4
-) (/usr/share/texlive/texmf-dist/tex/latex/framed/framed.sty
-Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip198
-\fb@frw=\dimen168
-\fb@frh=\dimen169
-) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+)
+(/usr/local/texlive/2012/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
 
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+(/usr/local/texlive/2012/texmf-dist/tex/latex/latexconfig/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
@@ -1413,28 +1397,137 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 )
-\@tmpwidth=\skip199
-\@tmpvskip=\skip200
+(/usr/local/texlive/2012/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count174
+\float@exts=\toks34
+\float@box=\box35
+\@float@everytoks=\toks35
+\@floatcapt=\box36
 )
-(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count175
+\calc@Bcount=\count176
+\calc@Adimen=\dimen166
+\calc@Bdimen=\dimen167
+\calc@Askip=\skip195
+\calc@Bskip=\skip196
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count177
+\calc@Cskip=\skip197
+)
+(/usr/local/texlive/2012/texmf-dist/tex/latex/ifplatform/ifplatform.sty
+Package: ifplatform 2010/10/22 v0.4 Testing for the operating system
+
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/catchfile.sty
+Package: catchfile 2011/03/01 v1.6 Catch the contents of a file (HO)
+)
+runsystem(uname -s > "fault_tolerance.w18")...executed.
+
+
+(./fault_tolerance.w18)
+runsystem(rm -- "fault_tolerance.w18")...executed.
+
+)
+\minted@bgbox=\box37
+\minted@code=\write5
+\@float@every@listing=\toks36
+\c@listing=\count178
+)
+runsystem(which pygmentize && touch fault_tolerance.aex)...executed.
+
+runsystem(rm fault_tolerance.aex)...executed.
+
+
+(/usr/local/texlive/2012/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
+\c@tracingmulticols=\count179
+\mult@box=\box38
+\multicol@leftmargin=\dimen168
+\c@unbalance=\count180
+\c@collectmore=\count181
+\doublecol@number=\count182
+\multicoltolerance=\count183
+\multicolpretolerance=\count184
+\full@width=\dimen169
+\page@free=\dimen170
+\premulticols=\dimen171
+\postmulticols=\dimen172
+\multicolsep=\skip198
+\multicolbaselineskip=\skip199
+\partial@page=\box39
+\last@line=\box40
+\mult@rightbox=\box41
+\mult@grightbox=\box42
+\mult@gfirstbox=\box43
+\mult@firstbox=\box44
+\@tempa=\box45
+\@tempa=\box46
+\@tempa=\box47
+\@tempa=\box48
+\@tempa=\box49
+\@tempa=\box50
+\@tempa=\box51
+\@tempa=\box52
+\@tempa=\box53
+\@tempa=\box54
+\@tempa=\box55
+\@tempa=\box56
+\@tempa=\box57
+\@tempa=\box58
+\@tempa=\box59
+\@tempa=\box60
+\@tempa=\box61
+\c@columnbadness=\count185
+\c@finalcolumnbadness=\count186
+\last@try=\dimen173
+\multicolovershoot=\dimen174
+\multicolundershoot=\dimen175
+\mult@nat@firstbox=\box62
+\colbreak@box=\box63
+\multicol@sort@counter=\count187
+)
+(/usr/local/texlive/2012/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
+\ttl@box=\box64
+\beforetitleunit=\skip200
+\aftertitleunit=\skip201
+\ttl@plus=\dimen176
+\ttl@minus=\dimen177
+\ttl@toksa=\toks37
+\titlewidth=\dimen178
+\titlewidthlast=\dimen179
+\titlewidthfirst=\dimen180
+)
+(/usr/local/texlive/2012/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/ifvtex.sty
 Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
 )
-\Gm@cnth=\count178
-\Gm@cntv=\count179
-\c@Gm@tempcnt=\count180
-\Gm@bindingoffset=\dimen170
-\Gm@wd@mp=\dimen171
-\Gm@odd@mp=\dimen172
-\Gm@even@mp=\dimen173
-\Gm@layoutwidth=\dimen174
-\Gm@layoutheight=\dimen175
-\Gm@layouthoffset=\dimen176
-\Gm@layoutvoffset=\dimen177
-\Gm@dimlist=\toks34
+\Gm@cnth=\count188
+\Gm@cntv=\count189
+\c@Gm@tempcnt=\count190
+\Gm@bindingoffset=\dimen181
+\Gm@wd@mp=\dimen182
+\Gm@odd@mp=\dimen183
+\Gm@even@mp=\dimen184
+\Gm@layoutwidth=\dimen185
+\Gm@layoutheight=\dimen186
+\Gm@layouthoffset=\dimen187
+\Gm@layoutvoffset=\dimen188
+\Gm@dimlist=\toks38
 )
 
 Package geometry Warning: Over-specification in `h'-direction.
@@ -1444,78 +1537,73 @@ Package geometry Warning: Over-specification in `h'-direction.
 Package geometry Warning: Over-specification in `v'-direction.
     `height' (845.04684pt) is ignored.
 
+\drop=\skip202
 (./fault_tolerance.aux)
 \openout1 = `fault_tolerance.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 73.
-LaTeX Font Info:    ... okay on input line 73.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 73.
-LaTeX Font Info:    ... okay on input line 73.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 73.
-LaTeX Font Info:    ... okay on input line 73.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 73.
-LaTeX Font Info:    ... okay on input line 73.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 73.
-LaTeX Font Info:    ... okay on input line 73.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 73.
-LaTeX Font Info:    ... okay on input line 73.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 73.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 73.
- (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 105.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 105.
+
+
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    ... okay on input line 105.
 
 Option `squaren' provided! 
  Command \squaren defined by SIunits package!
 
-LaTeX Info: Redefining \microtypecontext on input line 73.
+LaTeX Info: Redefining \microtypecontext on input line 105.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-Package microtype Info: No adjustment of tracking.
+Package microtype Info: No tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/mt-MinionPro.cfg
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/mt-MinionPro.cfg
 File: mt-MinionPro.cfg 2005/02/07 v1.0 microtype config file for MinionPro
 )
 
 Package microtype Warning: Unknown slot number of character
 (microtype)                `\j '
 (microtype)                in font encoding `T1' in inheritance list
-(microtype)                `microtype.cfg/201(protrusion)'.
+(microtype)                `microtype.cfg/186(protrusion)'.
 
-(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+(/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count181
-\scratchdimen=\dimen178
-\scratchbox=\box36
-\nofMPsegments=\count182
-\nofMParguments=\count183
-\everyMPshowfont=\toks35
-\MPscratchCnt=\count184
-\MPscratchDim=\dimen179
-\MPnumerator=\count185
-\makeMPintoPDFobject=\count186
-\everyMPtoPDFconversion=\toks36
-) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
-)
-Package pdftexcmds Info: LuaTeX not detected.
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+\scratchcounter=\count191
+\scratchdimen=\dimen189
+\scratchbox=\box65
+\nofMPsegments=\count192
+\nofMParguments=\count193
+\everyMPshowfont=\toks39
+\MPscratchCnt=\count194
+\MPscratchDim=\dimen190
+\MPnumerator=\count195
+\makeMPintoPDFobject=\count196
+\everyMPtoPDFconversion=\toks40
+) (/usr/local/texlive/2012/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+(/usr/local/texlive/2012/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
 Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
 ))
 Package grfext Info: Graphics extension search list:
@@ -1523,12 +1611,14 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 452.
 
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+(/usr/local/texlive/2012/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@pllisting=\count187
+runsystem(pygmentize -S default -f latex > fault_tolerance.pyg)...executed.
 
+
+(./fault_tolerance.pyg)
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -1537,14 +1627,14 @@ e
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(99.58464pt, 412.56497pt, 85.35826pt)
+* h-part:(L,W,R)=(85.35826pt, 426.79135pt, 85.35826pt)
 * v-part:(T,H,B)=(85.35826pt, 674.33032pt, 85.35826pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=412.56497pt
+* \textwidth=426.79135pt
 * \textheight=674.33032pt
-* \oddsidemargin=27.31465pt
-* \evensidemargin=27.31465pt
+* \oddsidemargin=13.08827pt
+* \evensidemargin=13.08827pt
 * \topmargin=-20.38553pt
 * \headheight=13.6pt
 * \headsep=19.8738pt
@@ -1563,256 +1653,275 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for OML+MinionPro-TOsF on inpu
-t line 74.
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/OMLMinionPro-TOsF.fd
-File: OMLMinionPro-TOsF.fd 2005/01/23 v2.0 font definitions for OML/MinionPro-T
-OsF.
-
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/MinionPro-FontDef.sty
-File: MinionPro-FontDef.sty 2007/02/01 v2.2 font definition macros
-))
-(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-eur.cfg
-File: mt-eur.cfg 2006/07/31 v1.1 microtype config. file: AMS Euler Roman (RS)
-)
-LaTeX Font Info:    Font shape `U/MdSymbolB/m/n' will be
-(Font)              scaled to size 12.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolB/m/n' will be
-(Font)              scaled to size 8.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolB/m/n' will be
-(Font)              scaled to size 6.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolC/m/n' will be
-(Font)              scaled to size 12.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolC/m/n' will be
-(Font)              scaled to size 8.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolC/m/n' will be
-(Font)              scaled to size 6.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolD/m/n' will be
-(Font)              scaled to size 12.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolD/m/n' will be
-(Font)              scaled to size 8.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolD/m/n' will be
-(Font)              scaled to size 6.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 74.
-LaTeX Font Info:    Font shape `U/MdSymbolF/m/n' will be
-(Font)              scaled to size 6.0pt on input line 74.
-
-
-LaTeX Warning: No \author given.
-
-[1
-
-{/usr/share/texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Font shape `T1/MinionPro-LF/bx/n' in size <20.74> not avail
-able
-(Font)              Font shape `T1/MinionPro-LF/b/n' tried instead on input lin
-e 93.
 LaTeX Font Info:    Font shape `T1/MinionPro-LF/bx/n' in size <24.88> not avail
 able
 (Font)              Font shape `T1/MinionPro-LF/b/n' tried instead on input lin
-e 93.
-LaTeX Font Info:    Try loading font information for TS1+MinionPro-LF on input 
-line 96.
-
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/TS1MinionPro-LF.fd
-File: TS1MinionPro-LF.fd 2005/01/23 v2.0 font definitions for TS1/MinionPro-LF.
-
-
-(/usr/share/texlive/texmf-local/tex/latex/MinionPro/MinionPro-FontDef.sty
-File: MinionPro-FontDef.sty 2007/02/01 v2.2 font definition macros
-))
-Package microtype Info: Loading generic settings for font family
-(microtype)             `MinionPro-LF' (encoding: TS1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
+e 109.
 LaTeX Font Info:    Font shape `T1/MinionPro-LF/bx/n' in size <14.4> not availa
 ble
 (Font)              Font shape `T1/MinionPro-LF/b/n' tried instead on input lin
-e 101.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 107.
+e 109.
+[1
 
+{/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+] (./fault_tolerance.toc
+LaTeX Font Info:    Font shape `T1/MinionPro-LF/bx/n' in size <10.95> not avail
+able
+(Font)              Font shape `T1/MinionPro-LF/b/n' tried instead on input lin
+e 1.
+LaTeX Font Info:    Try loading font information for OML+MinionPro-TOsF on inpu
+t line 1.
+
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/OMLMinionPro-TOsF.f
+d
+File: OMLMinionPro-TOsF.fd 2005/01/23 v2.0 font definitions for OML/MinionPro-T
+OsF.
+
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/MinionPro-FontDef.s
+ty
+File: MinionPro-FontDef.sty 2007/02/01 v2.2 font definition macros
+)) (/usr/local/texlive/2012/texmf-dist/tex/latex/microtype/mt-eur.cfg
+File: mt-eur.cfg 2006/07/31 v1.1 microtype config. file: AMS Euler Roman (RS)
 )
-Package microtype Info: Loading generic settings for font family
-(microtype)             `cmtt' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `U/MdSymbolB/m/n' will be
-(Font)              scaled to size 10.95pt on input line 107.
+(Font)              scaled to size 10.95pt on input line 1.
+LaTeX Font Info:    Font shape `U/MdSymbolB/m/n' will be
+(Font)              scaled to size 8.0pt on input line 1.
+LaTeX Font Info:    Font shape `U/MdSymbolB/m/n' will be
+(Font)              scaled to size 6.0pt on input line 1.
 LaTeX Font Info:    Font shape `U/MdSymbolC/m/n' will be
-(Font)              scaled to size 10.95pt on input line 107.
+(Font)              scaled to size 10.95pt on input line 1.
+LaTeX Font Info:    Font shape `U/MdSymbolC/m/n' will be
+(Font)              scaled to size 8.0pt on input line 1.
+LaTeX Font Info:    Font shape `U/MdSymbolC/m/n' will be
+(Font)              scaled to size 6.0pt on input line 1.
 LaTeX Font Info:    Font shape `U/MdSymbolD/m/n' will be
-(Font)              scaled to size 10.95pt on input line 107.
+(Font)              scaled to size 10.95pt on input line 1.
+LaTeX Font Info:    Font shape `U/MdSymbolD/m/n' will be
+(Font)              scaled to size 8.0pt on input line 1.
+LaTeX Font Info:    Font shape `U/MdSymbolD/m/n' will be
+(Font)              scaled to size 6.0pt on input line 1.
 LaTeX Font Info:    Font shape `U/MdSymbolF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 107.
+(Font)              scaled to size 10.95pt on input line 1.
+LaTeX Font Info:    Font shape `U/MdSymbolF/m/n' will be
+(Font)              scaled to size 8.0pt on input line 1.
+LaTeX Font Info:    Font shape `U/MdSymbolF/m/n' will be
+(Font)              scaled to size 6.0pt on input line 1.
+)
+[1
 
-<images/spin5.jpg, id=7, 863.225pt x 855.998pt>
-File: images/spin5.jpg Graphic file (type jpg)
- <use images/spin5.jpg>
-Package pdftex.def Info: images/spin5.jpg used on input line 113.
-(pdftex.def)             Requested size: 247.54149pt x 245.46404pt.
-
-<images/spin2_labelled.jpg, id=8, 1084.95337pt x 1019.91037pt>
-File: images/spin2_labelled.jpg Graphic file (type jpg)
-
-<use images/spin2_labelled.jpg>
-Package pdftex.def Info: images/spin2_labelled.jpg used on input line 119.
-(pdftex.def)             Requested size: 206.28249pt x 193.90948pt.
-
-<images/arm968_subsystem.pdf, id=9, 365.55272pt x 273.61021pt>
-File: images/arm968_subsystem.pdf Graphic file (type pdf)
-
-<use images/arm968_subsystem.pdf>
-Package pdftex.def Info: images/arm968_subsystem.pdf used on input line 125.
-(pdftex.def)             Requested size: 330.05322pt x 247.05267pt.
-
-<images/spinnaker_architecture.pdf, id=10, 433.98134pt x 352.1958pt>
-File: images/spinnaker_architecture.pdf Graphic file (type pdf)
-
-<use images/spinnaker_architecture.pdf>
-Package pdftex.def Info: images/spinnaker_architecture.pdf used on input line 1
-31.
-(pdftex.def)             Requested size: 330.05322pt x 267.85968pt.
-
-<images/system_architecture.pdf, id=11, 329.69675pt x 313.61667pt>
-File: images/system_architecture.pdf Graphic file (type pdf)
-
-<use images/system_architecture.pdf>
-Package pdftex.def Info: images/system_architecture.pdf used on input line 137.
-
-(pdftex.def)             Requested size: 165.02347pt x 156.97543pt.
-
-<images/router_organization.pdf, id=12, 406.88008pt x 371.56013pt>
-File: images/router_organization.pdf Graphic file (type pdf)
-
-<use images/router_organization.pdf>
-Package pdftex.def Info: images/router_organization.pdf used on input line 143.
-
-(pdftex.def)             Requested size: 247.54149pt x 226.05037pt.
- [2
 
 ]
-LaTeX Font Info:    Font shape `T1/MinionPro-LF/m/sl' in size <10.95> not avail
-able
-(Font)              Font shape `T1/MinionPro-LF/m/it' tried instead on input li
-ne 147.
- [3 <./images/spin5.jpg> <./images/spin2_labelled.jpg>] [4 <./images/arm968_sub
-system.pdf> <./images/spinnaker_architecture.pdf>] [5 <./images/system_architec
-ture.pdf> <./images/router_organization.pdf>] [6
+LaTeX Font Info:    Try loading font information for TS1+MinionPro-LF on input 
+line 136.
 
-] [7
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/TS1MinionPro-LF.fd
+File: TS1MinionPro-LF.fd 2005/01/23 v2.0 font definitions for TS1/MinionPro-LF.
+
+
+(/usr/local/texlive/2012/../texmf-local/tex/latex/MinionPro/MinionPro-FontDef.s
+ty
+File: MinionPro-FontDef.sty 2007/02/01 v2.2 font definition macros
+))
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 147.
+
+ (/usr/local/texlive/2012/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+) [1
+
 
 ]
 LaTeX Font Info:    Font shape `T1/MinionPro-LF/bx/n' in size <12> not availabl
 e
 (Font)              Font shape `T1/MinionPro-LF/b/n' tried instead on input lin
-e 169.
- [8
-
-] [9] [10] [11] [12] [13] [14] [15] [16]
-LaTeX Font Info:    Font shape `T1/MinionPro-LF/bx/n' in size <10.95> not avail
-able
-(Font)              Font shape `T1/MinionPro-LF/b/n' tried instead on input lin
-e 305.
- [17] [18] [19]
-[20
-
-] [21] [22] [23] [24]
-\openout4 = `fault_tolerance.pyg.lst'.
-
-runsystem(pygmentize -P encoding=latin1 -l c -F tokenmerge -f latex -o fault_to
-lerance.pyg.vrb fault_tolerance.pyg.lst)...executed.
-
-runsystem(pygmentize -S default -f latex > fault_tolerance.pyg.sty)...executed.
-
- (./fault_tolerance.pyg.sty) (./fault_tolerance.pyg.vrb
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 46.
-)
-Underfull \vbox (badness 10000) detected at line 870
- []
-
-[25
+e 162.
+ [2
 
 ]
-Underfull \vbox (badness 10000) detected at line 870
- []
+<images/img1.png, id=23, 592.2125pt x 17.06375pt>
+File: images/img1.png Graphic file (type png)
+ <use images/img1.png>
+Package pdftex.def Info: images/img1.png used on input line 167.
+(pdftex.def)             Requested size: 256.07741pt x 7.37865pt.
+LaTeX Font Info:    Font shape `T1/MinionPro-LF/m/sl' in size <10.95> not avail
+able
+(Font)              Font shape `T1/MinionPro-LF/m/it' tried instead on input li
+ne 181.
+
+[3 <./images/img1.png>] <images/img3.png, id=29, 370.38374pt x 283.0575pt>
+File: images/img3.png Graphic file (type png)
+
+<use images/img3.png>
+Package pdftex.def Info: images/img3.png used on input line 189.
+(pdftex.def)             Requested size: 256.07741pt x 195.70291pt.
+ <images/table1.png, id=30, 478.78876pt x 148.555pt>
+File: images/table1.png Graphic file (type png)
+
+<use images/table1.png>
+Package pdftex.def Info: images/table1.png used on input line 195.
+(pdftex.def)             Requested size: 256.07741pt x 79.45459pt.
+ [4 <./images/img3.png>] [5 <./images/table1.png>]
+[6] [7] <images/spin5.jpg, id=46, 863.225pt x 855.998pt>
+File: images/spin5.jpg Graphic file (type jpg)
+
+<use images/spin5.jpg>
+Package pdftex.def Info: images/spin5.jpg used on input line 242.
+(pdftex.def)             Requested size: 256.07741pt x 253.92786pt.
+
+<images/spin2_labelled.jpg, id=47, 1084.95337pt x 1019.91037pt>
+File: images/spin2_labelled.jpg Graphic file (type jpg)
+
+<use images/spin2_labelled.jpg>
+Package pdftex.def Info: images/spin2_labelled.jpg used on input line 248.
+(pdftex.def)             Requested size: 213.39568pt x 200.60138pt.
+
+<images/arm968_subsystem.pdf, id=48, 365.55272pt x 273.61021pt>
+File: images/arm968_subsystem.pdf Graphic file (type pdf)
+
+<use images/arm968_subsystem.pdf>
+Package pdftex.def Info: images/arm968_subsystem.pdf used on input line 254.
+(pdftex.def)             Requested size: 341.43437pt x 255.56958pt.
+
+<images/spinnaker_architecture.pdf, id=49, 433.98134pt x 352.1958pt>
+File: images/spinnaker_architecture.pdf Graphic file (type pdf)
+
+<use images/spinnaker_architecture.pdf>
+Package pdftex.def Info: images/spinnaker_architecture.pdf used on input line 2
+60.
+(pdftex.def)             Requested size: 341.43437pt x 277.09233pt.
+
+<images/system_architecture.pdf, id=50, 329.69675pt x 313.61667pt>
+File: images/system_architecture.pdf Graphic file (type pdf)
+
+<use images/system_architecture.pdf>
+Package pdftex.def Info: images/system_architecture.pdf used on input line 266.
+
+(pdftex.def)             Requested size: 170.71393pt x 162.38771pt.
+
+<images/router_organization.pdf, id=51, 406.88008pt x 371.56013pt>
+File: images/router_organization.pdf Graphic file (type pdf)
+
+<use images/router_organization.pdf>
+Package pdftex.def Info: images/router_organization.pdf used on input line 272.
+
+(pdftex.def)             Requested size: 256.07741pt x 233.846pt.
+ [8 <./images/spin5.jpg> <./images/spin2_labelled.jpg>] [9 <./images/arm968_sub
+system.pdf> <./images/spinnaker_architecture.pdf>] [10 <./images/system_archite
+cture.pdf> <./images/router_organization.pdf>] <images/backpressure.pdf, id=234
+, 542.44557pt x 411.65997pt>
+File: images/backpressure.pdf Graphic file (type pdf)
+
+<use images/backpressure.pdf>
+Package pdftex.def Info: images/backpressure.pdf used on input line 280.
+(pdftex.def)             Requested size: 256.07741pt x 194.33449pt.
+
+<images/bursting.pdf, id=235, 490.21645pt x 408.11673pt>
+File: images/bursting.pdf Graphic file (type pdf)
+
+<use images/bursting.pdf>
+Package pdftex.def Info: images/bursting.pdf used on input line 286.
+(pdftex.def)             Requested size: 256.07741pt x 213.1996pt.
+
+<images/bursting_random.pdf, id=236, 490.21645pt x 408.1177pt>
+File: images/bursting_random.pdf Graphic file (type pdf)
+
+<use images/bursting_random.pdf>
+Package pdftex.def Info: images/bursting_random.pdf used on input line 292.
+(pdftex.def)             Requested size: 256.07741pt x 213.20012pt.
+
+<images/bursting_connaware.pdf, id=237, 490.21645pt x 405.80609pt>
+File: images/bursting_connaware.pdf Graphic file (type pdf)
+
+<use images/bursting_connaware.pdf>
+Package pdftex.def Info: images/bursting_connaware.pdf used on input line 298.
+(pdftex.def)             Requested size: 256.07741pt x 211.99254pt.
+ [11
 
 
-Underfull \vbox (badness 10000) detected at line 870
- []
+ <./images/backpressure.pdf> <./images/bursting.pdf
 
-[26]
-Underfull \vbox (badness 10000) detected at line 870
- []
+pdfTeX warning: /usr/texbin/pdflatex (file ./images/bursting.pdf): PDF inclusio
+n: multiple pdfs with page group included in a single page
+>] [12 <./images/bursting_random.pdf> <./images/bursting_connaware.pdf
 
+pdfTeX warning: /usr/texbin/pdflatex (file ./images/bursting_connaware.pdf): PD
+F inclusion: multiple pdfs with page group included in a single page
+>] <images/heatmap2x2.png, id=305, 654.445pt x 628.3475pt>
+File: images/heatmap2x2.png Graphic file (type png)
 
-Underfull \vbox (badness 10000) detected at line 870
- []
+<use images/heatmap2x2.png>
+Package pdftex.def Info: images/heatmap2x2.png used on input line 324.
+(pdftex.def)             Requested size: 256.07741pt x 245.85991pt.
+ [13
 
-[27]
-Underfull \vbox (badness 10000) detected at line 870
- []
+ <./images/heatmap2x2.png>] [14
 
+] [15] [16]
+[17] [18] [19] [20] [21] [22] [23] [24] [25]
+runsystem(pygmentize -S vs -f latex > fault_tolerance.pyg)...executed.
 
-Underfull \vbox (badness 10000) detected at line 870
- []
-
-[28]
-Underfull \vbox (badness 10000) detected at line 870
- []
-
-
-Underfull \vbox (badness 10000) detected at line 870
- []
-
-[29]
-Underfull \vbox (badness 10000) detected at line 870
- []
+ (./fault_tolerance.pyg)
+runsystem(pygmentize -l c -f latex -F tokenmerge             -P "verboptions= ,
+fontsize=\tiny " -o fault_tolerance.out.pyg code/dumpBounce.c)...executed.
 
 
-Underfull \vbox (badness 10000) detected at line 870
- []
+(./fault_tolerance.out.pyg [26
 
-[30]
-Underfull \vbox (badness 10000) detected at line 870
- []
+] [27])
+runsystem(rm fault_tolerance.out.pyg)...executed.
+
+runsystem(pygmentize -l python -f latex -F tokenmerge             -P "verboptio
+ns= ,fontsize=\tiny " -o fault_tolerance.out.pyg code/backpressure.py)...execut
+ed.
+
+ (./fault_tolerance.out.pyg
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <7> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 7.
+)
+runsystem(rm fault_tolerance.out.pyg)...executed.
+
+runsystem(pygmentize -l python -f latex -F tokenmerge             -P "verboptio
+ns= ,fontsize=\tiny " -o fault_tolerance.out.pyg code/bursting.py)...executed.
 
 
-Underfull \vbox (badness 10000) detected at line 870
- []
+(./fault_tolerance.out.pyg [28])
+runsystem(rm fault_tolerance.out.pyg)...executed.
 
-[31] [32] (./fault_tolerance.aux) ) 
+ [29]
+\tf@toc=\write6
+\openout6 = `fault_tolerance.toc'.
+
+ (./fault_tolerance.aux) ) 
 Here is how much of TeX's memory you used:
- 19154 strings out of 493328
- 283341 string characters out of 6140733
- 507353 words of memory out of 5000000
- 22065 multiletter control sequences out of 15000+600000
- 409288 words of font info for 315 fonts, out of 8000000 for 9000
- 953 hyphenation exceptions out of 8191
- 50i,11n,64p,1590b,483s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvi
-ps/cm-super/cm-super-t1.enc}{/usr/share/texlive/texmf-local/fonts/enc/dvips/Min
-ionPro/base-MinionPro-ab.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/mns
-ymbol/MnSymbolC.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/mnsymbol/MnS
-ymbolE.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/mnsymbol/MnSymbolD.en
-c}{/usr/share/texlive/texmf-local/fonts/enc/dvips/MinionPro/base-MinionPro-aa.e
-nc}</usr/share/texlive/texmf-local/fonts/type1/adobe/MinionPro/MinionPro-Bold.p
-fb></usr/share/texlive/texmf-local/fonts/type1/adobe/MinionPro/MinionPro-It.pfb
-></usr/share/texlive/texmf-local/fonts/type1/adobe/MinionPro/MinionPro-Regular.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mnsymbol/MnSymbol10.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/mnsymbol/MnSymbol8.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on fault_tolerance.pdf (32 pages, 6146215 bytes).
+ 19494 strings out of 493488
+ 288749 string characters out of 3141326
+ 511784 words of memory out of 3000000
+ 22359 multiletter control sequences out of 15000+200000
+ 382523 words of font info for 182 fonts, out of 3000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 50i,11n,64p,1810b,586s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/c
+m-super/cm-super-t1.enc}{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/mns
+ymbol/MnSymbolC.enc}{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/mnsymbo
+l/MnSymbolE.enc}{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/mnsymbol/Mn
+SymbolD.enc}{/usr/local/texlive/2012/../texmf-local/fonts/enc/dvips/MinionPro/a
+_so5ulq.enc}{/usr/local/texlive/2012/../texmf-local/fonts/enc/dvips/MinionPro/a
+_7bszhd.enc}{/usr/local/texlive/2012/../texmf-local/fonts/enc/dvips/MinionPro/a
+_4giagd.enc}</usr/local/texlive/2012/../texmf-local/fonts/type1/adobe/MinionPro
+/MinionPro-Bold.pfb></usr/local/texlive/2012/../texmf-local/fonts/type1/adobe/M
+inionPro/MinionPro-It.pfb></usr/local/texlive/2012/../texmf-local/fonts/type1/a
+dobe/MinionPro/MinionPro-Regular.pfb></usr/local/texlive/2012/texmf-dist/fonts/
+type1/public/mnsymbol/MnSymbol10.pfb></usr/local/texlive/2012/texmf-dist/fonts/
+type1/public/mnsymbol/MnSymbol8.pfb></usr/local/texlive/2012/../texmf-local/fon
+ts/type1/adobe/MyriadPro/MyriadPro-Regular.pfb></usr/local/texlive/2012/texmf-d
+ist/fonts/type1/public/cm-super/sftt0800.pfb></usr/local/texlive/2012/texmf-dis
+t/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on fault_tolerance.pdf (32 pages, 6405697 bytes).
 PDF statistics:
- 328 PDF objects out of 1000 (max. 8388607)
- 155 compressed objects within 2 object streams
+ 403 PDF objects out of 1000 (max. 8388607)
+ 197 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 32799 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 17991 words of extra memory for PDF output out of 20736 (max. 10000000)
 

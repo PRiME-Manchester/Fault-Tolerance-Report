@@ -1,0 +1,12 @@
+// SARK-based program
+#include <sark.h>
+
+// ------------------------------------------------------------------------
+// constants
+// ------------------------------------------------------------------------
+#define TICK_PERIOD        10      // attempt to bounce dumped packets
+#define PKT_QUEUE_SIZE     256     // dumped packet queue length
+
+#define ROUTER_SLOT        SLOT_0  // router VIC slot -- not used currently!
+#define CC_SLOT            SLOT_1  // comms. cont. VIC slot
+#define TIMER_SLOT         SLOT_2  // timer VIC slot

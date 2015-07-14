@@ -1,0 +1,73 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}In this simple example we attempt to determine how many packets\PYZhy{}per\PYZhy{}second}
+\PY{l+s+sd}{must be sent over a SpiNNaker link before back pressure applied by the network}
+\PY{l+s+sd}{prevents packets being injected.\PYZdq{}\PYZdq{}\PYZdq{}}
+
+\PY{k+kn}{import} \PY{n+nn}{sys}
+
+\PY{k+kn}{from} \PY{n+nn}{network\PYZus{}tester} \PY{k+kn}{import} \PY{n}{Experiment}
+
+
+\PY{n}{e} \PY{o}{=} \PY{n}{Experiment}\PY{p}{(}\PY{n}{sys}\PY{o}{.}\PY{n}{argv}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{])}
+
+\PY{c}{\PYZsh{} The traffic generators will step every 5us}
+\PY{n}{e}\PY{o}{.}\PY{n}{timestep} \PY{o}{=} \PY{l+m+mf}{5e\PYZhy{}6}
+
+\PY{c}{\PYZsh{} The number of cores to use to send packets on a chip (note that a single core}
+\PY{c}{\PYZsh{} cannot saturate a link)}
+\PY{n}{vertices\PYZus{}per\PYZus{}chip} \PY{o}{=} \PY{l+m+mi}{16}
+
+\PY{c}{\PYZsh{} How many packets will be sent by each chip per timestep?}
+\PY{n}{packets\PYZus{}per\PYZus{}timestep} \PY{o}{=} \PY{l+m+mi}{3}
+
+\PY{c}{\PYZsh{} We\PYZsq{}ll have a group of vertices on one chip sending packets and a}
+\PY{c}{\PYZsh{} corresponding set of vertices on another chip.}
+\PY{n}{send\PYZus{}vertices} \PY{o}{=} \PY{p}{[}\PY{n}{e}\PY{o}{.}\PY{n}{new\PYZus{}vertex}\PY{p}{(}\PY{l+s}{\PYZdq{}s\PYZob{}\PYZcb{}\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{n}\PY{p}{))} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{)]}
+\PY{n}{recv\PYZus{}vertices} \PY{o}{=} \PY{p}{[}\PY{n}{e}\PY{o}{.}\PY{n}{new\PYZus{}vertex}\PY{p}{(}\PY{l+s}{\PYZdq{}r\PYZob{}\PYZcb{}\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{n}\PY{p}{))} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{)]}
+\PY{k}{for} \PY{n}{s}\PY{p}{,} \PY{n}{r} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{send\PYZus{}vertices}\PY{p}{,} \PY{n}{recv\PYZus{}vertices}\PY{p}{):}
+    \PY{c}{\PYZsh{} We create multiple nets to allow multiple packets to be sent per timestep}
+    \PY{c}{\PYZsh{} since a single net will send up\PYZhy{}to one packet per timestep.}
+    \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{packets\PYZus{}per\PYZus{}timestep}\PY{p}{):}
+        \PY{n}{e}\PY{o}{.}\PY{n}{new\PYZus{}net}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{r}\PY{p}{)}
+
+\PY{c}{\PYZsh{} We will explicitly place the vertices on different chips}
+\PY{n}{placements} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{v}\PY{p}{:} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{send\PYZus{}vertices}\PY{p}{\PYZcb{}}
+\PY{n}{placements}\PY{o}{.}\PY{n}{update}\PY{p}{(\PYZob{}}\PY{n}{v}\PY{p}{:} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{recv\PYZus{}vertices}\PY{p}{\PYZcb{})}
+\PY{n}{e}\PY{o}{.}\PY{n}{placements} \PY{o}{=} \PY{n}{placements}
+
+\PY{c}{\PYZsh{} We allow some warmup time to allow the network to reach a stable state before}
+\PY{c}{\PYZsh{} recording}
+\PY{n}{e}\PY{o}{.}\PY{n}{warmup} \PY{o}{=} \PY{l+m+mf}{0.05}
+\PY{n}{e}\PY{o}{.}\PY{n}{duration} \PY{o}{=} \PY{l+m+mf}{0.3}
+\PY{n}{e}\PY{o}{.}\PY{n}{cooldown} \PY{o}{=} \PY{l+m+mf}{0.01}
+
+\PY{c}{\PYZsh{} Record the number of packets sent}
+\PY{n}{e}\PY{o}{.}\PY{n}{record\PYZus{}sent} \PY{o}{=} \PY{n+nb+bp}{True}
+
+\PY{c}{\PYZsh{} During the experiment we\PYZsq{}ll ramp up the injection rate and see how many}
+\PY{c}{\PYZsh{} packets arrive at their destination.}
+\PY{n}{num\PYZus{}steps} \PY{o}{=} \PY{l+m+mi}{30}
+\PY{k}{for} \PY{n}{step} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}steps}\PY{p}{):}
+    \PY{k}{with} \PY{n}{e}\PY{o}{.}\PY{n}{new\PYZus{}group}\PY{p}{()} \PY{k}{as} \PY{n}{g}\PY{p}{:}
+        \PY{n}{e}\PY{o}{.}\PY{n}{probability} \PY{o}{=} \PY{n}{step} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n}{num\PYZus{}steps} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{g}\PY{o}{.}\PY{n}{add\PYZus{}label}\PY{p}{(}\PY{l+s}{\PYZdq{}packets\PYZus{}per\PYZus{}second\PYZdq{}}\PY{p}{,}
+                    \PY{p}{((}\PY{l+m+mf}{1.0} \PY{o}{/} \PY{n}{e}\PY{o}{.}\PY{n}{timestep}\PY{p}{)} \PY{o}{*}
+                     \PY{n}{e}\PY{o}{.}\PY{n}{probability} \PY{o}{*}
+                     \PY{n}{vertices\PYZus{}per\PYZus{}chip} \PY{o}{*}
+                     \PY{n}{packets\PYZus{}per\PYZus{}timestep}\PY{p}{))}
+
+\PY{n}{results} \PY{o}{=} \PY{n}{e}\PY{o}{.}\PY{n}{run}\PY{p}{()}
+
+\PY{n}{totals} \PY{o}{=} \PY{n}{results}\PY{o}{.}\PY{n}{totals}\PY{p}{()}
+
+\PY{c}{\PYZsh{} Scale sent\PYZhy{}packet count to packets per\PYZhy{}second}
+\PY{n}{totals}\PY{p}{[}\PY{l+s}{\PYZdq{}sent\PYZdq{}}\PY{p}{]} \PY{o}{/=} \PY{n}{e}\PY{o}{.}\PY{n}{duration}
+
+\PY{c}{\PYZsh{} Plot with matplotlib}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{totals}\PY{p}{[}\PY{l+s}{\PYZdq{}packets\PYZus{}per\PYZus{}second\PYZdq{}}\PY{p}{],} \PY{n}{totals}\PY{p}{[}\PY{l+s}{\PYZdq{}sent\PYZdq{}}\PY{p}{])}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{()}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s}{\PYZdq{}Offered load (Packets per second)\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s}{\PYZdq{}Accepted load (Packets per second)\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{()}
+\end{Verbatim}

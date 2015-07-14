@@ -1,0 +1,37 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage[ngerman,english]{babel}
+
+\usepackage{amsmath}
+\usepackage[squaren,thinspace,thinqspace]{SIunits}
+\usepackage[minionint, lf]{MinionPro}
+\usepackage[medfamily, sansmath, lf]{MyriadPro}
+
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+\usepackage[round]{natbib}
+\usepackage{url}
+\usepackage{geometry}
+\usepackage{verbments}
+
+\begin{document}
+\chapter{Code listing}
+\section{Bla}
+\begin{pyglist}
+// SARK-based program
+#include <sark.h>
+
+// ------------------------------------------------------------------------
+// constants
+// ------------------------------------------------------------------------
+#define TICK_PERIOD        10      // attempt to bounce dumped packets
+#define PKT_QUEUE_SIZE     256     // dumped packet queue length
+
+#define ROUTER_SLOT        SLOT_0  // router VIC slot -- not used currently!
+#define CC_SLOT            SLOT_1  // comms. cont. VIC slot
+#define TIMER_SLOT         SLOT_2  // timer VIC slot
+\end{pyglist}
+
+\end{document}
