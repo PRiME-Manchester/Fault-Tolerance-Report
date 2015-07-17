@@ -446,12 +446,19 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 \subsection{Backpressure}
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.65\linewidth]{images/backpressure.pdf}
+	\includegraphics[width=0.7\linewidth]{images/backpressure2.pdf}
 	\caption{Backpressure}	
 	\label{fig:backpressure}
 \end{figure}
 
-\hl{Jonathan's network tester documentation}
+\subsection{Network tester documentation}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.35\linewidth]{images/system_architecture.pdf}
+	\caption{SpiNNaker inter-links.}
+	\label{fig:interchip_links}	
+\end{figure}
+
 `Network Tester' is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network. In particular, network tester is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) which produce SpiNNaker packets which are then multicast to a fixed set of vertices.
 The following is a (non-exhaustive) list of the kinds of experiments which can be performed with `Network Tester':
 \begin{itemize}
@@ -461,13 +468,7 @@ packets.
 \item Characterising the behaviour of the network in the presence of locally and globally synchronised bursting traffic.
 \end{itemize}
 
-\hl{Jonathan's email} Clearly with packet reinjection, nearly all packets which are actually sent arrive at their destination, without reinjection, things aren't so great.
-
-Fun things to try: Uncomment lines 23--24 and the random network will get placed by what PACMAN calls ``connectivity-aware placement,'' rather than simulated annealing (the default). Interestingly, on my system this results in reinjection no-longer helping and the whole thing being even worse under bursty packets.
-
-Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is called and the packet generators will still generate bursts but they'll be at random phases to each other (i.e., not bursting all at the same time). This normally eliminates packet dropping for all but the most extreme burstiness.
-
-
+Clearly with packet reinjection, nearly all packets which are actually sent arrive at their destination, without reinjection, things aren't so great.
 
 \begin{figure}
 	\begin{subfigure}[htbp]{.5\linewidth}
@@ -483,6 +484,10 @@ Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is call
 		\label{fig:bursting_aware}
 	\end{subfigure}
 \end{figure}
+
+Fun things to try: Uncomment lines 23--24 and the random network will get placed by what PACMAN calls ``connectivity-aware placement,'' rather than simulated annealing (the default). Interestingly, on my system this results in reinjection no-longer helping and the whole thing being even worse under bursty packets.
+
+Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is called and the packet generators will still generate bursts but they'll be at random phases to each other (i.e., not bursting all at the same time). This normally eliminates packet dropping for all but the most extreme burstiness.
 
 \begin{figure}[htbp]
 	\centering
