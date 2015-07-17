@@ -23,7 +23,7 @@
 \usepackage{verbments}
 \usepackage{minted}
 \usepackage{multicol}
-%\usepackage{subcaption}
+\usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage{color,soul}
 \usepackage{pifont}
@@ -271,7 +271,7 @@ child{ node [arn_lev1] {Error Processing}
 child{ node [arn_lev1] {Fault Treatment} }
 ; 
 \end{tikzpicture}
-\caption{Means of software fault tolerance}
+\caption{Means for software fault tolerance}
 \end{figure}
 
 \subsubsection{Design diversity}
@@ -286,6 +286,7 @@ Design diversity techniques are specifically developed to tolerate design faults
 \begin{table}[h]
 \centering
 \caption{Strategies used by different fault tolerance methods}
+\abovetopsep=5pt
 \begin{tabular}{l c c c c }
 \toprule
                    & Design    & Data      & Environment & Checkpointing \\
@@ -343,17 +344,15 @@ Figure~\ref{fig:spin5} shows a photograph of the basic building block (a 48-chip
 	\label{fig:spin5}
 \end{figure}
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.2\linewidth]{images/arm968.png}
-	\caption{ARM968 architecture}
-	\label{fig:spin5}
-\end{figure}
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=0.2\linewidth]{images/arm968.png}
+%	\caption{ARM968 architecture}
+%	\label{fig:spin5}
+%\end{figure}
 
 \subsubsection{Hardware fault tolerance mechanisms in the SpiNNaker chip}
 The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker chip is made up of various blocks, most of which have a certain degree of hardware fault tolerance in place. The blocks in questions are: the ARM968, the vector interrupt controller, the counter/timer, the DMA controller, the communications controller, the router, the inter-chip transmit and receiver interfaces, the SDRAM interface, the Ethernet interface, the system RAM and the boot ROM. A schematic representation of all these sub systems is shown in \textbf{Figure~\ref{fig:spin_arch}} and \textbf{Figure~\ref{fig:arm968}}.
-
-\hl{Short description of each block??}
 
 \begin{figure}[htbp]
 	\centering
@@ -362,6 +361,28 @@ The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker
 	\label{fig:spin_arch}
 \end{figure}
 
+\subsubsubsection{Block description}
+\hl{Short description of each block??}
+\begin{itemize}
+	\setlength\itemsep{-2pt}
+	\item The \textbf{ARM968} together with the tightly-coupled instruction and date memories, forms the core processing resource in SpiNNaker.
+	\item Each processor node on an SpiNNaker chip has a \textbf{vectored interrupt controller} (VIC) that is used to enable  and disable  interrupts  from  various  sources,  and  to wake  the processor  from  sleep mode when required. The interrupt controller provides centralised management of IRQ and FIQ sources, and offers an efficient indication of the active sources for IRQ vectoring purposes.
+	\item Each processor node on a SpiNNaker chip has a \textbf{Counter/Timer}.
+	\item Each ARM968 processing subsystem includes a \textbf{DMA controller}. The DMA controller is primarily used for transferring inter-neural connection data from the SDRAM in large blocks in response to an  input  event  arriving  at a  fascicle processor, and  for  returning updated connection data during learning. In addition, the DMA controller can transfer data to/from other targets on the System NoC such as the System RAM and Boot ROM. As a secondary function the DMA controller incorporates a `Bridge' across which its host ARM968 has direct read and write access to System NoC devices, including the SDRAM. The ARM968 can use the Bridge whether or not DMA transfers are active.
+	\item	\textbf{Communications controller} --- Each processor node on SpiNNaker includes a communications controller which is responsible for generating and receiving packets to and from the communications network.
+	\item The \textbf{Router} is responsible for routing all packets that arrive at its input to one or more of its outputs. It  is  responsible  for  routing multicast neural event packets, which  it does  through an associative multicast  router  subsystem,  point-to-point  packets  (for  which  it  uses  a  look-up  table),  nearest-neighbour packets  (using  a  simple  algorithmic process),  fixed-route packet  routing  (defined  in  a register), default routing (when a multicast packet does not match any entry in the multicast router) and emergency routing (when an output link is blocked due to congestion or hardware failure).\\
+	Various error conditions are identified and handled by the Router, for example packet parity errors, time-out, and output link failure.
+	\item \textbf{Inter-chip  communication}  is  implemented  by  extending  the Communications NoC  from  chip  to chip.  In  order  to  sustain  throughput,  there  is  a  protocol  conversion  at  each  chip  boundary  from standard CHAIN 3-of-6 return-to-zero to 2-of-7 non-return-to-zero. The interfaces include logic to minimise the risk of a protocol deadlock caused by glitches on the inter-chip wires.
+	\item The \textbf{SDRAM  interface}  connects  the System NoC  to  an off-chip SDRAM device.  It  is  the ARM PL340, described in ARM document DDI 0331D.
+	\item \textbf{Ethernet interface} --- The  SpiNNaker  system  connects  to  a  host  machine  via  Ethernet  links.  Each  SpiNNaker  chip includes  an  Ethernet MII  interface,  although  only  a  few  of  the  chips  are  expected  to  use  this interface. These chips will require an external PHY.\\
+	The interface hardware operates at the frame level. All higher-level protocols will be implemented in software running on the local monitor processor.
+	\item The \textbf{System RAM} is an additional 32 Kbyte block of on-chip RAM used primarily by the monitor processor to enhance its program and data memory resources as it will be running more complex (though less time-critical) algorithms than the fascicle processors.\\
+	As the choice of monitor processor is made at start-up (and may change during run-time for fault-tolerance  purposes)  the  system  RAM  is  made  available  to  whichever  processor  is  monitor processor via  the System NoC. Accesses by  the Monitor Processor  to  the System RAM are non-blocking as far as SDRAM accesses by the fascicle processors are concerned.\\
+	The System RAM may also be used by  the fascicle processors to communicate with  the monitor processor and with each other, should the need arise.
+	\item The \textbf{Boot ROM} consists of a 32Kbyte on-chip ROM to provide minimal support for initial self-test and monitor processor selection. It also provides support for router initialisation for bootstrapping and system boot.
+\end{itemize}
+
+\subsubsubsection{Fault tolerance mechanisms on SpiNNaker}
 Starting by describing the fault tolerance detection mechanisms of the \textbf{ARM968} processor core, self-test routines are run at start-up and during normal operation. A chip-wide watchdog timer catches runaway software. In addition the ARM968 is able to isolate defective instruction and data RAM locations and can be mapped out by software. The system controller can also disable any incorrectly operating ARM968 cores. These detection and fault isolation mechanisms help to reconfigure the system in case a fault is detected. In the case of faulty instruction and data RAM, software can be written to avoid such locations. If on the other hand, the self-test and start-up routines detect a failure, the processor core functionality can be migrated to a neighbouring processor.
 
 Currently the \textbf{vector interrupt controller} does not provide a high degree of fault tolerance. In the case of a failed vector location, the vector interrupt controller effectively jumps to a random location. If a software mechanism was devised to detect these kind of faults, a failed vector location could be removed from service (provided there are enough vector locations available). Another solution would be to shut down the entire vector system and the interrupts run by software inspection of the IRQ and FIQ status registers.
@@ -370,19 +391,31 @@ In order to detect faults in \textbf{counter/timer}, the second counter/timer co
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.55\linewidth]{images/arm968_subsystem.pdf}
+	\includegraphics[width=0.6\linewidth]{images/arm968_subsystem.pdf}
 	\caption{ARM 968 subsystem}
 	\label{fig:arm968}
 \end{figure}
 
-The \textbf{DMA controller} has a CRC unit (more on this in the \hl{Section~X}) which can be used to detect errors in the data transferred by the DMA controller. If an error is detected by means of the CRC unit, the data block could be retransmitted. The DMA controller will also time-out if a transaction takes too long. If if the error rate is consistently high, fault tolerant software could be written to shut down te local processing subsystem and its functions migrated to another subsystem on the current or to another chip.
+The \textbf{DMA controller} has a CRC unit (more on this in \textbf{Section \ref{sec:crc}} which can be used to detect errors in the data transferred by the DMA controller. If an error is detected by means of the CRC unit, the data block could be retransmitted. The DMA controller will also time-out if a transaction takes too long. If if the error rate is consistently high, fault tolerant software could be written to shut down te local processing subsystem and its functions migrated to another subsystem on the current or to another chip.
 
 The \textbf{communications controller} is able to detect the following kinds of faults:
 parity of received packet; received packet framing error; transmit buffer overrun. Since the communications controller is mission-critical to the local processing subsystem, is should be disabled and isolated and its functions migrated to another subsystem on the current on onto another chip if a failure is detected.
 
-The \textbf{router}
+\hl{The router section needs to be reorganized and put references to the backpressure and dropped packet reinjection sections}\\
+The \textbf{router} is a sophisticated piece of circuitry and is endowed with some internal fault-tolerance capacity. In particular it is possible to map out a failed multicast router entry --- useful since the multicast router dominates the silicon area of the communications router. It also has the capacity to cope with external failures. Emergency routing will attempt to bypass a faulty or blocked link. In the event of a node (or larger) failure this will not be sufficient. In order to tolerate a chip failure several expedients can be employed on a local basis:
+\begin{itmz}
+	\item Point-to-point packets can be routed around the obstruction;
+	\item Multicast packets with a router entry can be redirected appropriately.
+\end{itmz}
+In most cases, default multicast packets cannot sensibly be trapped by adding table entries due to their (almost) infinite variety. To allow re-routing, these packets can be dropped to the monitor processor on a link-by-link basis using the diversion register. In principle they can then be routed around the obstruction as point-to-point payloads before being resurrected at the opposite side. Should the monitor processor become overwhelmed, it is also possible to use the diversion register to eliminate these packets in the router; this prevents them blocking the router pipeline while waiting for a time-out and thus delaying viable traffic.
 
-The \textbf{inter-chip transmit and receive interfaces} (See \textbf{Figure~\ref{fig:interchip_links}}).
+The router is able to detect the following faults --- packet parity errors, packet time-phase errors, packet unroutable errors such as a locally-sources multicast packet which doesn't match any entry in the multicast router, wrong packet length. In the case any of the above faults are detected, a multicast router entry can be disabled. The router can also be reconfigured to get around certain faults. For example, since all multicast router entries are identical the function of any entry can be relocated to a spare entry. Also, if a router becomes full a global reallocation of resources can move functionality to a different router.
+
+\hl{Check the inter-chip Tx/Rx section}\\
+The \textbf{inter-chip transmit and receive interfaces} (See \textbf{Figure~\ref{fig:interchip_links}}) has various fault detection capabilities, namely: Monitor processors should regularly test link functionality, an input controlled by the system controller causes the interface to deadlock, and the interface can be disabled to isolate the chip-chip link. As regards reconfiguration capabilities the link interface can be reset by the system controller to attempt recovery from the fault, and the link interface can be isolated and an alternative route used.
+
+The fault inducing, detecting and resetting functions are controlled from the system controller. The interfaces are `glitch hardened' to greatly reduce the probability of a link deadlock arising as a result of a glitch on one of the inter-chip wires. Such a glitch may introduce packet errors, which will be detected and handled elsewhere, but it is very unlikely to cause deadlock. It is expected that the link reset function will not be required often.
+
 
 \begin{figure}[htbp]
 	\centering
@@ -410,7 +443,15 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 
 \clearpage
 \section{Dumped packet reinsertion}
-\hl{Jonathan's documentation}
+\subsection{Backpressure}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.65\linewidth]{images/backpressure.pdf}
+	\caption{Backpressure}	
+	\label{fig:backpressure}
+\end{figure}
+
+\hl{Jonathan's network tester documentation}
 `Network Tester' is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network. In particular, network tester is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) which produce SpiNNaker packets which are then multicast to a fixed set of vertices.
 The following is a (non-exhaustive) list of the kinds of experiments which can be performed with `Network Tester':
 \begin{itemize}
@@ -426,33 +467,30 @@ Fun things to try: Uncomment lines 23--24 and the random network will get placed
 
 Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is called and the packet generators will still generate bursts but they'll be at random phases to each other (i.e., not bursting all at the same time). This normally eliminates packet dropping for all but the most extreme burstiness.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.65\linewidth]{images/backpressure.pdf}
-	\caption{Backpressure}	
-	\label{fig:backpressure}
+
+
+\begin{figure}
+	\begin{subfigure}[htbp]{.5\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{images/bursting.pdf}
+		\caption{Bursting}
+		\label{fig:bursting}
+	\end{subfigure}
+	\begin{subfigure}[htbp]{.5\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{images/bursting_connaware2.pdf}
+		\caption{Bursting Connection-aware}	
+		\label{fig:bursting_aware}
+	\end{subfigure}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.6\linewidth]{images/bursting.pdf}
-	\caption{Bursting}
-	\label{fig:bursting}
-\end{figure}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.6\linewidth]{images/bursting_random.pdf}
+	\includegraphics[width=0.5\linewidth]{images/bursting_random.pdf}
 	\caption{Bursting (Random)}	
 	\label{fig:bursting_random}
 \end{figure}
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.6\linewidth]{images/bursting_connaware.pdf}
-	\caption{Bursting Connection-aware}	
-	\label{fig:bursting_aware}
-\end{figure}
 
 \clearpage
 \section{Process migration}
@@ -476,6 +514,7 @@ crash.
 
 \newpage
 \section{CRC error correction}
+\label{sec:crc}
 
 \subsection{Wikipedia description of discrete logarithm}
 In mathematics, a discrete logarithm is an integer k solving the equation $b^k = g$, where $b$ and $g$ are elements of a finite group. Discrete logarithms are thus the finite-group-theoretic analogue of ordinary logarithms, which solve the same equation for real numbers $b$ and $g$, where $b$ is the base of the logarithm and $g$ is the value whose logarithm is being taken.

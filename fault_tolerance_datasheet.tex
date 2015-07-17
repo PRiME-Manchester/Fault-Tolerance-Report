@@ -149,23 +149,14 @@ The local processing subsystem is shut down and its functions migrated to anothe
 this or another chip. It should be possible t
 
 \section{Router (10.12)}
-The Communications Router has some internal fault-tolerance capacity, in particular it is possible
-to map out a failed multicast router entry. This is a useful mechanism as the multicast router
-dominates the silicon area of the Communications Router.
-There is also capacity to cope with external failures. Emergency routing will attempt to bypass a
-faulty or blocked link. In the event of a node (or larger) failure this will not be sufficient. In order to
-tolerate a chip failure several expedients can be employed on a local basis:
+The Communications Router has some internal fault-tolerance capacity, in particular it is possible to map out a failed multicast router entry. This is a useful mechanism as the multicast router dominates the silicon area of the Communications Router.
+There is also capacity to cope with external failures. Emergency routing will attempt to bypass a faulty or blocked link. In the event of a node (or larger) failure this will not be sufficient. In order to tolerate a chip failure several expedients can be employed on a local basis:
 \begin{itmz}
 \item P2P packets can be routed around the obstruction;
 \item MC packets with a router entry can be redirected appropriately.
 \end{itmz}
-In most cases, default MC packets cannot sensibly be trapped by adding table entries due to their
-(almost) infinite variety. To allow rerouting, these packets can be dropped to the Monitor Processor
-on a link-by-link basis using the diversion register. In principle they can then be routed around the
-obstruction as P2P payloads before being resurrected at the opposite side.
-Should the Monitor Processor become overwhelmed, it is also possible to use the diversion register
-to eliminate these packets in the Router; this prevents them blocking the Router pipeline whilst
-waiting for a timeout and thus delaying viable traffic.
+In most cases, default MC packets cannot sensibly be trapped by adding table entries due to their (almost) infinite variety. To allow rerouting, these packets can be dropped to the Monitor Processor on a link-by-link basis using the diversion register. In principle they can then be routed around the obstruction as P2P payloads before being resurrected at the opposite side. Should the Monitor Processor become overwhelmed, it is also possible to use the diversion register to eliminate these packets in the Router; this prevents them blocking the Router pipeline whilst waiting for a timeout and thus delaying viable traffic.
+
 \subsection*{Fault detection}
 \begin{itmz}
 \item packet parity errors.
@@ -187,16 +178,11 @@ router.
 \end{itmz}
 
 \section{Inter-chip transmit and receive interfaces (11.3)}
-The fault inducing, detecting and resetting functions are controlled from the System Controller (see
-`System Controller' on page 66). The interfaces are `glitch hardened' to greatly reduce the
-probability of a link deadlock arising as a result of a glitch on one of the inter-chip wires. Such a
-glitch may introduce packet errors, which will be detected and handled elsewhere, but it is very
-unlikely to cause deadlock. It is expected that the link reset function will not be required often.
-Fault insertion
-The only programmer-accessible features implemented in these interfaces are software reset and a
-disable control, both accessed via the System Controller. In normal operation these interfaces
-provide transparent connectivity between the routing network on one chip and those on its
-neighbours.
+The fault inducing, detecting and resetting functions are controlled from the System Controller (see `System Controller' on page 66). The interfaces are `glitch hardened' to greatly reduce the probability of a link deadlock arising as a result of a glitch on one of the inter-chip wires. Such a glitch may introduce packet errors, which will be detected and handled elsewhere, but it is very unlikely to cause deadlock. It is expected that the link reset function will not be required often.
+
+\subsection*{Fault insertion}
+The only programmer-accessible features implemented in these interfaces are software reset and a disable control, both accessed via the System Controller. In normal operation these interfaces provide transparent connectivity between the routing network on one chip and those on its neighbours.
+
 \subsection*{Fault detection}
 \begin{itmz}
 \item Monitor Processors should regularly test link functionality.
