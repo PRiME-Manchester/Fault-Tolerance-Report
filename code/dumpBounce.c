@@ -86,10 +86,10 @@ pkt_queue_t pkt_queue;  // dumped packet queue
 // --------------------------------------------------------------
 INT_HANDLER timer_int_han (void)
 {
-  #ifdef DEBUG
+#ifdef DEBUG
     // count entries //##
     sark.vcpu->user2++;
-  #endif
+#endif
 
   // clear interrupt in timer,
   tc[T1_INT_CLR] = (uint) tc;
@@ -116,13 +116,13 @@ INT_HANDLER timer_int_han (void)
     }
   }
 
-  #ifdef DEBUG
+#ifdef DEBUG
     // update packet counters,
     //##  sark.vcpu->user0 = pkt_ctr0;
     sark.vcpu->user1 = pkt_ctr1;
     //##  sark.vcpu->user2 = pkt_ctr2;
     //##  sark.vcpu->user3 = pkt_ctr3;
-  #endif
+#endif
 
   // and tell VIC we're done
   vic[VIC_VADDR] = (uint) vic;
@@ -131,34 +131,34 @@ INT_HANDLER timer_int_han (void)
 
 INT_HANDLER router_int_han (void)
 {
-  #ifdef DEBUG
+#ifdef DEBUG
     // count entries //##
     sark.vcpu->user0++;
-  #endif
+#endif
 
-  #ifdef DEBUG
+#ifdef DEBUG
     // profiling
     uint start_time = tc[T2_COUNT];
-  #endif
+#endif
 
   // get packet from router,
   uint hdr = rtr[RTR_DHDR];
   uint pld = rtr[RTR_DDAT];
   uint key = rtr[RTR_DKEY];
 
-  #ifdef DEBUG
+#ifdef DEBUG
     // profiling -- T2 is a down counter!
     uint run_time = start_time - tc[T2_COUNT];
-  #endif
+#endif
 
   // clear dump status and interrupt in router,
   uint rtr_dstat = rtr[RTR_DSTAT];
 
-  #ifdef DEBUG
+#ifdef DEBUG
     // check for overflow -- non-recoverable error!,
     if (rtr_dstat & RTR_DOVRFLW_MASK)
       pkt_ctr1++;
-  #endif
+#endif
 
   // bounce mc packets only
   if ((hdr & PKT_TYPE_MASK) == PKT_TYPE_MC)
@@ -177,26 +177,26 @@ INT_HANDLER router_int_han (void)
       // update queue pointer,
       pkt_queue.tail = new_tail;
 
-      #ifdef DEBUG
+#ifdef DEBUG
         // and count packet
         //# pkt_ctr0++;
-      #endif
+#endif
 
     }
-    #ifdef DEBUG
+#ifdef DEBUG
       else
       {
         // full queue -- non-recoverable error!
         //# pkt_ctr2++;
       }
-    #endif
+#endif
   }
 
-  #ifdef DEBUG
+#ifdef DEBUG
     // profiling -- keep track of maximum
     if (run_time > max_time)
       max_time = run_time;
-  #endif
+#endif
 }
 
 
@@ -237,13 +237,13 @@ INT_HANDLER cc_int_han (void)
       // write key to fire packet,
       cc[CC_TXKEY] = key;
     
-      #ifdef DEBUG
+#ifdef DEBUG
         // count entries //##
         sark.vcpu->user3++;
 
         // and count packet
         //# pkt_ctr3++;
-      #endif
+#endif
     }
     else
     {
@@ -339,9 +339,9 @@ void c_main()
   router_init ();            // setup router to interrupt when 
 			// dumping
 
-  #ifdef DEBUG
+#ifdef DEBUG
     timer2_init ();          // setup timer2 for profiling
-  #endif
+#endif
 
   cpu_sleep ();		     // Send core to sleep
 }
