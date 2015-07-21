@@ -218,14 +218,6 @@ pdfkeywords={faulttolerance spinnaker}
 %\chapterstyle{hangnum}
 
 \newpage
-\section{Introduction}
-The three fault-tolerant mechanisms that will be dealt with in this report are:
-\begin{itemize}
-\item Dumped packet re-insertion and network congestion
-\item Process migration --- currently implemented on the heat demo, where a core fault is simulated by intentionally reset a core. Currently if core 1 on core (0,0) is reset or disabled no communication is possible with the host PC.
-\item CRC error detection/correction of SDRAM blocks
-\end{itemize}
-	
 %\subsection{Useful books and links}
 %\begin{itemize}
 %\item Sorin, Fault tolerant computer architecture. Ch. 3 Error recovery (FER and BER). \citet{sorin2009fault}.
@@ -237,8 +229,9 @@ The three fault-tolerant mechanisms that will be dealt with in this report are:
 %\end{itemize}
 
 \section{Software fault tolerance}
-\textit{Source:} \url{http://srel.ee.duke.edu/sw_ft/node9.html}
 \subsection{Introduction}
+\textit{Source:} \url{http://srel.ee.duke.edu/sw_ft/node9.html}
+
 With the explosive growth in Internet technology and the emergence of a number of new and advanced applications, assured availability of computer systems has become a critical issue. The challenge is to provide the desired availability and performance at a low cost.
 Outages in computer systems consist of both hardware and software failures. While hardware failures have been studied extensively and varied mechanisms have been presented to increase the system availability with regard to such failures, software failures and the corresponding reliability/availability analysis has not drawn much attention from researchers. The study of software failures has now become more important since it has been recognized that computer systems outages are more due to software faults than to hardware faults [13,27].
 
@@ -273,8 +266,9 @@ Most Bohrbugs, which are deterministic and repeatable, can be removed through ri
 \ul{There are two strategies for software fault tolerance - error processing and fault treatment. Error processing aims to remove errors from the software state and can be implemented by substituting an error-free state in place of the erroneous state, called error recovery, or by compensating for the error by providing redundancy, called error compensation. Error recovery can be achieved by either forward or backward error recovery. The second strategy, fault treatment, aims to prevent activation of faults and so action is taken before the error creeps in. The two steps in this strategy are fault diagnosis and fault passivation. Figure 2 shows this classification. The nature of faults which typically occur in software has to be thoroughly understood in order to apply these strategies effectively. Techniques for tolerating faults in software have been divided into three classes - design diversity, data diversity and environment diversity. Table 1 shows the fault tolerance strategies used by these classes. All these classes are discussed briefly in the following sections.}
 
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[->,>=stealth',
+%\centering
+\hspace*{2cm}
+\begin{tikzpicture}[->,>=stealth', 
 	level 1/.style={sibling distance = 5cm, level distance = 2.2cm},
 	level 2/.style={sibling distance = 3.5cm}
 %	level 3/.style={sibling distance = 3.5cm}
@@ -347,6 +341,14 @@ Tandem's fault tolerant computer system [22] is based on the process pair approa
 \hl{Checkpointing and recovery [6,18,24,25] belongs to the category of error recovery for fault tolerance, as opposed to design diversity which belongs to error compensation, and data and environment diversities which belong to the fault treatment category. Error compensation, error recovery and fault treatment are complementary to one another and fault tolerance in software can be increased by deploying a combination of these techniques. The recovery block uses checkpoints in its implementation. Garg [8,9] proposes and analyzes the combination of software rejuvenation (preventive fault treatment) with checkpointing and recovery to reduce the chances of activating a fault and simultaneously minimizing the loss of computation when there is a failure.}
 
 \hl{Checkpointing involves occasionally saving the state of a process in stable storage during normal execution. Upon failure, the process is restarted in the saved state (last saved checkpoint). This thus reduces the amount of lost work. Checkpointing and recovery was mainly intended to tolerate transient hardware failures, where the application is restarted upon repair of a hardware unit after failure. This technique has been implemented in both software and hardware. Checkpointing and restart was used as early as 1948 when the ENIAC was used to solve a two point boundary value problem with known conditions, although the computation was marred by a very high tube error rate [4]. Checkpointing has also been used as a backward error recovery technique for handling intermittent software faults since then. For instance, the progressive retry technique [32] employs checkpointing along with message logs.}
+
+\section{Introduction}
+The three fault-tolerant mechanisms that will be dealt with in this report are:
+\begin{itemize}
+\item Dumped packet re-insertion and network congestion
+\item Process migration --- currently implemented on the heat demo, where a core fault is simulated by intentionally reset a core. Currently if core 1 on core (0,0) is reset or disabled no communication is possible with the host PC.
+\item CRC error detection/correction of SDRAM blocks
+\end{itemize}
 
 \newpage
 \subsection{SpiNNaker architecture}
