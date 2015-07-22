@@ -5,6 +5,8 @@
 %\usepackage[ngerman,english]{babel}
 
 \usepackage{amsmath}
+\usepackage{commath}
+\usepackage{textcomp}
 \usepackage[squaren,thinspace,thinqspace]{SIunits}
 \usepackage[minionint, lf]{MinionPro}
 \usepackage[medfamily, sansmath, lf]{MyriadPro}
@@ -230,16 +232,16 @@ pdfkeywords={faulttolerance spinnaker}
 
 \section{Software fault tolerance}
 \subsection{Introduction}
-\textit{Source:} \url{http://srel.ee.duke.edu/sw_ft/node9.html}
-
 With the explosive growth in Internet technology and the emergence of a number of new and advanced applications, assured availability of computer systems has become a critical issue. The challenge is to provide the desired availability and performance at a low cost.
-Outages in computer systems consist of both hardware and software failures. While hardware failures have been studied extensively and varied mechanisms have been presented to increase the system availability with regard to such failures, software failures and the corresponding reliability/availability analysis has not drawn much attention from researchers. The study of software failures has now become more important since it has been recognized that computer systems outages are more due to software faults than to hardware faults \citep{gray1991high, sullivan1991software}.
+Outages in computer systems consist of both hardware and software failures. While hardware failures have been studied extensively and varied mechanisms have been presented to increase the system availability with regard to such failures, software failures and the corresponding reliability/availability analysis has not drawn much attention from researchers. The study of software failures has now become more important since it has been recognized that computer systems outages are more due to software faults than to hardware faults \citep{gray1991high}.
 
 It was long assumed that concepts of reliability and failure rate do not apply to software since software does not degrade physically as a function of time or environmental stresses. But it is not reasonable to expect a software system to be operating on the same input data, user requirements and computing environment constantly. These changes must be accommodated in most applications and so a history of fault-free behavior cannot be taken as an indication of fault-free behaviour in the future. Many studies have shown that even for applications which have relatively less complex software, many failures in computer systems are due to software bugs \citep{pradhan1996fault}. Therefore, software reliability is one of the weakest links in system reliability.
 
 Demands on software reliability and availability have increased tremendously due to the nature of present day applications. There are stringent requirements in terms of cumulative down time and failure free operation of software. In many cases, there are serious consequences like huge economic losses or risk to human life if the software is faulty. In spite of using the best available software development techniques, there have been many instances of spectacular system failures due to software errors like the crash of the Ariane 5 launcher in June 1996 which was attributed to specification and design errors in the software of the inertial reference system \citep{lions1996ariane}. Also, increasing complexity and proliferation of real-time software have led to a resultant increase in software failures.
 
-A major limitation in developing reliable software is the test and verification process. It is almost impossible to fully test and verify if a software is bug-free. \ul{Formal verification techniques such as proof of correctness cannot be applied to large programs. Furthermore, the shortcomings in the mathematical induction process on which proof of correctness is based and the difficulties in verifying adherence to timing constraints for real-time systems make the software testing and verification process harder. This limitation coupled with the very stringent requirements for fault-free operation of the software form the basis for the need for fault tolerance in software.}
+A major limitation in developing reliable software is the test and verification process. It is almost impossible to fully test and verify if a software is bug-free. Formal verification techniques such as proof of correctness cannot be applied to large programs. Furthermore, the shortcomings in the mathematical induction process on which proof of correctness is based and the difficulties in verifying adherence to timing constraints for real-time systems make the software testing and verification process harder. This limitation coupled with the very stringent requirements for fault-free operation of the software form the basis for the need for fault tolerance in software.
+
+\emph{For a more detailed discussion on software fault tolerance refer to \citet{checkpointing}}.
 
 \subsection{Software Failure and Classification of Software Faults}
 \subsubsection{What is a software failure?}
@@ -252,7 +254,7 @@ According to \citet{laprie1992dependability}, ``a system failure occurs when the
 %\end{figure}
 
 \subsubsection{Classification of software faults}
-Some studies have suggested that since software is not a physical entity and hence not subject to transient physical phenomena (as opposed to hardware), software faults are permanent in nature \citep{huang1994two}. Some other studies classify software faults as both permanent and transient. \citet{gray1986computers} classifies software faults into \hl{Bohrbugs} and \emph{Heisenbugs}. \hl{Bohrbugs (not a commonly used term)} are essentially permanent design faults and hence almost deterministic in nature. They can be identified easily and weeded out during the testing and debugging phase (or early deployment phase) of the software life cycle. \emph{Heisenbugs}, on the other hand, belong to the class of temporary internal faults and are intermittent. They are essentially permanent faults whose conditions of activation occur rarely or are not easily reproducible. Hence these faults result in transient failures, i.e., failures which may not recur if the software is restarted. Some typical situations in which \emph{Heisenbugs} might surface are boundaries between various software components, improper or insufficient exception handling and interdependent timing of various events. It is for this reason that \emph{Heisenbugs} are extremely difficult to identify through testing. \ul{Hence a mature piece of software in the operational phase, released after its development and testing stage, is more likely to experience failures caused by \emph{Heisenbugs} than due to \emph{Bohrbugs}. Most recent studies on failure data have reported that a large proportion of software failures are transient in nature} \citep{gray1986computers, gray1990census}, \ul{caused by phenomena such as overloads or timing and exception errors} \citep{chillarege1995measurement, sullivan1991software}. \ul{The study of failure data from Tandem's fault tolerant computer system indicated that 70\% of the failures were transient failures, caused by faults like race conditions and timing problems} \citep{lee1994software, lee1995software}.
+Some studies have suggested that since software is not a physical entity and hence not subject to transient physical phenomena (as opposed to hardware), software faults are permanent in nature \citep{huang1994two}. Some other studies classify software faults as both permanent and transient. \citet{gray1986computers} classifies software faults into Bohrbugs and Heisenbugs. Bohrbugs, a term that has since long fallen out of use, are permanent design faults and hence almost deterministic in nature. They can be identified easily and weeded out during the testing and debugging phase of the software life cycle. \emph{Heisenbugs}, on the other hand, belong to the class of temporary internal faults and are intermittent. They are essentially permanent faults whose conditions of activation occur rarely or are not easily reproducible. Hence these faults result in transient failures, i.e., failures which may not recur if the software is restarted. Some typical situations in which intermittent might surface are boundaries between various software components, improper or insufficient exception handling and interdependent timing of various events. It is for this reason that intermittent faults are extremely difficult to identify through testing. Hence a mature piece of software in the operational phase, released after its development and testing stage, is more likely to experience failures caused by \emph{Heisenbugs} than due to permanent faults. Most recent studies on failure data have reported that a large proportion of software failures are transient in nature \citep{gray1990census}, caused by phenomena such as overloads or timing and exception errors \citep{chillarege1995measurement}. The study of failure data from Tandem's fault tolerant computer system indicated that 70\% of the failures were transient failures, caused by faults like race conditions and timing problems \citep{lee1995software}.
 
 \subsection{Techniques for Fault Tolerance in Software}
 Means to cope with the existence and manifestation of faults in software are divided into three main categories:
@@ -263,72 +265,66 @@ Means to cope with the existence and manifestation of faults in software are div
 \item \textbf{Fault tolerance:} This method makes the assumption that the system has unavoidable and undetectable faults and aims to make provisions for the system to operate correctly even in the presence of faults.
 \end{itemize}
 
-Most \hl{Bohrbugs}, which are deterministic and repeatable, can be removed through rigorous and extensive testing and debugging. But, as argued in the previous sections, no amount of testing can certify software as fault-free, i.e., fault avoidance and fault removal cannot ensure the absence of faults. Therefore, any practical piece of software can be presumed to contain faults in the operational phase and designers must deal with these faults if the software failure has serious consequences. The remaining faults in software after testing and debugging are usually \emph{Heisenbugs} which eluded detection during the testing. \ul{Hence, fault tolerance, is the only remaining hope to achieve dependable software. Fault tolerance makes is possible for the software system to provide service even in the presence of faults. This means that an imminent failure needs to be prevented or recovered from. Only methods to deal with software fault tolerance in the operational phase will be discussed.}
+Most deterministic and repeatable faults, can be removed through rigorous and extensive testing and debugging. But, as argued in the previous sections, no amount of testing can certify software as fault-free, i.e., fault avoidance and fault removal cannot ensure the absence of faults. Therefore, any practical piece of software can be presumed to contain faults in the operational phase and designers must deal with these faults if the software failure has serious consequences. The remaining faults in software after testing and debugging are usually intermittent which eluded detection during the testing. Hence, fault tolerance, is the only remaining hope to achieve dependable software. Fault tolerance makes is possible for the software system to provide service even in the presence of faults. This means that an imminent failure needs to be prevented or recovered from. Only methods to deal with software fault tolerance in the operational phase will be discussed.
 
-There are two strategies for software fault tolerance --- error processing and fault treatment. Error processing aims to remove errors from the software state and can be implemented by substituting an error-free state in place of the erroneous state, called error recovery, or by compensating for the error by providing redundancy, called error compensation. Error recovery can be achieved by either forward or backward error recovery. The second strategy, fault treatment, aims to prevent activation of faults and so action is taken before the error creeps in. The two steps in this strategy are fault diagnosis and fault passivation. \textbf{Figure~\ref{fig:faulttoltree}} shows this classification. The nature of faults which typically occur in software has to be thoroughly understood in order to apply these strategies effectively. Techniques for tolerating faults in software have been divided into three classes --- design diversity, data diversity and environment diversity. \textbf{Table~\ref{tab:faulttolmethods}} shows the fault tolerance strategies used by these classes.
+There are two strategies for software fault tolerance --- error processing and fault treatment. Error processing aims to remove errors from the software state and can be implemented by substituting an error-free state in place of the erroneous state, called error recovery, or by compensating for the error by providing redundancy, called error compensation. Error recovery can be achieved by either forward or backward error recovery. The second strategy, fault treatment, aims to prevent activation of faults and so action is taken before the error creeps in. The two steps in this strategy are fault diagnosis and fault passivation. The nature of faults which typically occur in software has to be thoroughly understood in order to apply these strategies effectively. Techniques for tolerating faults in software have been divided into three classes --- design diversity, data diversity and environment diversity.
 
-\begin{figure}[htbp]
-%\centering
-\hspace*{2cm}
-\begin{tikzpicture}[->,>=stealth', 
-	level 1/.style={sibling distance = 5cm, level distance = 2.2cm},
-	level 2/.style={sibling distance = 3.5cm}
-%	level 3/.style={sibling distance = 3.5cm}
-	] 
-\node [arn] {\small Means for Software Fault tolerance}
-child{ node [arn_lev1] {\small Error Processing} 
-	child{ node [arn_lev2] {\small Error Compensation} }
-	child{ node [arn_lev2] {\small Error Recovery}
-		child{ node [arn_lev2] {\small Forward Error Recovery}}
-		child{ node [arn_lev2] {\small Backward Error Recovery}}
-	}                            
-}
-child{ node [arn_lev1] {\small Fault Treatment} }
-; 
-\end{tikzpicture}
-\caption{Means for software fault tolerance}
-\label{fig:faulttoltree}
-\end{figure}
+%\textbf{Table~\ref{tab:faulttolmethods}} shows the fault tolerance strategies used by these classes.
+%
+%\begin{table}[h]
+%	\centering
+%	\caption{Strategies used by different fault tolerance methods}
+%	\label{tab:faulttolmethods}
+%	\begin{tabular}{l c c c c }
+%		\toprule
+%		& Design    & Data      & Environment & Checkpointing \\
+%		& diversity & diversity & diversity   & \& recovery   \\
+%		\midrule
+%		Error compensation & \cmark    & \cmark    &             &               \\
+%		Error recovery     &           &           &             & \cmark        \\
+%		Fault treatment    &           &           & \cmark      &               \\
+%		\bottomrule
+%	\end{tabular}
+%\end{table}
+
+%\begin{figure}[htbp]
+%%\centering
+%\hspace*{2cm}
+%\begin{tikzpicture}[->,>=stealth', 
+%	level 1/.style={sibling distance = 4.5cm, level distance = 2cm},
+%	level 2/.style={sibling distance = 3.5cm}
+%%	level 3/.style={sibling distance = 3.5cm}
+%	] 
+%\node [arn] {\small Means for Software Fault tolerance}
+%child{ node [arn_lev1] {\small Error Processing} 
+%	child{ node [arn_lev2] {\small Error Compensation} }
+%	child{ node [arn_lev2] {\small Error Recovery}
+%		child{ node [arn_lev2] {\small Forward Error Recovery}}
+%		child{ node [arn_lev2] {\small Backward Error Recovery}}
+%	}                            
+%}
+%child{ node [arn_lev1] {\small Fault Treatment} }
+%; 
+%\end{tikzpicture}
+%\caption{Means for software fault tolerance}
+%\label{fig:faulttoltree}
+%\end{figure}
 
 \subsubsection{Design diversity}
 Design diversity techniques are specifically developed to tolerate design faults in software arising out of wrong specifications and incorrect coding. Two or more variants of a software developed by different teams but to a common specification are used. These variants are then used in a time or space redundant manner to achieve fault tolerance. Popular techniques which are based on the design diversity concept for fault tolerance in software are: N-version programming, Recovery block, and N-self checking programming.
 
-%\begin{itemize}
-%\item N-version programming: First introduced by \citet{avizienis1977implementation}, this concept is similar to the NMR (N-modular programming) approach in hardware fault tolerance. In this technique, N (N>=2) independently generated functionally equivalent programs called versions, are executed in parallel. A majority voting logic is used to compare the results produced by all the versions and report one of the results which is presumed correct. The ability to tolerate faults here depends on how ``independent'' the different versions of the program are. This technique has been applied to a number of real-life systems like rail road traffic control and flight control, even though the overhead involved in generating different versions and implementing the voting logic may be high.
-%\item Recovery block: Recovery blocks were first introduced by \citet{horning1974program}. This scheme is analogous to the cold standby scheme for hardware fault tolerance. Basically, in this approach, multiple variants of a software which are functionally equivalent are deployed in a time redundant fashion. An acceptance test is used to test the validity of the result produced by the primary version. If the result from the primary version passes the acceptance test, this result is reported and execution stops. If, on the other hand, the result from the primary version fails the acceptance test, another version from among the multiple versions is invoked and the result produced is checked by the acceptance test. The execution of the structure does not stop until the acceptance test is passed by one of the multiple versions or until all the versions have been exhausted. The significant differences in the recovery block approach from N-version programming are that only one version is executed at a time and the acceptability of results is decided by a test rather than by majority voting. The recovery block technique has been applied to real life systems and has been the basis for the distributed recovery block structure for integrating hardware and software fault tolerance and the extended distributed recovery block structure for command and control applications. Modelling and analysis of recovery blocks are described by \citet{tomek1993modeling, lyu1995software}.
-%\item N-self checking programming: In N-self checking programming, multiple variants of a software are used in a hot-standby fashion as opposed to the recovery block technique in which the variants are used in the cold-standby mode. A self-checking software component is a variant with an acceptance test or a pair of variants with an associated comparison test \citep{laprie1990definition}. Fault tolerance is achieved by executing more than one self-checking component in parallel. These components can also be used to tolerate one or more hardware faults.
-%\end{itemize}
-
-\begin{table}[h]
-\centering
-\caption{Strategies used by different fault tolerance methods}
-\label{tab:faulttolmethods}
-\begin{tabular}{l c c c c }
-\toprule
-                   & Design    & Data      & Environment & Checkpointing \\
-                   & diversity & diversity & diversity   & \& recovery   \\
-\midrule
-Error compensation & \cmark    & \cmark    &             &               \\
-Error recovery     &           &           &             & \cmark        \\
-Fault treatment    &           &           & \cmark      &               \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-%The design diversity approach was developed mainly to deal with \emph{Bohrbugs}. It relies on the assumption of independence of between multiple variants of software. However, as some studies have shown, this assumption may not always be valid. Design diversity can also be used to treat \emph{Heisenbugs}. Since there are multiple versions of software operating, it not likely that all of them will experience the same transient failure. On the disadvantages of design diversity is the high cost involved in developing multiple variants of software. A better and more efficient scheme to deal with \emph{Heisenbugs} will be discussed in \textbf{Section~\ref{sec:envdiv}}.
-
 \subsubsection{Data diversity}
-Data diversity, a technique for fault tolerance in software, was introduced by \citet{ammann1988data}. While the design diversity approaches to provide fault tolerance rely on multiple versions of the software written to the same specifications, the data diversity approach uses only one version of the software. This approach relies on the observation that a software sometime fails for certain values in the input space and this failure could be averted if there is a minor perturbation of input data which is acceptable to the software. N-copy programming, based on data diversity, has N copies of a program executing in parallel, but each copy running on a different input set produced by a diverse-data system. The diverse-data system produces a related set of points in the data space. Selection of the system output is done using an enhanced voting scheme which may not be a majority voting mechanism. This technique might not be acceptable to all programs since equivalent input data transformations might not be acceptable by the specification. \ul{However, in some cases like a real time control program, a minor perturbation in sensor values may be able to prevent a failure since sensor values are usually noisy and inaccurate.}
+Data diversity, a technique for fault tolerance in software, was introduced by \citet{ammann1988data}. While the design diversity approaches to provide fault tolerance rely on multiple versions of the software written to the same specifications, the data diversity approach uses only one version of the software. This approach relies on the observation that a software sometime fails for certain values in the input space and this failure could be averted if there is a minor perturbation of input data which is acceptable to the software. N-copy programming, based on data diversity, has N copies of a program executing in parallel, but each copy running on a different input set produced by a diverse-data system. The diverse-data system produces a related set of points in the data space. Selection of the system output is done using an enhanced voting scheme which may not be a majority voting mechanism. This technique might not be acceptable to all programs since equivalent input data transformations might not be acceptable by the specification. However, in some cases like a real time control program, a minor perturbation in sensor values may be able to prevent a failure since sensor values are usually noisy and inaccurate.
 
-\ul{Data diversity can work well with \emph{Bohrbugs} and is cheaper to implement than design diversity techniques. To some extent, data diversity can also deal with \emph{Heisenbugs} since different input data is presented and by definition, these bugs are non-deterministic and non-repeatable.}
+Data diversity can work well with permanent faults and is cheaper to implement than design diversity techniques. To some extent, data diversity can also deal with intermittent faults since different input data is presented and by definition, these bugs are non-deterministic and non-repeatable.
 
 \subsubsection{Environment diversity}
 \label{sec:envdiv}
-Environment diversity is the newest approach to fault tolerance in software. Although this technique has been used for long in an ad hoc manner, only recently has it gained recognition and importance. Having its basis on the observation that most software failures are transient in nature, the environment diversity approach requires re-executing the software in a different environment \citep{jalote1995framework}. Environment diversity deals effectively with \emph{Heisenbugs} by exploiting their definition and nature.
+Environment diversity is the newest approach to fault tolerance in software. Although this technique has been used for long in an ad hoc manner, only recently has it gained recognition and importance. Having its basis on the observation that most software failures are transient in nature, the environment diversity approach requires re-executing the software in a different environment \citep{jalote1995framework}. Environment diversity deals effectively with intermittent faults by exploiting their definition and nature.
 
-\citet{adams1984optimizing} has proposed restarting the system as the best approach to masking software faults. Environment diversity is a generalization of restart. This has been proposed in \citep{huang1994two} as a cheap but effective technique for fault tolerance in software. Transient faults typically occur in computer systems due to design faults in software which result in unacceptable and erroneous states in the operating system environment. Therefore environment diversity attempts to provide a new or modified operating environment for the running software. Usually, this is done at the instance of a failure in the software. When the software fails, it is restarted in a different, error-free operating system environment state which is achieved by some clean up operations.
+\citet{adams1984optimizing} has proposed restarting the system as the best approach to masking software faults. Environment diversity is a generalization of restart. This has been proposed in \citet{huang1994two} as a cheap but effective technique for fault tolerance in software. Transient faults typically occur in computer systems due to design faults in software which result in unacceptable and erroneous states in the operating system environment. Therefore environment diversity attempts to provide a new or modified operating environment for the running software. Usually, this is done at the instance of a failure in the software. When the software fails, it is restarted in a different, error-free state which is achieved by some clean up operations.
 
-\ul{Examples of environment diversity techniques include retry operation, restart application and rebooting the node. The retry and restart operations can be done on the same node or on another spare (cold/warm/hot) node.}
+Examples of environment diversity techniques include retry operation, restart application and rebooting the node. The retry and restart operations can be done on the same node or on another spare node.
 
 Tandem's fault tolerant computer system \citep{lee1995software} is based on the process pair approach. It was noted that these failures did not recur once the application was restarted on the second processor. This was due to the fact that the second processor provided a different environment which did not trigger the same error conditions which led to the failure of the application on the first processor. Hence, in this case, hardware redundancy was used to tolerate most of the software faults. The basic observation in all these transient failures is that the same error condition is unlikely to occur if the software is re-executed in a different environment.
 
@@ -341,17 +337,18 @@ Checkpointing involves occasionally saving the state of a process in stable stor
 
 %Checkpointing and restart was used as early as 1948 when the ENIAC was used to solve a two point boundary value problem with known conditions, although the computation was marred by a very high tube error rate \citep{avizienis2012evolution}. Checkpointing has also been used as a backward error recovery technique for handling intermittent software faults since then. For instance, the progressive retry technique \citep{wang1995checkpointing} employs checkpointing along with message logs.
 
+\clearpage
 \section{Fault tolerance on SpiNNaker}
 The three fault-tolerant mechanisms that will be dealt with in this report are:
 \begin{itemize}
-\item Dumped packet re-insertion and network congestion
-\item Process migration --- currently implemented on the heat demo, where a core fault is simulated by intentionally reset a core. Currently if core 1 on core (0,0) is reset or disabled no communication is possible with the host PC.
-\item CRC error detection/correction of SDRAM blocks
+\item Dumped packet re-insertion and network congestion,
+\item Process migration,
+\item CRC error detection/correction of SDRAM blocks.
 \end{itemize}
 
 \subsection{SpiNNaker architecture}
 
-\subsubsection{Short description of the SpiNNaker chip}
+\subsubsection{Overview}
 The SpiNNaker engine is a massively-parallel multi-core computing system. It will contain up to about one million ARM9 cores and 7~Tbytes of RAM distributed throughout the system in 57,000 nodes, each node being a System-in-Package (SiP) containing 18 cores plus a 128~Mbyte off-die SDRAM (Synchronous Dynamic Random Access Memory). Each core has associated with it 64~Kbytes of data tightly-coupled memory (DTCM) and 32~Kbytes of instruction tightly-coupled memory (ITCM). The cores have a variety of ways of communicating with each other and with the memory, the dominant of which is by packets. These are 5- or 9-byte (40- or 72-bit) quanta of information that are transmitted around the system under the aegis of a bespoke concurrent hardware routing system. 
 
 \begin{figure}[htbp]
@@ -380,13 +377,6 @@ The physical hierarchy of the system has each node containing two silicon dies -
 \subsubsection{Hardware fault tolerance mechanisms in the SpiNNaker chip}
 The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker chip is made up of various blocks, most of which have a certain degree of hardware fault tolerance in place. The blocks in questions are: the ARM968, the vector interrupt controller, the counter/timer, the DMA controller, the communications controller, the router, the inter-chip transmit and receiver interfaces, the SDRAM interface, the Ethernet interface, the system RAM and the boot ROM. A schematic representation of all these sub systems is shown in \textbf{Figure~\ref{fig:spin_arch}} and \textbf{Figure~\ref{fig:arm968}}.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/spinnaker_architecture.pdf}
-	\caption{SpiNNaker architecture}	
-	\label{fig:spin_arch}
-\end{figure}
-
 \subsubsubsection{Block description}
 \begin{itemize}
 	\setlength\itemsep{-2pt}
@@ -407,6 +397,13 @@ The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker
 	\item The \textbf{Boot ROM} consists of a 32Kbyte on-chip ROM to provide minimal support for initial self-test and monitor processor selection. It also provides support for router initialisation for bootstrapping and system boot.
 \end{itemize}
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/spinnaker_architecture.pdf}
+	\caption{SpiNNaker architecture}	
+	\label{fig:spin_arch}
+\end{figure}
+
 \subsubsubsection{Fault tolerance mechanisms on SpiNNaker}
 Starting by describing the fault tolerance detection mechanisms of the \textbf{ARM968} processor core, self-test routines are run at start-up and during normal operation. A chip-wide watchdog timer catches runaway software. In addition the ARM968 is able to isolate defective instruction and data RAM locations and can be mapped out by software. The system controller can also disable any incorrectly operating ARM968 cores. These detection and fault isolation mechanisms help to reconfigure the system in case a fault is detected. In the case of faulty instruction and data RAM, software can be written to avoid such locations. If on the other hand, the self-test and start-up routines detect a failure, the processor core functionality can be migrated to a neighbouring processor.
 
@@ -414,7 +411,7 @@ Currently the \textbf{vector interrupt controller} does not provide a high degre
 
 In order to detect faults in \textbf{counter/timer}, the second counter/timer could be configured with a longer period to check the calibration of the first. Assuming that the system only requires one counter/timer, and a fault is detected, the faulty counter could be disabled, with the operational counter/timer taking over.
 
-\begin{figure}[htbp]
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/arm968_subsystem.pdf}
 	\caption{ARM 968 subsystem}
@@ -458,15 +455,34 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 %	\caption{Router organization}	
 %\end{figure}
 
+\clearpage
 \section{Network congestion}
 
-\subsection{Network tester}
+\subsection{Backpressure}
+Backpressure visualisation. \textbf{Figure~\ref{fig:backpressure}} generated by 'Network Tester' \citep[see][]{heathcote2015networktester}.
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.4\linewidth]{images/system_architecture.pdf}
+	\includegraphics[width=0.5\linewidth]{images/backpressure2.pdf}
+	\caption{Backpressure}	
+	\label{fig:backpressure}
+\end{figure}
+
+\subsection{Dumped-packet reinsertion}
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.35\linewidth]{images/system_architecture.pdf}
 	\caption{SpiNNaker inter-links.}
 	\label{fig:interchip_links}	
 \end{figure}
+
+`Network Tester' written by \citet{heathcote2015networktester} is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network. In particular, network tester is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) which produce SpiNNaker packets which are then multicast to a fixed set of vertices.
+The following is a (non-exhaustive) list of the kinds of experiments which can be performed with `Network Tester':
+\begin{itemize}
+\item Determining how a network copes with different rates and patterns of packet generation. For example to determining the maximum speed at which a particular neural simulation may run on SpiNNaker without dropping
+packets.
+\item Determining the effectiveness of place and route algorithms by finding `hot-spots' in the network.
+\item Characterising the behaviour of the network in the presence of locally and globally synchronised bursting traffic.
+\end{itemize}
 
 \begin{figure}
 	\begin{subfigure}[htbp]{.5\linewidth}
@@ -484,14 +500,6 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 	\caption{Network congestion with respect to network load.}
 \end{figure}
 
-`Network Tester' is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network. In particular, network tester is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) which produce SpiNNaker packets which are then multicast to a fixed set of vertices.
-The following is a (non-exhaustive) list of the kinds of experiments which can be performed with `Network Tester':
-\begin{itemize}
-\item Determining how a network copes with different rates and patterns of packet generation. For example to determining the maximum speed at which a particular neural simulation may run on SpiNNaker without dropping
-packets.
-\item Determining the effectiveness of place and route algorithms by finding `hot-spots' in the network.
-\item Characterising the behaviour of the network in the presence of locally and globally synchronised bursting traffic.
-\end{itemize}
 
 Clearly with packet reinjection, nearly all packets which are actually sent arrive at their destination, without reinjection, things aren't so great.
 
@@ -507,15 +515,48 @@ Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is call
 \end{figure}
 
 \clearpage
-\subsection{Backpressure}
+\section{Process migration}
+The heat demo is essentially a 2D heat diffusion equation solver (developed by Luis A. Plana). The heat equation is a partial differential equation that describes the variation in temperature over time in a region, given an initial temperature distribution and the boundary conditions. For a temperature $u(x,y,t)$ of two spatial variables $x$ and $y$ and the time variable $t$, the 2D heat equation is:
+\[
+\dpd{u}{t} -\alpha\left( \dpd[2]{u}{x} + \dpd[2]{u}{y} \right) = 0 
+\]
+where $\alpha$ is the thermal diffusivity, a material-dependent positive constant. A common way to solve this equation numerically is to approximate the derivatives by finite differences, generating a finite-difference discretisation of the heat equation.
+
+Relaxation methods are iterative numerical methods used to solve systems of equations, including non-linear systems. In particular, they are commonly used to solve finite-difference discretisations of differential equations, such as the heat equation. A time-stepping algorithm is used to compute the new temperature of each point in the region, based on its current temperature and that of its neighbouring points:
+
+\begin{align*}
+\Delta x   &= \beta_x \cdot [u(x+1,y,t) + u(x-1,y,t) - 2 \cdot u(x,y,t)] \\
+\Delta x   &= \beta_y \cdot [u(x,y+1,t) + u(x,y-1,t) - 2 \cdot u(x,y,t)] \\
+u(x,y,t+1) &= u(x,y,t) + \Delta x + \Delta y
+\end{align*}
+
+\noindent A visualisation of the above equations is depicated in \textbf{Figure~{\ref{fig:heatdemo_iterative}}}.
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.6\linewidth]{images/backpressure2.pdf}
-	\caption{Backpressure}	
-	\label{fig:backpressure}
+	\includegraphics[width=0.2\linewidth]{images/heatdemo_iterative.png}
+	\caption{2D heat diffusion --- finite difference method.}	
+	\label{fig:heatdemo_iterative}
 \end{figure}
 
-\section{Process migration}
+These methods are well-suited for parallel implementation following a Single Program, Multiple Data (SPMD) model in which multiple autonomous cores simultaneously execute the same program with different data, and use messages to communicate with each other. In the heat equation case, each point sends its temperature to four neighbours and receives their temperatures in each time step.
+
+Using a relaxation method to solve the heat equation is easily and efficiently mapped to SpiNNaker. In particular, the communications pattern is that which SpiNNaker is optimised for: many short messages sent concurrently to several destinations.
+
+To implement the algorithm in SpiNNaker, the entire region is partitioned into sub-arrays of points and distributed across the machine. In the extreme case, every core is assigned a single point. Each core can then compute the corresponding temperatures and distribute them to its neighbours using SpiNNaker's efficient multicast communication infrastructure.
+
+In SpiNNaker, the topology of the problem is dissociated from the topology of the machine, i.e., the mapping of points to cores in SpiNNaker is completely flexible and neighbouring points may not be mapped to neighbouring chips. Once the routing tables have been setup by the programme, a core can send a message with its current temperature and the communications infrastructure is responsible for the delivery of that message to the correct places.
+
+SpiNNaker promotes event-driven software: cores respond to events and carry out the necessary computations. In the mean time, the cores are in low-power mode to save energy. Polling and idle iterations are avoided. In the heat equation solver, the arrival of a neighbour's temperature and the lapse of the time interval will trigger a core into operation.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/heatmap2x2.png}
+	\caption{Heat map demo visualisation on a 4-chip SpiNNaker board.}	
+\end{figure}
+
+The figure shows a snapshot of the output visualizer of a 2D Heat Diffusion Solver running on a 64-core SpiNNaker board. In this example, each of the 64 application cores in SpiNNaker is assigned a single point in a ``hexagonal'' region. Each square in the plot represents the temperature at a given point in the region.
+
+The user can control the temperatures of the North, South, East and West boundaries and view the evolution of temperatures over time. The figure shows a scenario in which the North and West boundaries have been set to 40~\textdegree C and the East and South boundaries to 10~\textdegree C.
 
 To test out the \verb|heat_demo_ft| functionality, start the \verb|heat_demo_ft.aplx|
 by running (from ybug) \verb|@ heat_demo_ft_1board.ybug|
@@ -527,17 +568,14 @@ Command: \verb|sw 0xe2000004 0x5ec00002|
 Note: If the core you reset happens to be the leadAp, the application will
 crash.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.6\linewidth]{images/heatmap2x2.png}
-	\caption{Heat map demo visualisation on a 4-chip SpiNNaker board.}	
-\end{figure}
+\emph{Currently implemented on the heat demo, where a core fault is simulated by intentionally reset a core. Currently if core 1 on core (0,0) is reset or disabled no communication is possible with the host PC.}
 
 
+\clearpage
 \section{CRC error correction}
 \label{sec:crc}
 
-\subsection{Wikipedia description of discrete logarithm}
+\subsection{Discrete logarithms}
 In mathematics, a discrete logarithm is an integer k solving the equation $b^k = g$, where $b$ and $g$ are elements of a finite group. Discrete logarithms are thus the finite-group-theoretic analogue of ordinary logarithms, which solve the same equation for real numbers $b$ and $g$, where $b$ is the base of the logarithm and $g$ is the value whose logarithm is being taken.
 
 Computing discrete logarithms is believed to be difficult. No efficient general method for computing discrete logarithms on conventional computers is known, and several important algorithms in public-key cryptography base their security on the assumption that the discrete logarithm problem has no efficient solution.
@@ -576,7 +614,7 @@ While computing discrete logarithms and factoring integers are distinct problems
 	\item the difficulty of both problems has been used to construct various cryptographic systems.
 \end{itemize}
 
-\subsection{Abstract}
+\subsection{Abstract} --- Martin Grymel
 Error-control codes provide a mechanism to increase the reliability of digital data being processed, transmitted, or stored under noisy conditions. Cyclic codes constitute an important class of error-control code, offering powerful error detection and correction capabilities. They can easily be generated and verified in hardware, which makes them particularly well suited to the practical use as error detecting codes.
 
 A cyclic code is based on a generator polynomial which determines its properties including the specific error detection strength. The optimal choice of polynomial depends on many factors that may be influenced by the underlying application. It is therefore advantageous to employ programmable cyclic code hardware that allows a flexible choice of polynomial to be applied to different requirements. A novel method is presented in this thesis to realise programmable cyclic code circuits that are fast, energy-efficient and minimise implementation resources.
@@ -649,7 +687,7 @@ To improve the reliability of memory transfers, SpiNNaker employs cyclic codes f
 The optimal choice of cyclic code to employ is influenced by many factors including the length of the data that is to be protected and the desired error control capabilities. Therefore, programmable cyclic code circuits are employed within SpiNNaker to maximise flexibility in the choice of cyclic code for different scenarios. A novel method for the generation of efficient programmable cyclic code circuits is proposed in Chapter 5.
 
 \newpage
-\subsection{Excerpts from Chapter 5 -- Programmable CRC hardware}
+\subsection{Excerpts from Chapter 5 --- Programmable CRC hardware}
 Cyclic codes constitute a powerful class of error-control code as set out in Section 2.3. They offer effective error detection and can easily be realised in hardware, which makes them a popular choice for many applications that require the detection of errors, including Ethernet [TW11]. In the context of pure error detection, a cyclic code is often referred to as a Cyclic Redundancy Checksum (CRC) and the popularity of cyclic codes has led to a number of different software and hardware implementations [LC83; RG88].Speed requirements usually make software schemes impractical and dedicated hardware is needed. The generic hardware approach uses an inexpensive Linear Feedback Shift Register (LFSR), which assumes serial data input. In the presence of wide data buses, the serial computation has been extended to parallel versions that process whole data words based on derived equations and on cascading the LFSR [Spr01]. Various optimisation techniques have been developed that target resource reduction [Bra+96] and speed increase [Der01; CP06; KRM08; KRM09].
 
 A wide range of factors influence the selection of an appropriate CRC generator polynomial for a particular application as outlined in Subsection 2.3.4. This range includes the error detection and correction capabilities of a generator polynomial, which depend on the length of the data that is to be protected. For instance, in scenarios where data blocks of different length are used, or where the final requirements of the generator polynomial are not known at the time of the hardware implementation, it is beneficial to employ programmable CRC circuits that can be configured to different generator polynomials.

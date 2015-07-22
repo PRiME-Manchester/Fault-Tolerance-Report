@@ -16,9 +16,10 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\citation{gray1991high,sullivan1991software}
+\citation{gray1991high}
 \citation{pradhan1996fault}
 \citation{lions1996ariane}
+\citation{checkpointing}
 \citation{laprie1992dependability}
 \citation{laprie1992dependability}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Software fault tolerance}{3}{section.1}}
@@ -27,113 +28,100 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {1.2.1}What is a software failure?}{3}{subsubsection.1.2.1}}
 \citation{huang1994two}
 \citation{gray1986computers}
-\citation{gray1986computers,gray1990census}
-\citation{chillarege1995measurement,sullivan1991software}
-\citation{lee1994software,lee1995software}
+\citation{gray1990census}
+\citation{chillarege1995measurement}
+\citation{lee1995software}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {1.2.2}Classification of software faults}{4}{subsubsection.1.2.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Techniques for Fault Tolerance in Software}{4}{subsection.1.3}}
 \citation{ammann1988data}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Means for software fault tolerance\relax }}{5}{figure.caption.1}}
-\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:faulttoltree}{{1}{5}{Means for software fault tolerance\relax }{figure.caption.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.1}Design diversity}{5}{subsubsection.1.3.1}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Strategies used by different fault tolerance methods\relax }}{5}{table.caption.2}}
-\newlabel{tab:faulttolmethods}{{1}{5}{Strategies used by different fault tolerance methods\relax }{table.caption.2}{}}
 \citation{jalote1995framework}
 \citation{adams1984optimizing}
 \citation{huang1994two}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.1}Design diversity}{5}{subsubsection.1.3.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.2}Data diversity}{5}{subsubsection.1.3.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.3}Environment diversity}{5}{subsubsection.1.3.3}}
+\newlabel{sec:envdiv}{{1.3.3}{5}{Environment diversity}{subsubsection.1.3.3}{}}
 \citation{lee1995software}
 \citation{kulkarni1990effects}
 \citation{garg1996minimizing}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.2}Data diversity}{6}{subsubsection.1.3.2}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.3}Environment diversity}{6}{subsubsection.1.3.3}}
-\newlabel{sec:envdiv}{{1.3.3}{6}{Environment diversity}{subsubsection.1.3.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.4}Checkpointing and Recovery}{6}{subsubsection.1.3.4}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Fault tolerance on SpiNNaker}{7}{section.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}SpiNNaker architecture}{7}{subsection.2.1}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}Short description of the SpiNNaker chip}{7}{subsubsection.2.1.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces SDRAM stich-bonded to the underlying SpiNNaker die.\relax }}{7}{figure.caption.3}}
-\newlabel{fig:spin5}{{2}{7}{SDRAM stich-bonded to the underlying SpiNNaker die.\relax }{figure.caption.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 48-chip Spin5 board\relax }}{8}{figure.caption.4}}
-\newlabel{fig:spin5}{{3}{8}{48-chip Spin5 board\relax }{figure.caption.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.2}Hardware fault tolerance mechanisms in the SpiNNaker chip}{8}{subsubsection.2.1.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces SpiNNaker architecture\relax }}{8}{figure.caption.5}}
-\newlabel{fig:spin_arch}{{4}{8}{SpiNNaker architecture\relax }{figure.caption.5}{}}
-\@writefile{toc}{\contentsline {subsubsubsection}{\numberline {2.1.2.1}Block description}{9}{subsubsubsection.2.1.2.1}}
-\@writefile{toc}{\contentsline {subsubsubsection}{\numberline {2.1.2.2}Fault tolerance mechanisms on SpiNNaker}{10}{subsubsubsection.2.1.2.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces ARM 968 subsystem\relax }}{10}{figure.caption.6}}
-\newlabel{fig:arm968}{{5}{10}{ARM 968 subsystem\relax }{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}Overview}{7}{subsubsection.2.1.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces SDRAM stich-bonded to the underlying SpiNNaker die.\relax }}{7}{figure.caption.1}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:spin5}{{1}{7}{SDRAM stich-bonded to the underlying SpiNNaker die.\relax }{figure.caption.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.2}Hardware fault tolerance mechanisms in the SpiNNaker chip}{7}{subsubsection.2.1.2}}
+\@writefile{toc}{\contentsline {subsubsubsection}{\numberline {2.1.2.1}Block description}{7}{subsubsubsection.2.1.2.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 48-chip Spin5 board\relax }}{8}{figure.caption.2}}
+\newlabel{fig:spin5}{{2}{8}{48-chip Spin5 board\relax }{figure.caption.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces SpiNNaker architecture\relax }}{9}{figure.caption.3}}
+\newlabel{fig:spin_arch}{{3}{9}{SpiNNaker architecture\relax }{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {subsubsubsection}{\numberline {2.1.2.2}Fault tolerance mechanisms on SpiNNaker}{9}{subsubsubsection.2.1.2.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces ARM 968 subsystem\relax }}{10}{figure.caption.4}}
+\newlabel{fig:arm968}{{4}{10}{ARM 968 subsystem\relax }{figure.caption.4}{}}
+\citation{heathcote2015networktester}
+\citation{heathcote2015networktester}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Network congestion}{12}{section.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Network tester}{12}{subsection.3.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces SpiNNaker inter-links.\relax }}{12}{figure.caption.7}}
-\newlabel{fig:interchip_links}{{6}{12}{SpiNNaker inter-links.\relax }{figure.caption.7}{}}
-\newlabel{fig:bursting}{{7a}{13}{Bursting\relax }{figure.caption.8}{}}
-\newlabel{sub@fig:bursting}{{a}{13}{Bursting\relax }{figure.caption.8}{}}
-\newlabel{fig:bursting_aware}{{7b}{13}{Bursting Connection-aware\relax }{figure.caption.8}{}}
-\newlabel{sub@fig:bursting_aware}{{b}{13}{Bursting Connection-aware\relax }{figure.caption.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Network congestion with respect to network load.\relax }}{13}{figure.caption.8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Network congestion in a bursty (random) situation.\relax }}{13}{figure.caption.9}}
-\newlabel{fig:bursting_random}{{8}{13}{Network congestion in a bursty (random) situation.\relax }{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Backpressure}{14}{subsection.3.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Backpressure\relax }}{14}{figure.caption.10}}
-\newlabel{fig:backpressure}{{9}{14}{Backpressure\relax }{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Backpressure}{12}{subsection.3.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Backpressure\relax }}{12}{figure.caption.5}}
+\newlabel{fig:backpressure}{{5}{12}{Backpressure\relax }{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Dumped-packet reinsertion}{12}{subsection.3.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces SpiNNaker inter-links.\relax }}{12}{figure.caption.6}}
+\newlabel{fig:interchip_links}{{6}{12}{SpiNNaker inter-links.\relax }{figure.caption.6}{}}
+\newlabel{fig:bursting}{{7a}{13}{Bursting\relax }{figure.caption.7}{}}
+\newlabel{sub@fig:bursting}{{a}{13}{Bursting\relax }{figure.caption.7}{}}
+\newlabel{fig:bursting_aware}{{7b}{13}{Bursting Connection-aware\relax }{figure.caption.7}{}}
+\newlabel{sub@fig:bursting_aware}{{b}{13}{Bursting Connection-aware\relax }{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Network congestion with respect to network load.\relax }}{13}{figure.caption.7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Network congestion in a bursty (random) situation.\relax }}{13}{figure.caption.8}}
+\newlabel{fig:bursting_random}{{8}{13}{Network congestion in a bursty (random) situation.\relax }{figure.caption.8}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Process migration}{14}{section.4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Heat map demo visualisation on a 4-chip SpiNNaker board.\relax }}{14}{figure.caption.11}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}CRC error correction}{15}{section.5}}
-\newlabel{sec:crc}{{5}{15}{CRC error correction}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Wikipedia description of discrete logarithm}{15}{subsection.5.1}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Example}{15}{subsubsection.5.1.1}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}Algorithms}{15}{subsubsection.5.1.2}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.3}Comparison to integer factorization}{15}{subsubsection.5.1.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Abstract}{16}{subsection.5.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Introduction}{16}{subsection.5.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Objectives}{17}{subsection.5.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Contribution}{17}{subsection.5.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Overview}{18}{subsection.5.6}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.1}Chapter 4}{18}{subsubsection.5.6.1}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.2}Chapter 5}{18}{subsubsection.5.6.2}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.3}Chapter 6}{18}{subsubsection.5.6.3}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.4}Chapter 7}{19}{subsubsection.5.6.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}Excerpts from Chapter 4 -- SpiNNaker}{19}{subsection.5.7}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.1}Memory}{19}{subsubsection.5.7.1}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.2}CRC unit}{19}{subsubsection.5.7.2}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.3}Conclusion}{20}{subsubsection.5.7.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.8}Excerpts from Chapter 5 -- Programmable CRC hardware}{21}{subsection.5.8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.9}Excerpts from Chapter 8 Conclusion -- Cyclic codes}{21}{subsection.5.9}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.9.1}Programmable CRC}{22}{subsubsection.5.9.1}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.9.2}Future work in Programmable CRC}{22}{subsubsection.5.9.2}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.9.3}Error Correction}{22}{subsubsection.5.9.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.10}Summary}{24}{subsection.5.10}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.1}Efficient Programmable CRC Circuits}{24}{subsubsection.5.10.1}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.2}Algorithms for Computing Discrete Logarithms}{24}{subsubsection.5.10.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces 2D heat diffusion --- finite difference method.\relax }}{14}{figure.caption.9}}
+\newlabel{fig:heatdemo_iterative}{{9}{14}{2D heat diffusion --- finite difference method.\relax }{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Heat map demo visualisation on a 4-chip SpiNNaker board.\relax }}{15}{figure.caption.10}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}CRC error correction}{16}{section.5}}
+\newlabel{sec:crc}{{5}{16}{CRC error correction}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Discrete logarithms}{16}{subsection.5.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Example}{16}{subsubsection.5.1.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}Algorithms}{16}{subsubsection.5.1.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.3}Comparison to integer factorization}{16}{subsubsection.5.1.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Abstract}{17}{subsection.5.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Introduction}{17}{subsection.5.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Objectives}{18}{subsection.5.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Contribution}{18}{subsection.5.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Overview}{19}{subsection.5.6}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.1}Chapter 4}{19}{subsubsection.5.6.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.2}Chapter 5}{19}{subsubsection.5.6.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.3}Chapter 6}{19}{subsubsection.5.6.3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.4}Chapter 7}{20}{subsubsection.5.6.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}Excerpts from Chapter 4 -- SpiNNaker}{20}{subsection.5.7}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.1}Memory}{20}{subsubsection.5.7.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.2}CRC unit}{20}{subsubsection.5.7.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.3}Conclusion}{21}{subsubsection.5.7.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.8}Excerpts from Chapter 5 --- Programmable CRC hardware}{22}{subsection.5.8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.9}Excerpts from Chapter 8 Conclusion -- Cyclic codes}{22}{subsection.5.9}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.9.1}Programmable CRC}{23}{subsubsection.5.9.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.9.2}Future work in Programmable CRC}{23}{subsubsection.5.9.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.9.3}Error Correction}{23}{subsubsection.5.9.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.10}Summary}{25}{subsection.5.10}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.1}Efficient Programmable CRC Circuits}{25}{subsubsection.5.10.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.2}Algorithms for Computing Discrete Logarithms}{25}{subsubsection.5.10.2}}
 \bibstyle{abbrvnat}
 \bibdata{fault_tolerance_report}
 \bibcite{adams1984optimizing}{{1}{1984}{{Adams}}{{}}}
 \bibcite{ammann1988data}{{2}{1988}{{Ammann and Knight}}{{}}}
-\bibcite{avizienis1977implementation}{{3}{1977}{{Avizienis and Chen}}{{}}}
-\bibcite{avizienis2012evolution}{{4}{2012}{{Avizienis et~al.}}{{Avizienis, Kopetz, and Laprie}}}
-\bibcite{castelli2001proactive}{{5}{2001}{{Castelli et~al.}}{{Castelli, Harper, Heidelberger, Hunter, Trivedi, Vaidyanathan, and Zeggert}}}
-\bibcite{chandy1975analytic}{{6}{1975}{{Chandy et~al.}}{{Chandy, Browne, Dissly, and Uhrig}}}
-\bibcite{chillarege1995measurement}{{7}{1995}{{Chillarege et~al.}}{{Chillarege, Biyani, and Rosenthal}}}
-\bibcite{garg1996minimizing}{{8}{1996}{{Garg et~al.}}{{Garg, Huang, Kintala, and Trivedi}}}
-\bibcite{garg1998methodology}{{9}{1998}{{Garg et~al.}}{{Garg, Van~Moorsel, Vaidyanathan, and Trivedi}}}
-\bibcite{gray1986computers}{{10}{1986}{{Gray}}{{}}}
-\bibcite{gray1990census}{{11}{1990}{{Gray}}{{}}}
-\bibcite{gray1991high}{{12}{1991}{{Gray and Siewiorek}}{{}}}
-\bibcite{horning1974program}{{13}{1974}{{Horning et~al.}}{{Horning, Lauer, Melliar-Smith, and Randell}}}
-\bibcite{huang1994two}{{14}{1994}{{Huang et~al.}}{{Huang, Jalote, and Kintala}}}
-\bibcite{huang1995software}{{15}{1995}{{Huang et~al.}}{{Huang, Kintala, Kolettis, and Fulton}}}
-\bibcite{jalote1995framework}{{16}{1995}{{Jalote et~al.}}{{Jalote, Huang, and Kintala}}}
-\bibcite{kulkarni1990effects}{{17}{1990}{{Kulkarni et~al.}}{{Kulkarni, Nicola, and Trivedi}}}
-\bibcite{laprie1992dependability}{{18}{1992}{{Laprie}}{{}}}
-\bibcite{laprie1990definition}{{19}{1990}{{Laprie et~al.}}{{Laprie, Arlat, Beounes, and Kanoun}}}
-\bibcite{lee1994software}{{20}{1994}{{Lee}}{{}}}
-\bibcite{lee1995software}{{21}{1995}{{Lee and Iyer}}{{}}}
-\bibcite{lions1996ariane}{{22}{1996}{{Lions et~al.}}{{}}}
-\bibcite{long1992implementing}{{23}{1992}{{Long et~al.}}{{Long, Fuchs, and Abraham}}}
-\bibcite{lyu1995software}{{24}{1995}{{Lyu}}{{}}}
-\bibcite{pradhan1996fault}{{25}{1996}{{Pradhan}}{{}}}
-\bibcite{pradhan1994roll}{{26}{1994}{{Pradhan and Vaidya}}{{}}}
-\bibcite{sullivan1991software}{{27}{1991}{{Sullivan and Chillarege}}{{}}}
-\bibcite{tomek1993modeling}{{28}{1993}{{Tomek et~al.}}{{Tomek, Muppala, Trivedi, et~al.}}}
-\bibcite{wang1995checkpointing}{{29}{1995}{{Wang et~al.}}{{Wang, Huang, Vo, Chung, and Kintala}}}
+\bibcite{chillarege1995measurement}{{3}{1995}{{Chillarege et~al.}}{{Chillarege, Biyani, and Rosenthal}}}
+\bibcite{garg1996minimizing}{{4}{1996}{{Garg et~al.}}{{Garg, Huang, Kintala, and Trivedi}}}
+\bibcite{gray1986computers}{{5}{1986}{{Gray}}{{}}}
+\bibcite{gray1990census}{{6}{1990}{{Gray}}{{}}}
+\bibcite{gray1991high}{{7}{1991}{{Gray and Siewiorek}}{{}}}
+\bibcite{heathcote2015networktester}{{8}{2015}{{Heathcote}}{{}}}
+\bibcite{huang1994two}{{9}{1994}{{Huang et~al.}}{{Huang, Jalote, and Kintala}}}
+\bibcite{jalote1995framework}{{10}{1995}{{Jalote et~al.}}{{Jalote, Huang, and Kintala}}}
+\bibcite{kulkarni1990effects}{{11}{1990}{{Kulkarni et~al.}}{{Kulkarni, Nicola, and Trivedi}}}
+\bibcite{laprie1992dependability}{{12}{1992}{{Laprie}}{{}}}
+\bibcite{lee1995software}{{13}{1995}{{Lee and Iyer}}{{}}}
+\bibcite{lions1996ariane}{{14}{1996}{{Lions et~al.}}{{}}}
+\bibcite{pradhan1996fault}{{15}{1996}{{Pradhan}}{{}}}
+\bibcite{checkpointing}{{16}{2008}{{Trivedi}}{{}}}
