@@ -1,46 +1,36 @@
-\contentsline {section}{\numberline {1}Software fault tolerance}{3}{section.1}
-\contentsline {subsection}{\numberline {1.1}Introduction}{3}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}Software Failure and Classification of Software Faults}{3}{subsection.1.2}
-\contentsline {subsubsection}{\numberline {1.2.1}What is a software failure?}{3}{subsubsection.1.2.1}
-\contentsline {subsubsection}{\numberline {1.2.2}Classification of software faults}{4}{subsubsection.1.2.2}
-\contentsline {subsection}{\numberline {1.3}Techniques for Fault Tolerance in Software}{4}{subsection.1.3}
-\contentsline {subsubsection}{\numberline {1.3.1}Design diversity}{5}{subsubsection.1.3.1}
-\contentsline {subsubsection}{\numberline {1.3.2}Data diversity}{5}{subsubsection.1.3.2}
-\contentsline {subsubsection}{\numberline {1.3.3}Environment diversity}{5}{subsubsection.1.3.3}
-\contentsline {subsubsection}{\numberline {1.3.4}Checkpointing and Recovery}{6}{subsubsection.1.3.4}
-\contentsline {section}{\numberline {2}Fault tolerance on SpiNNaker}{7}{section.2}
-\contentsline {subsection}{\numberline {2.1}SpiNNaker architecture}{7}{subsection.2.1}
-\contentsline {subsubsection}{\numberline {2.1.1}Overview}{7}{subsubsection.2.1.1}
-\contentsline {subsubsection}{\numberline {2.1.2}Hardware fault tolerance mechanisms in the SpiNNaker chip}{7}{subsubsection.2.1.2}
-\contentsline {subsubsubsection}{\numberline {2.1.2.1}Block description}{7}{subsubsubsection.2.1.2.1}
-\contentsline {subsubsubsection}{\numberline {2.1.2.2}Fault tolerance mechanisms on SpiNNaker}{9}{subsubsubsection.2.1.2.2}
-\contentsline {section}{\numberline {3}Network congestion}{12}{section.3}
-\contentsline {subsection}{\numberline {3.1}Backpressure}{12}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Dumped-packet reinsertion}{12}{subsection.3.2}
-\contentsline {section}{\numberline {4}Process migration}{14}{section.4}
-\contentsline {section}{\numberline {5}CRC error correction}{16}{section.5}
-\contentsline {subsection}{\numberline {5.1}Discrete logarithms}{16}{subsection.5.1}
-\contentsline {subsubsection}{\numberline {5.1.1}Example}{16}{subsubsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.2}Algorithms}{16}{subsubsection.5.1.2}
-\contentsline {subsubsection}{\numberline {5.1.3}Comparison to integer factorization}{16}{subsubsection.5.1.3}
-\contentsline {subsection}{\numberline {5.2}Abstract}{17}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Introduction}{17}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}Objectives}{18}{subsection.5.4}
-\contentsline {subsection}{\numberline {5.5}Contribution}{18}{subsection.5.5}
-\contentsline {subsection}{\numberline {5.6}Overview}{19}{subsection.5.6}
-\contentsline {subsubsection}{\numberline {5.6.1}Chapter 4}{19}{subsubsection.5.6.1}
-\contentsline {subsubsection}{\numberline {5.6.2}Chapter 5}{19}{subsubsection.5.6.2}
-\contentsline {subsubsection}{\numberline {5.6.3}Chapter 6}{19}{subsubsection.5.6.3}
-\contentsline {subsubsection}{\numberline {5.6.4}Chapter 7}{20}{subsubsection.5.6.4}
-\contentsline {subsection}{\numberline {5.7}Excerpts from Chapter 4 -- SpiNNaker}{20}{subsection.5.7}
-\contentsline {subsubsection}{\numberline {5.7.1}Memory}{20}{subsubsection.5.7.1}
-\contentsline {subsubsection}{\numberline {5.7.2}CRC unit}{20}{subsubsection.5.7.2}
-\contentsline {subsubsection}{\numberline {5.7.3}Conclusion}{21}{subsubsection.5.7.3}
-\contentsline {subsection}{\numberline {5.8}Excerpts from Chapter 5 --- Programmable CRC hardware}{22}{subsection.5.8}
-\contentsline {subsection}{\numberline {5.9}Excerpts from Chapter 8 Conclusion -- Cyclic codes}{22}{subsection.5.9}
-\contentsline {subsubsection}{\numberline {5.9.1}Programmable CRC}{23}{subsubsection.5.9.1}
-\contentsline {subsubsection}{\numberline {5.9.2}Future work in Programmable CRC}{23}{subsubsection.5.9.2}
-\contentsline {subsubsection}{\numberline {5.9.3}Error Correction}{23}{subsubsection.5.9.3}
-\contentsline {subsection}{\numberline {5.10}Summary}{25}{subsection.5.10}
-\contentsline {subsubsection}{\numberline {5.10.1}Efficient Programmable CRC Circuits}{25}{subsubsection.5.10.1}
-\contentsline {subsubsection}{\numberline {5.10.2}Algorithms for Computing Discrete Logarithms}{25}{subsubsection.5.10.2}
+\contentsline {section}{\numberline {1}Software fault tolerance}{2}{section.1}
+\contentsline {subsection}{\numberline {1.1}Introduction}{2}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Software Failure and Classification of Software Faults}{2}{subsection.1.2}
+\contentsline {subsubsection}{\numberline {1.2.1}What is a software failure?}{2}{subsubsection.1.2.1}
+\contentsline {subsubsection}{\numberline {1.2.2}Classification of software faults}{3}{subsubsection.1.2.2}
+\contentsline {subsection}{\numberline {1.3}Techniques for Fault Tolerance in Software}{3}{subsection.1.3}
+\contentsline {subsubsection}{\numberline {1.3.1}Design diversity}{4}{subsubsection.1.3.1}
+\contentsline {subsubsection}{\numberline {1.3.2}Data diversity}{4}{subsubsection.1.3.2}
+\contentsline {subsubsection}{\numberline {1.3.3}Environment diversity}{4}{subsubsection.1.3.3}
+\contentsline {subsubsection}{\numberline {1.3.4}Checkpointing and Recovery}{5}{subsubsection.1.3.4}
+\contentsline {section}{\numberline {2}Fault tolerance on SpiNNaker}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}SpiNNaker architecture}{6}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Overview}{6}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}Hardware fault tolerance mechanisms in the SpiNNaker chip}{6}{subsubsection.2.1.2}
+\contentsline {subsubsubsection}{\numberline {2.1.2.1}Block description}{6}{subsubsubsection.2.1.2.1}
+\contentsline {subsubsubsection}{\numberline {2.1.2.2}Fault tolerance mechanisms on SpiNNaker}{8}{subsubsubsection.2.1.2.2}
+\contentsline {section}{\numberline {3}Network congestion}{11}{section.3}
+\contentsline {subsection}{\numberline {3.1}Backpressure}{11}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Dumped-packet reinsertion}{11}{subsection.3.2}
+\contentsline {section}{\numberline {4}Process migration}{13}{section.4}
+\contentsline {section}{\numberline {5}CRC error correction}{15}{section.5}
+\contentsline {subsection}{\numberline {5.1}Introduction}{15}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Discrete logarithms (Wikipedia)}{15}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Objectives}{16}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Excerpts from Chapter 4 -- SpiNNaker}{16}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}Overview}{16}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}Memory}{16}{subsubsection.5.4.2}
+\contentsline {subsubsection}{\numberline {5.4.3}CRC unit}{17}{subsubsection.5.4.3}
+\contentsline {subsubsection}{\numberline {5.4.4}Conclusion}{18}{subsubsection.5.4.4}
+\contentsline {subsection}{\numberline {5.5}Excerpts from Chapter 8 Conclusion -- Cyclic codes}{18}{subsection.5.5}
+\contentsline {subsubsection}{\numberline {5.5.1}Programmable CRC}{18}{subsubsection.5.5.1}
+\contentsline {subsubsection}{\numberline {5.5.2}Future work in Programmable CRC}{19}{subsubsection.5.5.2}
+\contentsline {subsubsection}{\numberline {5.5.3}Error Correction}{19}{subsubsection.5.5.3}
+\contentsline {subsection}{\numberline {5.6}Summary}{19}{subsection.5.6}
+\contentsline {subsubsection}{\numberline {5.6.1}Efficient Programmable CRC Circuits}{19}{subsubsection.5.6.1}
+\contentsline {subsubsection}{\numberline {5.6.2}Algorithms for Computing Discrete Logarithms}{19}{subsubsection.5.6.2}
