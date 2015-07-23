@@ -14,6 +14,5 @@
 *.synctex.gz
 *.toc
 *.lol
+*.out
 *.bak
-
-

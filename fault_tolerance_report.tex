@@ -1,4 +1,3 @@
-% LaTeX file for a 1 page document
 \documentclass[a4paper, 11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -51,21 +50,6 @@ pdfkeywords={faulttolerance spinnaker}
 	breaklinks=true}
 \urlstyle{same}
 
-%\titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0.3\baselineskip}
-
-% *************** Page layout ***************
-% set up recto (right) page layout
-%\settypeblocksize{620pt}{400pt}{*}
-%\setulmargins{3.5cm}{*}{*}
-%\setlrmargins{3cm}{*}{*}
-%%\setlrmargins{*}{*}{1.4}
-%\setheadfoot{\onelineskip}{2\onelineskip}
-%\setheaderspaces{*}{1.5\onelineskip}{*}
-%\checkandfixthelayout
-%% Make even page margins similar to odd page margins to enable proper
-%% single-sided printing (Pg. 25 Memoir documentclass manual)
-%\setlength{\evensidemargin}{\oddsidemargin}
-
 \usepackage{geometry}
 \geometry{
 	a4paper,
@@ -76,35 +60,11 @@ pdfkeywords={faulttolerance spinnaker}
 	bottom=30mm,
 }
 
-%\setsecnumdepth{subsection}
-%\maxsecnumdepth{subsection}
-
-%\pagestyle{ruled}
-%\nouppercaseheads
-
 \newenvironment{itmz}{
 	\begin{itemize}
 		\setlength{\itemsep}{0pt}
 		\setlength{\parskip}{0pt}
 	}{\end{itemize}}
-
-%\fixpdflayout
-
-%\tikzset{
-%	treenode/.style = {align=center, inner sep=3pt, text centered},
-%	arn/.style = {treenode, rectangle, draw=black, rounded corners=4pt, fill=blue!20, text width=10em},
-%	arn_lev1/.style = {treenode, rectangle, draw=black, rounded corners=3pt, fill=pink!60, text width=6em},
-%	arn_lev2/.style = {treenode, rectangle, draw=black, rounded corners=3pt, fill=pink!60, text width=6em},
-%	arn_lev2a/.style = {treenode, rectangle, draw=black, rounded corners=3pt, fill=pink!60, text width=5em}
-%}
-
-%\tikzset{
-%	treenode/.style = {align=center, inner sep=3pt, text centered},
-%	arn/.style = {treenode, rectangle, draw=black, rounded corners=4pt, fill=blue!20, font=\sffamily\bfseries, text width=10em},
-%	arn_lev1/.style = {treenode, font=\sffamily, text width=6em},
-%	arn_lev2/.style = {treenode, font=\sffamily, text width=6em},
-%	arn_lev2a/.style = {treenode, font=\sffamily, text width=5em}
-%}
 
 \tikzset{
 	treenode/.style = {align=center, inner sep=3pt, text centered},
@@ -113,17 +73,6 @@ pdfkeywords={faulttolerance spinnaker}
 	arn_lev2/.style = {treenode, text width=6em},
 	arn_lev2a/.style = {treenode, text width=5.8em}
 }
-
-% *************** Caption font configuration ****************
-%\captionstyle[\centering]{\raggedright}
-%\captionnamefont{\sffamily\footnotesize\bfseries}
-%\captiontitlefont{\sffamily\footnotesize\mathversion{sans}}
-%\renewcommand{\parttitlefont}{\Huge\sffamily\bfseries}
-
-%\setsecheadstyle{\sffamily\Large\bfseries\hrule\vspace{2pt}}
-%\setsecheadstyle{\sffamily\bfseries\Large}
-%\setsubsecheadstyle{\sffamily\bfseries\large}
-%\setsubsubsecheadstyle{\sffamily\bfseries\slshape\large}
 
 % Fancy title page
 \makeatletter
@@ -191,45 +140,11 @@ pdfkeywords={faulttolerance spinnaker}
 \date{}
 
 \begin{document}
-
-%\begin{titlingpage}
 \maketitle
-%\titleGM
-%\end{titlingpage}
 
-%\begin{abstract}
-%The reconstruction conjecture states that the multiset of unlabeled
-%vertex-deleted subgraphs of a graph determines the graph, provided it
-%has at least 3 vertices.  A version of the problem was first stated
-%by Stanis\l aw Ulam.  In this paper, we show that the conjecture can
-%be proved by elementary methods.  It is only necessary to integrate
-%the Lenkle potential of the Broglington manifold over the quantum
-%supervacillatory measure in order to reduce the set of possible
-%counterexamples to a small number (less than a trillion).  A simple
-%computer program that implements Pipletti's classification theorem
-%for torsion-free Aramaic groups with simplectic socles can then
-%finish the remaining cases.
-%\end{abstract}
-
-%\chapter{Fault tolerance mechanisms}
-%\frontmatter
 \tableofcontents
-%\listoflistings
-
-%\mainmatter
-%\chapterstyle{hangnum}
 
 \newpage
-%\subsection{Useful books and links}
-%\begin{itemize}
-%\item Sorin, Fault tolerant computer architecture. Ch. 3 Error recovery (FER and BER). \citet{sorin2009fault}.
-%\item Avresky, Fault-tolerant Parallel and Distributed Systems. Part II.4 Fault-tolerant distributed systems. Part IV (all). \citet{avresky2012fault}.
-%\item Abd-El-Barr, Design and analysis of reliable and fault-tolerant computer systems. Seems to treat fault tolerance of networks in depth. Chps. 1, 2, 3, 4, Ch. 13 Algorithm-Based Fault tolerance \citet{abd2006design}.
-%\item Goloubeva, Software-Implemented Hardware Fault tolerance. Ch1. Background and Ch. 4 Achieving fault tolerance \citet{goloubeva2006software}
-%\item Checkpointing \citet{checkpointing}.
-%\item Network tester \citet{networktester}.
-%\end{itemize}
-
 \section{Software fault tolerance}
 \subsection{Introduction}
 With the explosive growth in Internet technology and the emergence of a number of new and advanced applications, assured availability of computer systems has become a critical issue. The challenge is to provide the desired availability and performance at a low cost.
@@ -246,12 +161,6 @@ A major limitation in developing reliable software is the test and verification 
 \subsection{Software Failure and Classification of Software Faults}
 \subsubsection{What is a software failure?}
 According to \citet{laprie1992dependability}, ``a system failure occurs when the delivered service no longer complies with the specifications, the latter being an agreed description of the system's expected function and/or service.'' This definition applies to both hardware and software system failures. Faults or bugs in a hardware or a software component cause errors. An error is defined by \citet{laprie1992dependability} as that part of the system which is liable to lead to subsequent failure, and an error affecting the service is an indication that a failure occurs or has occurred. If the system comprises of multiple components, errors can lead to a component failure. As various components in the system interact, failure of one component might introduce one or more faults in another.
-
-%\begin{figure}[htbp]
-%	\centering
-%	\includegraphics[width=0.6\linewidth]{images/img1.png}
-%	\caption{Fault behaviour}
-%\end{figure}
 
 \subsubsection{Classification of software faults}
 Some studies have suggested that since software is not a physical entity and hence not subject to transient physical phenomena (as opposed to hardware), software faults are permanent in nature \citep{huang1994two}. Some other studies classify software faults as both permanent and transient. \citet{gray1986computers} classifies software faults into Bohrbugs and Heisenbugs. \hl{Consider revising this old terminology and replace Bohrbugs with hard errors and Heisenbugs with intermittent faults} Bohrbugs, a term that has since long fallen out of use, are permanent design faults and hence almost deterministic in nature. They can be identified easily and weeded out during the testing and debugging phase of the software life cycle. \emph{Heisenbugs}, on the other hand, belong to the class of temporary internal faults and are intermittent. They are essentially permanent faults whose conditions of activation occur rarely or are not easily reproducible. Hence these faults result in transient failures, i.e., failures which may not recur if the software is restarted. Some typical situations in which intermittent might surface are boundaries between various software components, improper or insufficient exception handling and interdependent timing of various events. It is for this reason that intermittent faults are extremely difficult to identify through testing. Hence a mature piece of software in the operational phase, released after its development and testing stage, is more likely to experience failures caused by \emph{Heisenbugs} than due to permanent faults. Most recent studies on failure data have reported that a large proportion of software failures are transient in nature \citep{gray1990census}, caused by phenomena such as overloads or timing and exception errors \citep{chillarege1995measurement}. The study of failure data from Tandem's fault tolerant computer system indicated that 70\% of the failures were transient failures, caused by faults like race conditions and timing problems \citep{lee1995software}.
@@ -328,14 +237,10 @@ Examples of environment diversity techniques include retry operation, restart ap
 
 Tandem's fault tolerant computer system \citep{lee1995software} is based on the process pair approach. It was noted that these failures did not recur once the application was restarted on the second processor. This was due to the fact that the second processor provided a different environment which did not trigger the same error conditions which led to the failure of the application on the first processor. Hence, in this case, hardware redundancy was used to tolerate most of the software faults. The basic observation in all these transient failures is that the same error condition is unlikely to occur if the software is re-executed in a different environment.
 
-%\ul{A specific form of environment diversity, called software rejuvenation} \citep{castelli2001proactive,garg1998methodology,huang1995software} \ul{is the crux of our research.}
-
 \subsubsection{Checkpointing and Recovery}
 Checkpointing and recovery \citep{kulkarni1990effects} belongs to the category of error recovery for fault tolerance, as opposed to design diversity which belongs to error compensation, and data and environment diversities which belong to the fault treatment category. Error compensation, error recovery and fault treatment are complementary to one another and fault tolerance in software can be increased by deploying a combination of these techniques. The recovery block uses checkpoints in its implementation. \citet{garg1996minimizing} proposes and analyses the combination of software rejuvenation (preventive fault treatment) with checkpointing and recovery to reduce the chances of activating a fault and simultaneously minimizing the loss of computation when there is a failure.
 
 Checkpointing involves occasionally saving the state of a process in stable storage during normal execution. Upon failure, the process is restarted in the saved state (last saved checkpoint). This thus reduces the amount of lost work. Checkpointing and recovery was mainly intended to tolerate transient hardware failures, where the application is restarted upon repair of a hardware unit after failure. This technique has been implemented in both software and hardware.
-
-%Checkpointing and restart was used as early as 1948 when the ENIAC was used to solve a two point boundary value problem with known conditions, although the computation was marred by a very high tube error rate \citep{avizienis2012evolution}. Checkpointing has also been used as a backward error recovery technique for handling intermittent software faults since then. For instance, the progressive retry technique \citep{wang1995checkpointing} employs checkpointing along with message logs.
 
 \clearpage
 \section{Fault tolerance on SpiNNaker}
@@ -366,13 +271,6 @@ The physical hierarchy of the system has each node containing two silicon dies -
 	\caption{48-chip Spin5 board}
 	\label{fig:spin5}
 \end{figure}
-
-%\begin{figure}[htbp]
-%	\centering
-%	\includegraphics[width=0.2\linewidth]{images/arm968.png}
-%	\caption{ARM968 architecture}
-%	\label{fig:spin5}
-%\end{figure}
 
 \subsubsection{Hardware fault tolerance mechanisms in the SpiNNaker chip}
 The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker chip is made up of various blocks, most of which have a certain degree of hardware fault tolerance in place. The blocks in questions are: the ARM968, the vector interrupt controller, the counter/timer, the DMA controller, the communications controller, the router, the inter-chip transmit and receiver interfaces, the SDRAM interface, the Ethernet interface, the system RAM and the boot ROM. A schematic representation of all these sub systems is shown in \textbf{Figure~\ref{fig:spin_arch}} and \textbf{Figure~\ref{fig:arm968}}.
@@ -446,15 +344,6 @@ To detect faults in the \textbf{system RAM}, the monitor processor could perform
 
 A fault in the \textbf{boot ROM} can be easily detected during start-up if the boot ROM fails the boot process. One can easily switch the boot ROM out of the boot area rendering it harmless. When the boor ROM is switched out of the boot area the system RAM is switched in the boot area and a neighbour chip can initialise the system RAM with the boot code and retry initialisation.
 
-
-
-
-%\begin{figure}[htbp]
-%	\centering
-%	\includegraphics[width=0.6\linewidth]{images/router_organization.pdf}
-%	\caption{Router organization}	
-%\end{figure}
-
 \clearpage
 \section{Network congestion}
 
@@ -475,6 +364,8 @@ Backpressure visualisation. \textbf{Figure~\ref{fig:backpressure}} generated by 
 	\label{fig:interchip_links}	
 \end{figure}
 
+\verb|dumpBounce.c|:  packet re-injection software that runs on a separate core.
+ 
 `Network Tester' written by \citet{heathcote2015networktester} is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network. In particular, network tester is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) which produce SpiNNaker packets which are then multicast to a fixed set of vertices.
 The following is a (non-exhaustive) list of the kinds of experiments which can be performed with `Network Tester':
 \begin{itemize}
@@ -518,8 +409,6 @@ Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is call
 \section{Process migration}
 
 \begin{itemize}
-\item \verb|dumpBounce.c|:  packet re-injection software that runs on a separate core.
-
 \item \verb|heat_demo_ft.c|:  heat demo with basic ``function migration''. The leadAp core will take out a non-working core and take over its task.
 
 \item \verb|heat_demo_bt.c|: a first attempt at replacing a broken leadAp core. The strategy is slightly different from the one we discussed earlier, but simpler to implement (all cores poll at the same frequency). In this case, a broken core is taken out but there is no ``function migration'' (do no harm stage).
@@ -533,19 +422,19 @@ where $\alpha$ is the thermal diffusivity, a material-dependent positive constan
 
 Relaxation methods are iterative numerical methods used to solve systems of equations, including non-linear systems. In particular, they are commonly used to solve finite-difference discretisations of differential equations, such as the heat equation. A time-stepping algorithm is used to compute the new temperature of each point in the region, based on its current temperature and that of its neighbouring points:
 
-\begin{align*}
-\Delta x   &= \beta_x \cdot [u(x+1,y,t) + u(x-1,y,t) - 2 \cdot u(x,y,t)] \\
-\Delta x   &= \beta_y \cdot [u(x,y+1,t) + u(x,y-1,t) - 2 \cdot u(x,y,t)] \\
-u(x,y,t+1) &= u(x,y,t) + \Delta x + \Delta y
-\end{align*}
-
-\noindent A visualisation of the above equations is depicated in \textbf{Figure~{\ref{fig:heatdemo_iterative}}}.
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.15\linewidth]{images/heatdemo_finitediff.pdf}
-	\caption{2D heat diffusion --- finite difference method.}	
-	\label{fig:heatdemo_iterative}
-\end{figure}
+%\begin{align*}
+%\Delta x   &= \beta_x \cdot [u(x+1,y,t) + u(x-1,y,t) - 2 \cdot u(x,y,t)] \\
+%\Delta x   &= \beta_y \cdot [u(x,y+1,t) + u(x,y-1,t) - 2 \cdot u(x,y,t)] \\
+%u(x,y,t+1) &= u(x,y,t) + \Delta x + \Delta y
+%\end{align*}
+%
+%\noindent A visualisation of the above equations is depicated in \textbf{Figure~{\ref{fig:heatdemo_iterative}}}.
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=0.15\linewidth]{images/heatdemo_finitediff.pdf}
+%	\caption{2D heat diffusion --- finite difference method.}	
+%	\label{fig:heatdemo_iterative}
+%\end{figure}
 
 These methods are well-suited for parallel implementation following a Single Program, Multiple Data (SPMD) model in which multiple autonomous cores simultaneously execute the same program with different data, and use messages to communicate with each other. In the heat equation case, each point sends its temperature to four neighbours and receives their temperatures in each time step.
 
@@ -584,33 +473,35 @@ crash.
 \section{CRC error correction}
 \label{sec:crc}
 
-%\subsection{Abstract --- Martin Grymel}
-%\emph{Error-control codes provide a mechanism to increase the reliability of digital data being processed, transmitted, or stored under noisy conditions. Cyclic codes constitute an important class of error-control code, offering powerful error detection and correction capabilities. They can easily be generated and verified in hardware, which makes them particularly well suited to the practical use as error detecting codes.}
-%
-%\emph{A cyclic code is based on a generator polynomial which determines its properties including the specific error detection strength. The optimal choice of polynomial depends on many factors that may be influenced by the underlying application. It is therefore advantageous to employ programmable cyclic code hardware that allows a flexible choice of polynomial to be applied to different requirements. A novel method is presented in this \ul{thesis} to realise programmable cyclic code circuits that are fast, energy-efficient and minimise implementation resources.}
-%
-%\emph{It can be shown that the correction of a single-bit error on the basis of a cyclic code is equivalent to the solution of an instance of the discrete logarithm problem. A new approach is proposed for computing discrete logarithms; this leads to a generic deterministic algorithm for analysed group orders that equal Mersenne numbers with an exponent of a power of two. The algorithm exhibits a worst-case runtime in the order of the square root of the group order and constant space requirements.}
+\subsection{SpiNNaker Overview}
+This chapter presents an overview of the SpiNNaker project which targets the large-scale simulation of spiking neural networks. The SpiNNaker architecture facilitates a massively-parallel supercomputer with a million processors, which supports these neural simulations. The issue of anticipated memory faults in a SpiNNaker system of this scale is highlighted, and the usage of cyclic codes as a layer of protection against many of these errors is explained.
 
-%\hl{Too detailed}
-%\emph{This \ul{thesis} establishes new relationships for finite fields that are represented as the polynomial ring over the binary field modulo a primitive polynomial. With a subset of these properties, a novel approach is developed for the solution of the discrete logarithm in the multiplicative groups of these fields. This leads to a deterministic algorithm for small group orders that has linear space and linearithmic time requirements in the degree of defining polynomial, enabling an efficient correction of single-bit errors based on the corresponding cyclic codes.}
+\subsection{Memory}
+The large SpiNNaker system in its envisaged configuration of 57,600 nodes will incorporate approximately 7 TB of SDRAM. With such an immense amount of memory, the effect of data bit errors is significant during the operation of the machine.
+
+Memory bit errors are subdivided into two different classes: hard and soft errors. A hard error is characterised by a permanent hardware fault in a memory cell that will result in a consistent reliability issue. For instance, it may be the case that a memory cell will always provide one particular bit value during readout, no matter what value has been written to it. Soft errors are transient faults that occur randomly and may, for example, be induced through cosmic rays or the decay of radioactive atoms in the memory packaging materials. Also, a soft error may arise either directly in the memory, or along the data path during the memory read or write phase.
+
+Recently, a large-scale study has been conducted to investigate statistics for error rates in Dynamic Random Access Memory (DRAM) in production systems \hl{[SPW09]}. It suggests that the average error rate ranges from 25,000 to 75,000 FIT (failures in time per billion hours of operation) per Mbit, however a distinction between hard and soft errors is not made. If these numbers are applied to the SpiNNaker system of 57,600 nodes, 25 to 74 bit errors on average can be expected to occur within the SDRAM per minute, roughly approximated as one bit error per second.
+
+It may be the case that the number of expected bit errors in the SpiNNaker system will not have a significant impact on particular applications such as neural network simulations. However, it is not known to what extent neural network simulations can compensate for memory faults, and other potential applications may not tolerate bit errors at all, so appropriate measures need to be taken to deal with them in the SpiNNaker system. For this reason error-control codes are employed within SpiNNaker to provide a layer of protection against memory faults.
 
 \subsection{Introduction}
 \ul{The preservation of digital data integrity is of major concern for computer, communication, and storage systems. In all these applications digital data is susceptible to unintentional modification which may arise from electrical or magnetic disturbance, component failure, or the result of system design error. Depending on the specific application, data failures may result in severe consequences and thus their potential occurrence needs to be considered carefully in the underlying design of the system.}
 
 Data reliability can be enhanced through the employment of error-control codes,which provide mechanisms for the detection and correction of errors. These codes enrich the data with redundancy by forming code words, which initially can be used to detect inconsistencies in the received data. If the affected data can be retransmitted or recalculated, one simple error correction scheme is the Automatic Repeat Query (ARQ), where the receiver simply requests a retransmission once it detects data inconsistencies. However, where retransmission or recalculation is not feasible, being too slow or uneconomic, Forward Error Correction (FEC) techniques can correct errors on the basis of the corrupted received data and its inherent redundancy.
 
-Cyclic codes form an important class of error-control code offering powerful error detection and correction capabilities. At the same time, their algebraic properties permit the use of simplified processing procedures when compared to non-cyclic codes. For instance, the encoding of data into cyclic code words can easily be achieved in hardware using a simple linear feedback shift register. Likewise, the same circuit can be used to validate code words, and thus detect errors. For these reasons, cyclic codes have been widely adopted as error-detecting codes and commonly deployed in combination with ARQ schemes. This thesis concentrates on cyclic codes with symbols from the binary field.
+Cyclic codes form an important class of error-control code offering powerful error detection and correction capabilities. At the same time, their algebraic properties permit the use of simplified processing procedures when compared to non-cyclic codes. For instance, the encoding of data into cyclic code words can easily be achieved in hardware using a simple linear feedback shift register. Likewise, the same circuit can be used to validate code words, and thus detect errors. For these reasons, cyclic codes have been widely adopted as error-detecting codes and commonly deployed in combination with ARQ schemes. This thesis \hl{concentrates on cyclic codes with symbols from the binary field}.
 
-If error correction is desired, the most basic case concerns the localisation of a single erroneous bit. It can be shown that for cyclic codes this problem is equivalent to the computation of the discrete logarithm in finite cyclic groups, for which it is widely believed that for the general case no efficient classical algorithm is devisable. This is one reason why the discrete logarithm forms the basis for many cryptographic applications such as the Diffie-Hellman-Merkle key exchange. However, it has not been proven that the computation of the discrete logarithm is hard for all groups of practical interest.
+If error correction is desired, the most basic case concerns the localisation of a single erroneous bit. It can be shown that for cyclic codes this problem is equivalent to the computation of the discrete logarithm in finite cyclic groups, for which it is widely believed that for the general case no efficient classical algorithm is devisable. This is one reason why the discrete logarithm forms the basis for many cryptographic applications. However, it has not been proven that the computation of the discrete logarithm is hard for all groups of practical interest.
 
-Cyclic codes are characterised by an underlying generator polynomial. Different generator polynomials exhibit different capabilities in regard to the detection and correction of errors. Certain polynomials, for example,may be particularly well suited to the practical realisation of the error correction process. The selection of polynomial is also dependent on the length of the data that is to be protected and the anticipated error patterns. In systems where diverse applications may favour different cyclic codes, and where the requirements may change over time or be unknown at the design stage, it may be advantageous to provide full flexibility in regard to the usable cyclic code generator polynomials. Efficient cyclic code processing relies on dedicated cyclic code hardware circuits, which may be programmable if the underlying generator polynomial is adaptable. Such a programmable circuit has been created for the SpiNNaker project, a massively parallel spiking neural network simulator.
+Cyclic codes are characterised by an underlying generator polynomial. Different generator polynomials exhibit different capabilities in regard to the detection and correction of errors. Certain polynomials, for example, may be particularly well suited to the practical realisation of the error correction process. The selection of polynomial is also dependent on the length of the data that is to be protected and the anticipated error patterns. In systems where diverse applications may favour different cyclic codes, and where the requirements may change over time or be unknown at the design stage, it may be advantageous to provide full flexibility in regard to the usable cyclic code generator polynomials. Efficient cyclic code processing relies on dedicated cyclic code hardware circuits, which may be programmable if the underlying generator polynomial is adaptable. Such a programmable circuit has been created for the SpiNNaker project, a massively parallel spiking neural network simulator.
 
 \subsection{Discrete logarithms (Wikipedia)}
 In mathematics, a discrete logarithm is an integer k solving the equation $b^k = g$, where $b$ and $g$ are elements of a finite group. Discrete logarithms are thus the finite-group-theoretic analogue of ordinary logarithms, which solve the same equation for real numbers $b$ and $g$, where $b$ is the base of the logarithm and $g$ is the value whose logarithm is being taken.
 
 Computing discrete logarithms is believed to be difficult. No efficient general method for computing discrete logarithms on conventional computers is known, and several important algorithms in public-key cryptography base their security on the assumption that the discrete logarithm problem has no efficient solution.
 
-No efficient classical algorithm for computing general discrete logarithms $\log _b g$ is known. The naive algorithm is to raise $b$ to higher and higher powers $k$ until the desired $g$ is found; this is sometimes called trial multiplication. This algorithm requires running time linear in the size of the group $G$ and thus exponential in the number of digits in the size of the group. There exists an efficient quantum algorithm due to \hl{Peter Shor [1].}
+No efficient classical algorithm for computing general discrete logarithms $\log _b g$ is known. The naive algorithm is to raise $b$ to higher and higher powers $k$ until the desired $g$ is found; this is sometimes called trial multiplication. This algorithm requires running time linear in the size of the group $G$ and thus exponential in the number of digits in the size of the group.
 
 More sophisticated algorithms exist, usually inspired by similar algorithms for integer factorization. These algorithms run faster than the naive algorithm, some of them linear in the square root of the size of the group, and thus exponential in half the number of digits in the size of the group. However none of them runs in polynomial time (in the number of digits in the size of the group).
 
@@ -619,99 +510,21 @@ Cyclic codes comprise a powerful class of error-control code; they have gained w
 
 The current predominating drawback of cyclic codes is the lack of efficient error correction techniques for them. To perform the correction of a single-bit error an instance of the generalised discrete logarithm problem needs to be solved. It is an additional goal of this research to explore new methods in the quest for an efficient mechanism for computing discrete logarithms in relevant finite cyclic groups and, therefore, facilitate the efficient recovery from single-bit errors through cyclic codes.
 
-%\subsection{Contribution}
-%The contributions of this thesis are summarised as follows:
-%
-%\begin{itemize}
-%\item A new scheme is proposed enabling the efficient calculation of the state transition and control matrix for the parallel operation of a cyclic code circuit in hardware. This circuit is used both for the data encoding step and the decoder error detection phase. With the incorporation of a programmable transition and control matrix, this adaptable circuit can be configured to use different cyclic codes. This added flexibility is a valuable enhancement, as the error detection and error correction performance of a particular cyclic code depends on parameters including the length of the data that is to be protected and the anticipated error patterns of an application. A simulation of the novel programmable cyclic code circuit produced shows significant improvements in terms of speed, area and energy efficiency when compared with previously published designs. The design of the new circuit has been published [GF11].
-%\item A new approach is proposed for the computation of discrete logarithms; this leads to a generic deterministic algorithm for analysed group orders that equal a Mersenne number where the exponent is a power of two. It is shown that, for these groups, the worst-case running time is proportional to the square root of the group order, while the space requirements are constant. The scheme is further improved for particular cases where the discrete logarithm values occur with different probabilities, leading to reduced average and worst-case execution times. Furthermore, properties are derived that apply to the sequences that are used by the algorithm.
-%\item A set of new relationships is developed for the field elements of the ring of polynomials over the binary field modulo a primitive polynomial. Based on a subset of these properties, a novel approach is proposed for the computation of discrete logarithms in the cyclic multiplicative group of the finite field. For at least all primitive polynomials up to degree 12 and the first evaluated primitive polynomials of degree 13 and 14, a deterministic algorithm with linear space and linearithmic time requirements in the degree of the polynomial results.
-%\end{itemize}
-
-\subsection{Excerpts from Chapter 4 -- SpiNNaker}
-\subsubsection{Overview}
-This chapter presents an overview of the SpiNNaker project which targets the large-scale simulation of spiking neural networks. The SpiNNaker architecture facilitates a massively-parallel supercomputer with a million processors, which supports these neural simulations. The issue of anticipated memory faults in a SpiNNaker system of this scale is highlighted, and the usage of cyclic codes as a layer of protection against many of these errors is explained.
-
-\subsubsection{Memory}
-The large SpiNNaker system in its envisaged configuration of 57,600 nodes will incorporate in the order of 7 TB of SDRAM. With such an immense amount of memory, the effect of data bit errors is significant during the operation of the machine.
-
-Memory bit errors are subdivided into two different classes: hard and soft errors \hl{[ZL79; Zie96; Zie+96]}.A hard error is characterised by a permanent hardware fault in a memory cell that will result in a consistent reliability issue. For instance, it may be the case that a memory cell will always provide one particular bit value during readout, no matter what value has been written to it. Soft errors are transient faults that occur randomly and may, for example, be induced through cosmic rays or the decay of radioactive atoms in the memory packaging materials. Also, a soft error may arise either directly in the memory, or along the data path during the memory read or write phase.
-
-Recently, a large-scale study has been conducted to investigate statistics for error rates in Dynamic Random Access Memory (DRAM) in production systems \hl{[SPW09]}. It suggests that the average error rate ranges from 25,000 to 75,000 FIT (failures in time per billion hours of operation) per Mbit, however a distinction between hard and soft errors is not made. If these numbers are applied to the SpiNNaker system of 57,600 nodes, 25 to 74 bit errors on average can be expected to occur within the SDRAM per minute, roughly approximated as one bit error per second.
-
-It may be the case that the number of expected bit errors in the SpiNNaker system will not have a significant impact on particular applications such as neural network simulations. However, it is not known to what extent neural network simulations can compensate for memory faults, and other potential applications may not tolerate bit errors at all, so appropriate measures need to be taken to deal with them in the SpiNNaker system. For this reason error-control codes are employed within SpiNNaker to provide a layer of protection against memory faults.
-
-\subsubsection{CRC unit}
+\subsection{CRC unit}
 The DMA controller of each processing subsystem has been equipped with a CRC unit that allows the generation and verification of error-control codes. The circuit primarily supports cyclic codes as they offer powerful error detection and correction capabilities and as they are, at the same time, easily implementable in hardware \hl{[LC83]}. If, for instance, a processor initiates a DMA transfer to copy a data block from the local memory to the SDRAM, the CRC unit can be instructed to calculate (transparently and in parallel) the redundancy part for a cyclic code and, automatically, append this to the SDRAM data block. The CRC unit can be used to calculate the error syndrome for a data block retrieved from memory and signal the corresponding processing core if an integrity issue arose. The program that is executed on the processing core has to decide what action is to be taken in the event of a detected data inconsistency. A simple retransmission of the data block could correct the error if it occurred along the data path during the readout phase, however even this may not be fast enough for the `real-time' operation of a SpiNNaker neural simulation. Therefore it is necessary to consider appropriate error correction procedures in software, to recover from memory faults based on the obtained error syndrome, including when they are uncorrectable. These can range from a simple disregard of the error, through a localisation and correction of the error, to a shutdown of the relevant SpiNNaker system components for replacement if hard errors are involved.
 
-In the choice of employed cyclic code, many factors need to be taken into account for the selection of the generator polynomial. For instance, certain undiscovered subclasses of cyclic codes may allow the realisation of very efficient error correction procedures in software, or data blocks of different lengths may be stored in the SDRAM so that a polynomial offering best combined error protection for all of the block lengths should be selected. To offer maximal flexibility within SpiNNaker, a programmable CRC circuit has been incorporated that permits switching the generator polynomial to any of degree 32 or lower whenever required. A direct advantage is that the polynomial is adaptable to the length of the data block that is to be protected, which means that the best choice of offered error protection can be made. Another feature of the CRC circuit is that several cyclic codes of a smaller degree can be generated based on different bits of the data stream. For example, for each half-word of the data stream, a cyclic code based on a generator polynomial of degree 16 can be computed.
+In the choice of employed cyclic code, many factors need to be taken into account for the selection of the generator polynomial. For instance, certain undiscovered subclasses of cyclic codes may allow the realisation of very efficient error correction procedures in software, or data blocks of different lengths may be stored in the SDRAM so that a polynomial offering best combined error protection for all of the block lengths should be selected. To offer maximal flexibility within SpiNNaker, a programmable CRC circuit has been incorporated that permits switching the generator polynomial to any of degree 32 or lower whenever required. A direct advantage is that the polynomial is adaptable to the length of the data block that is to be protected, which means that the best choice of offered error protection can be made. \ul{Another feature of the CRC circuit is that several cyclic codes of a smaller degree can be generated based on different bits of the data stream. For example, for each half-word of the data stream, a cyclic code based on a generator polynomial of degree 16 can be computed.}
 
 The width of the data bus that traverses the DMA controller in SpiNNaker is 32 bits, and the CRC unit has been designed to process this number of bits in parallel to avoid being a bottleneck to DMA data transfers. To configure the unit for the usage of a cyclic code or any other supported error-control code, one Kbit of configuration data needs to be supplied by the corresponding processing core to the appropriate registers inside the unit. Since the data bus is used to provide this configuration data, the transfer takes place as a series of 32 bit words. The registers are realised as latches to reduce the hardware demand, as each SpiNNaker chip accommodates one CRC unit for each of the 18 DMA controllers (one per processor subsystem).
 
-\subsubsection{Conclusion}
-The SpiNNaker architecture has been created to support large-scale simulations of spiking neural networks in biological real-time. It has been dimensioned to scale up to machines consisting of a million processors with SDRAM totalling about 7 TB. With such a vast amount of memory, it is estimated that, on average, about 1 bit error per second will occur.
-
-To improve the reliability of memory transfers, SpiNNaker employs cyclic codes for error control due to the efficient realisation of the code generation and verification circuit. Once inconsistencies are detected for a block of data, software procedures may be triggered to attempt an error recovery. The correction of a single-bit error on the basis of a cyclic code, essentially requires the computation of the discrete logarithm in relevant groups. However, no efficient algorithm is known for the computation of this type of discrete logarithm. Two new solutions for the computation of the discrete logarithm in certain groups are proposed in \hl{[Grymel]}.
-
-The optimal choice of cyclic code to employ is influenced by many factors including the length of the data that is to be protected and the desired error control capabilities. Therefore, programmable cyclic code circuits are employed within SpiNNaker to maximise flexibility in the choice of cyclic code for different scenarios. A novel method for the generation of efficient programmable cyclic code circuits is proposed in the \hl{next section}.
-
-%\subsection{Excerpts from Chapter 5 --- Programmable CRC hardware}
-%\subsubsection{Overview}
-%In this chapter, the equations for a parallel realisation of a cyclic code circuit are derived. It is then shown how a programmable version of such a circuit can be created which can be configured to use different generator polynomials. Furthermore, a new scheme is presented that allows the efficient computation of the state transition and control matrix necessary for the circuit. With this scheme a novel programmable parallel cyclic code circuit is proposed that is then compared to previous work. This chapter is based on a journal publication \hl{[GF11]}.
-%
-%\subsubsection{Hardware}
-%Cyclic codes constitute a powerful class of error-control code as set out in Section 2.3. They offer effective error detection and can easily be realised in hardware, which makes them a popular choice for many applications that require the detection of errors, including Ethernet \hl{[TW11]}. In the context of pure error detection, a cyclic code is often referred to as a Cyclic Redundancy Checksum (CRC) and the popularity of cyclic codes has led to a number of different software and hardware implementations \hl{[LC83; RG88]}.Speed requirements usually make software schemes impractical and dedicated hardware is needed. The generic hardware approach uses an inexpensive Linear Feedback Shift Register (LFSR), which assumes serial data input. In the presence of wide data buses, the serial computation has been extended to parallel versions that process whole data words based on derived equations and on cascading the LFSR \hl{[Spr01]}. Various optimisation techniques have been developed that target resource reduction \hl{[Bra+96]} and speed increase \hl{[Der01; CP06; KRM08; KRM09]}.
-%
-%A wide range of factors influence the selection of an appropriate CRC generator polynomial for a particular application as outlined in Subsection 2.3.4. This range includes the error detection and correction capabilities of a generator polynomial, which depend on the length of the data that is to be protected. For instance, in scenarios where data blocks of different length are used, or where the final requirements of the generator polynomial are not known at the time of the hardware implementation, it is beneficial to employ programmable CRC circuits that can be configured to different generator polynomials.
-%
-%This applies precisely to the SpiNNaker project, whose target is to provide a research platform for the simulation of arbitrary spiking neural networks as described in Chapter 4. The planned large SpiNNaker system will incorporate a substantial amount of SDRAM to hold relevant data for the neural network simulations; in this context, CRCs are used to reduce the effect of data errors arising in the memory. Since the length of the data blocks may vary between different neural network simulations, for instance, it has been decided to incorporate programmable CRC circuits into the SpiNNaker system to offer maximal flexibility.
-%
-%With the design of a circuit, there is usually a tradeoff between speed and area. In this particular scenario, there are two dimensions to the speed of a programmable CRC circuit: the time necessary to process a data word, and the time required to reconfigure to a new polynomial. This chapter directly extends the parallel CRC circuit by \hl{Campobello et al. [CPR03]} based on state space representation in several ways. On the one hand, restrictions between the width of the data processed in parallel and the order of the polynomial are lifted. On the other hand, a novel scheme is presented allowing the inexpensive computation of the CRC transition and control matrix in hardware. This leads to a programmable parallel CRC implementation that offers an improved balance between area and both dimensions of speed.
-
-\subsection{Excerpts from Chapter 8 Conclusion -- Cyclic codes}
-\emph{Cyclic codes have gained wide popularity as error-detecting codes due to their inherent algebraic properties that permit easy implementation and effective detection of errors. This thesis supports the position of cyclic codes as a powerful class of error-control code whose properties extend beyond simple error detection. The thesis demonstrates contributions in the generation of efficient, programmable, parallel cyclic code circuits, and in the potential of cyclic codes for efficient error correction. These contributions are described in more detail, together with highlighting possible areas for future exploration within this concluding chapter.}
-
-\subsubsection{Programmable CRC}
+\subsection{Programmable CRC}
 A cyclic code is characterised through its generator polynomial which influences the specific error detection and correction capabilities of the code, depending on the length of the data that is to be protected, as outlined in Chapter 2. In addition, different applications may run on the same system with completely different cyclic code requirements, as in the case of SpiNNaker which is described in Chapter 4. It was shown how cyclic code circuits can overcome the limitations of a single generator polynomial by allowing the circuit to be flexibly programmed with any polynomial within the design constraints. In Chapter 5 a new method for computing the transition and control matrix of a parallel cyclic code circuit was presented. This method allows the efficient realisation of programmable parallel circuits that operate at high speeds, reconfigure rapidly to new polynomials, require few implementation resources, and are energy-efficient when compared with alternative schemes.
 
-\subsubsection{Future work in Programmable CRC}
-\ul{With an efficient programmable cyclic code circuit that can reconfigure rapidly to new generator polynomials, it is feasible to change the polynomial after each processed word of a data stream.} The calculation of the next polynomial can be made dependent on factors including the current input data word and the current state of the circuit, i.e. the calculated redundancy and the polynomial. It would be interesting to investigate if a polynomial adjustment algorithm can be devised that has advantages over fixed cyclic code generator polynomials, from both error detection and correction points of view.
-
-\subsubsection{Error Correction}
-The correction of a single-bit error on the basis of a cyclic code requires the computation of the discrete logarithm in finite cyclic groups, represented as the polynomial ring over the binary field modulo the cyclic code generator polynomial. No efficient algorithm is known for the evaluation of the discrete logarithm in these groups and, moreover, it is also widely believed that no such algorithm can be devised. Nonetheless, this work focused on the exploration of new algorithms in the quest for an efficient calculation of discrete logarithms in relevant groups.
-
-A new approach was developed for calculating discrete logarithms. For groups that have an order equal to a Mersenne number with an exponent of a power of two, a deterministic generic algorithm was devised based on size differences of cyclotomic cosets. The algorithm requires only constant space and exhibits a worst-case asymptotic running time of the square root of the group order. It was shown that the average- and worst-case running times of the algorithm can be improved for certain cases where the discrete logarithm values occur with unequal probabilities.
-
-For finite fields with binary characteristic, represented as the polynomial ring over the binary field modulo a primitive polynomial, new properties were developed in Chapter 7. On the basis of a subset of these properties, a novel approach was proposed for computing discrete logarithms in the cyclic multiplicative groups of these fields. \hl{It resulted in a deterministic algorithm with linear space and linearithmic time requirements in the degree of the defining polynomial, for at least all polynomials up to degree 12 and the first polynomials of degree 13 and 14. The algorithm requires a set of parameters in the order of the polynomial degree, where the parameter search space grows exponentially in the polynomial degree. For this reason partial results on the running time for single polynomials of higher degrees up to 32 were provided.}
-
-%\subsubsubsection*{Future work in programmable CRC}
-%The research conducted on discrete logarithm algorithms generated a number of open questions that present potential future research opportunities:
-%\begin{itemize}
-%\item Under the assumption of the existence of an efficient algorithm for the computation of the discrete logarithm in finite cyclic groups represented in the ring of polynomials modulo a polynomial, the efficient correction of single-bit errors based on cyclic code is feasible. It needs to be investigated further to determine to what extent this assumption would also enable the efficient correction of multi-bit errors.
-%
-%\item For the proposed algorithm for discrete logarithms for group orders that equal Mersenne numbers with an exponent of a power of two, it may be possible to use the developed sequence properties to improve the algorithm. It may also be the case that new properties can be found that will enable a speed-up of the algorithm. In particular, it needs to be investigated if the proposed algorithm reduces the initial discrete logarithm problem into smaller subgroups, similar to the Silver-Pohlig-Hellman algorithm, as this permits alternative algorithms to be employed in those subgroups.
-%
-%\item The proposed generic algorithm for discrete logarithms was tailored to group orders of special Mersenne numbers. It remains an open question as to whether the algorithm can be generalised to all group orders and what the resulting execution overheads would be.
-%
-%\item An algorithm, efficient in time and space, was proposed for the computation of discrete logarithms in the multiplicative groups of small finite fields represented in the polynomial ring over the binary field modulo a primitive polynomial. It was shown that the algorithm is applicable at least to all defining polynomials up to degree 12, and the first polynomials of degree 13 and 14. For single polynomials of degree 15 to 32, it is known that a mapping configuration exists that allows the algorithm to terminate under all conditions, however it is unclear if one exists that also results in an efficient worst-case execution time. It would be interesting to investigate if, for all polynomials with a degree exceeding 12, loop-free mapping configurations exist, and also what would be the best asymptotic worst-case runtime behaviour of the algorithm. A related open question concerns the best achievable average asymptotic runtime of the algorithm.
-%
-%\item The determination of the overall best mapping configuration for a specific polynomial and optimisation goal was achieved through a brute force attack which is impractical for polynomials of higher degree due to the exponential search space. It may be the case that an efficient method can be devised that allows the computation of the mapping configuration for at least the best worst-or average-case; such a method may also assist in the analysis of the asymptotic runtime behaviours. Alternatively, it may be possible to develop good heuristics to reduce the search space and employ evolutionary algorithms to find a close approximation for the optimal set of values.
-%
-%\item A number of conjectures were established that need analysis to determine if they can be proven. Proofs for the conjectures concerning the L transformation in particular could lead to further insights into the efficient computation of discrete logarithms in the relevant groups.
-%
-%\item The proposed algorithm to compute discrete logarithms in multiplicative groups of small finite fields, represented in the polynomial ring over the binary field modulo a primitive polynomial, might also be easily applicable to defining polynomials that are not primitive, but irreducible. If the defining polynomial is reducible, then it induces only a cyclic group, for which the algorithm might also be easily employed. Moreover, it should be investigated if the algorithm can be adapted to finite fields with a characteristic other than two.
-%
-%\item It was conjectured that, for a defining primitive polynomial of degree $m$ and a parity level $l$ with $1 \leq l \leq \lfloor \frac{m-2}{2} \rfloor $, $2^{l-1}$ linear transformations of the form $T^x$ exist such that each odd parity block of size one on level l is mapped by one of the transformations onto an even parity block element on the same level. It would be interesting to investigate whether, for every level $l$, a set of these $2^{l-1}$ transformations exists, such that the transformations can easily be computed from each other. In particular, it is an open question if the displacement r between the two transformations $L_{2a}$ and $L_{2b}$ for level two can easily be determined, such that $L_{2a} = T^r L_{2b}$.
-%
-%\item It is currently unknown if a simple correlation exists between the displacements of equally-sized blocks on a certain parity level. If the displacements can be easily computed, alignments of different parity vector spaces can simply be obtained and therefore also transformations such as $E_0$ and $E_1$.
-%\end{itemize}
-
-\subsection{Summary}
-\subsubsection{Efficient Programmable CRC Circuits}
+\subsection{Efficient Programmable CRC Circuits}
 
 A novel method was proposed for the efficient realisation of programmable parallel cyclic code circuits. The resulting circuits can rapidly be configured with a generator polynomial, exhibit fast operating speeds, have low resource requirements, and are energy-efficient at the same time when compared to alternative solutions.
 
-\subsubsection{Algorithms for Computing Discrete Logarithms}
+\subsection{Algorithms for Computing Discrete Logarithms}
 
 Two new approaches were developed for computing discrete logarithms to facilitate the correction of single-bit errors based on cyclic codes.
 
