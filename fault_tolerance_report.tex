@@ -117,104 +117,95 @@ pdfkeywords={faulttolerance spinnaker}
 
 \newpage
 \section{Software fault tolerance}
+\label{sec:software_ft}
+
 \subsection{Introduction}
-With the explosive growth in Internet technology and the emergence of a number of new and advanced applications, assured availability of computer systems has become a critical issue. The challenge is to provide the desired availability and performance at a low cost.
-Outages in computer systems consist of both hardware and software failures. While hardware failures have been studied extensively and varied mechanisms have been presented to increase the system availability with regard to such failures, software failures and the corresponding reliability/availability analysis has not drawn much attention from researchers. The study of software failures has now become more important since it has been recognized that computer systems outages are more due to software faults than to hardware faults \citep{gray1991high}.
+This report will first outline (\textbf{Section~\ref{sec:software_ft}}) some fault tolerance basics and concepts from the field of software fault tolerance \citep{trivedi2008software} with the hope that the some of the ideas can be extended to SpiNNaker, a massively parallel processing machine. \textbf{Section~\ref{sec:ft_spinnaker}} details the various hardware blocks in the SpiNNaker chip which provide features that could be used to implement fault tolerant mechanisms to benefit the system as a whole. \textbf{Sections \ref{sec:congestion}} and~\textbf{\ref{sec:migration}} show some working examples of how fault tolerance is currently being implemented on SpiNNaker and \textbf{Section~\ref{sec:crc}} outlines a technique by \citet{grymel2013error} of how to perform 1-bit error correction when doing DMA transfers using the built-in programmable CRC unit.
 
-It was long assumed that concepts of reliability and failure rate do not apply to software since software does not degrade physically as a function of time or environmental stresses. But it is not reasonable to expect a software system to be operating on the same input data, user requirements and computing environment constantly. These changes must be accommodated in most applications and so a history of fault-free behavior cannot be taken as an indication of fault-free behaviour in the future. Many studies have shown that even for applications which have relatively less complex software, many failures in computer systems are due to software bugs \citep{pradhan1996fault}. Therefore, software reliability is one of the weakest links in system reliability.
+While hardware failures have been studied extensively and varied mechanisms have been presented to increase the system availability with regard to such failures, software failures and the corresponding reliability/availability analysis has not drawn much attention from researchers. The study of software failures has now become more important since it has been recognized that computer systems outages are more due to software faults than to hardware faults \citep{gray1991high}. For a long time it was assumed that concepts of reliability and failure rate do not apply to software since software does not degrade physically as a function of time or environmental conditions. Many studies have shown that even for applications which have relatively less complex software, many failures in computer systems are due to software bugs \citep{pradhan1996fault}. Therefore, software reliability is one of the weakest links in system reliability.
 
-Demands on software reliability and availability have increased tremendously due to the nature of present day applications. There are stringent requirements in terms of cumulative down time and failure free operation of software. In many cases, there are serious consequences like huge economic losses or risk to human life if the software is faulty. In spite of using the best available software development techniques, there have been many instances of spectacular system failures due to software errors like the crash of the Ariane 5 launcher in June 1996 which was attributed to specification and design errors in the software of the inertial reference system \citep{lions1996ariane}. Also, increasing complexity and proliferation of real-time software have led to a resultant increase in software failures.
+Present-day applications have strict reliability and availability demands, because in many cases there are serious consequences like huge economic losses or risk to human life if the software is faulty. There have been instances of spectacular system failures due to software errors like the crash of the Ariane 5 launcher \citep{lions1996ariane}. Also, increasing complexity and proliferation of real-time software have led to a resultant increase in software failures.
 
-A major limitation in developing reliable software is the test and verification process. It is almost impossible to fully test and verify if a software is bug-free. Formal verification techniques such as proof of correctness cannot be applied to large programs. Furthermore, the shortcomings in the mathematical induction process on which proof of correctness is based and the difficulties in verifying adherence to timing constraints for real-time systems make the software testing and verification process harder. This limitation coupled with the very stringent requirements for fault-free operation of the software form the basis for the need for fault tolerance in software.
+A major limitation in developing reliable software is the test and verification process. Formal verification techniques cannot be applied to large programs. Furthermore, the difficulties in verifying adherence to timing constraints for real-time systems such as SpiNNaker make the software testing and verification process harder. This limitation coupled with the very stringent requirements for fault-free operation of the software form the basis for the need for fault tolerance in software \citep{trivedi2008software}.
 
-\emph{For a more detailed discussion on software fault tolerance refer to \citet{checkpointing}}.
+\subsection{Classification of Software Faults}
+%According to \citet{laprie1992dependability}, ``a system failure occurs when the delivered service no longer complies with the specifications, the latter being an agreed description of the system's expected function and/or service.'' Some studies have suggested that since software is not a physical entity and hence not subject to transient physical phenomena (as opposed to hardware), software faults are permanent in nature \citep{huang1994two}.
 
-\subsection{Software Failure and Classification of Software Faults}
-\subsubsection{What is a software failure?}
-According to \citet{laprie1992dependability}, ``a system failure occurs when the delivered service no longer complies with the specifications, the latter being an agreed description of the system's expected function and/or service.'' This definition applies to both hardware and software system failures. Faults or bugs in a hardware or a software component cause errors. An error is defined by \citet{laprie1992dependability} as that part of the system which is liable to lead to subsequent failure, and an error affecting the service is an indication that a failure occurs or has occurred. If the system comprises of multiple components, errors can lead to a component failure. As various components in the system interact, failure of one component might introduce one or more faults in another.
-
-\subsubsection{Classification of software faults}
-Some studies have suggested that since software is not a physical entity and hence not subject to transient physical phenomena (as opposed to hardware), software faults are permanent in nature \citep{huang1994two}. Software faults can be classified into hard and soft faults. Hard faults are permanent design faults and hence almost deterministic in nature. They can be identified easily and weeded out during the testing and debugging phase of the software life cycle. Soft faults, on the other hand, belong to the class of temporary internal faults and are intermittent. They are essentially permanent faults whose conditions of activation occur rarely or are not easily reproducible. Hence these faults result in transient failures, i.e., failures which may not recur if the software is restarted. Some typical situations in which intermittent might surface are boundaries between various software components, improper or insufficient exception handling and interdependent timing of various events. It is for this reason that intermittent faults are extremely difficult to identify through testing. Hence a mature piece of software in the operational phase, released after its development and testing stage, is more likely to experience failures caused by intermittent faults than due to permanent faults. Most recent studies on failure data have reported that a large proportion of software failures are transient in nature \citep{gray1990census}, caused by phenomena such as overloads or timing and exception errors \citep{chillarege1995measurement}. The study of failure data from Tandem's fault tolerant computer system indicated that 70\% of the failures were transient failures, caused by faults like race conditions and timing problems \citep{lee1995software}.
+Software faults can be classified into hard and soft faults. Hard faults are permanent design faults and hence almost deterministic in nature. They can be identified easily and weeded out during the testing and debugging phase of the software life cycle. Soft faults, on the other hand, belong to the class of temporary internal faults and are intermittent. Hence these faults result in transient failures, i.e., failures which may not recur if the software is restarted. Some typical situations in which intermittent faults might surface are boundaries between various software components, improper or insufficient exception handling and interdependent timing of various events. It is for this reason that intermittent faults are extremely difficult to identify through testing. Most recent studies on failure data have reported that a large proportion of software failures are transient in nature \citep{gray1990census}, caused by phenomena such as overloads or timing and exception errors \citep{chillarege1995measurement}.
 
 \subsection{Techniques for Fault Tolerance in Software}
-Means to cope with the existence and manifestation of faults in software are divided into three main categories:
+Means to cope with the existence and manifestation of faults in software can be divided into three main categories:
 
 \begin{itemize}
-\item \textbf{Fault avoidance/prevention:} This includes design methodologies which attempt to make software provably fault-free.
-\item \textbf{Fault removal:} These methods aim to remove faults after the development stage is completed. This is done by exhaustive and rigorous testing of the final product.
-\item \textbf{Fault tolerance:} This method makes the assumption that the system has unavoidable and undetectable faults and aims to make provisions for the system to operate correctly even in the presence of faults.
+\item \textbf{Fault avoidance/prevention} includes design methodologies which attempt to make software provably fault-free.
+\item \textbf{Fault removal} methods aim to remove faults after the development stage is completed. This is done by exhaustive and rigorous testing of the final product.
+\item \textbf{Fault tolerance} makes the assumption that the system has unavoidable and undetectable faults and aims to make provisions for the system to operate correctly even in the presence of faults.
 \end{itemize}
 
-Most deterministic and repeatable faults, can be removed through rigorous and extensive testing and debugging. But, as argued in the previous sections, no amount of testing can certify software as fault-free, i.e., fault avoidance and fault removal cannot ensure the absence of faults. Therefore, any practical piece of software can be presumed to contain faults in the operational phase and designers must deal with these faults if the software failure has serious consequences. The remaining faults in software after testing and debugging are usually intermittent which eluded detection during the testing. Hence, fault tolerance, is the only remaining hope to achieve dependable software. Fault tolerance makes is possible for the software system to provide service even in the presence of faults. This means that an imminent failure needs to be prevented or recovered from. Only methods to deal with software fault tolerance in the operational phase will be discussed.
+Most deterministic and repeatable faults, can be removed through rigorous and extensive testing and debugging, but no amount of testing can certify software as fault-free. The faults remaining after testing and debugging are usually intermittent. Hence, \emph{fault tolerance}, is the only remaining hope to achieve dependable software. Fault tolerance makes it possible for the software system to provide service even in the presence of faults. This means that an imminent failure needs to be prevented or recovered from.
 
-There are two strategies for software fault tolerance --- error processing and fault treatment. Error processing aims to remove errors from the software state and can be implemented by substituting an error-free state in place of the erroneous state, called error recovery, or by compensating for the error by providing redundancy, called error compensation. Error recovery can be achieved by either forward or backward error recovery. The second strategy, fault treatment, aims to prevent activation of faults and so action is taken before the error creeps in. The two steps in this strategy are fault diagnosis and fault passivation. \textbf{Figure~\ref{fig:faulttoltree}} shows this classification. The nature of faults which typically occur in software has to be thoroughly understood in order to apply these strategies effectively. Techniques for tolerating faults in software have been divided into three classes --- design diversity, data diversity and environment diversity.
-
-%\textbf{Table~\ref{tab:faulttolmethods}} shows the fault tolerance strategies used by these classes.
-%
-%\begin{table}[h]
-%	\centering
-%	\caption{Strategies used by different fault tolerance methods}
-%	\label{tab:faulttolmethods}
-%	\begin{tabular}{l c c c c }
-%		\toprule
-%		& Design    & Data      & Environment & Checkpointing \\
-%		& diversity & diversity & diversity   & \& recovery   \\
-%		\midrule
-%		Error compensation & \cmark    & \cmark    &             &               \\
-%		Error recovery     &           &           &             & \cmark        \\
-%		Fault treatment    &           &           & \cmark      &               \\
-%		\bottomrule
-%	\end{tabular}
-%\end{table}
+There are two strategies for software fault tolerance: error processing and fault treatment. Error processing aims to remove errors from the software state and can be implemented by substituting an error-free state in place of the erroneous state, or by compensating for the error by providing redundancy, called error compensation. Error recovery can be achieved by either forward or backward error recovery. The second strategy, fault treatment, aims to prevent activation of faults and so action is taken before the error creeps in. \textbf{Figure~\ref{fig:faulttoltree}} shows this classification \citep{trivedi2008software}. Techniques for tolerating faults in software have been divided into three main classes: design diversity, data diversity and environment diversity (see \textbf{Table~\ref{tab:faulttolmethods}}).
 
 \begin{figure}[htbp]
-%\centering
-\hspace*{2cm}
-\begin{tikzpicture}[->,>=stealth', 
-	level 1/.style={sibling distance = 4.5cm, level distance = 2cm},
-	level 2/.style={sibling distance = 3.5cm}
-%	level 3/.style={sibling distance = 3.5cm}
+	%\centering
+	\hspace*{2cm}
+	\begin{tikzpicture}[->,>=stealth', 
+	level 1/.style={sibling distance = 3.5cm, level distance = 1.8cm},
+	level 2/.style={sibling distance = 3cm}
+	%	level 3/.style={sibling distance = 3.5cm}
 	] 
-\node [arn] {\small Means for Software Fault tolerance}
-child{ node [arn_lev1] {\small Error Processing} 
-	child{ node [arn_lev2] {\small Error Compensation} }
-	child{ node [arn_lev2] {\small Error Recovery}
-		child{ node [arn_lev2] {\small Forward Error Recovery}}
-		child{ node [arn_lev2] {\small Backward Error Recovery}}
-	}                            
-}
-child{ node [arn_lev1] {\small Fault Treatment} }
-; 
-\end{tikzpicture}
-\caption{Means for software fault tolerance}
-\label{fig:faulttoltree}
+	\node [arn] {\small Means for Software Fault tolerance}
+	child{ node [arn_lev1] {\small Error Processing} 
+		child{ node [arn_lev2] {\small Error Compensation} }
+		child{ node [arn_lev2] {\small Error Recovery}
+			child{ node [arn_lev2] {\small Forward Error Recovery}}
+			child{ node [arn_lev2] {\small Backward Error Recovery}}
+		}                            
+	}
+	child{ node [arn_lev1] {\small Fault Treatment} }
+	; 
+	\end{tikzpicture}
+	\caption{Means for software fault tolerance}
+	\label{fig:faulttoltree}
 \end{figure}
 
+\begin{table}[h]
+	\centering
+	\caption{Strategies used by different fault tolerance methods}
+	\label{tab:faulttolmethods}
+	\begin{tabular}{l c c c c }
+		\toprule
+		& Design    & Data      & Environment & Checkpointing \\
+		& diversity & diversity & diversity   & \& recovery   \\
+		\midrule
+		Error compensation & \cmark    & \cmark    &             &               \\
+		Error recovery     &           &           &             & \cmark        \\
+		Fault treatment    &           &           & \cmark      &               \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
 \subsubsection{Design diversity}
-Design diversity techniques are specifically developed to tolerate design faults in software arising out of wrong specifications and incorrect coding. Two or more variants of a software developed by different teams but to a common specification are used. These variants are then used in a time or space redundant manner to achieve fault tolerance. Popular techniques which are based on the design diversity concept for fault tolerance in software are: N-version programming, Recovery block, and N-self checking programming.
+Design diversity techniques are specifically developed to tolerate design faults in software arising out of wrong specifications and incorrect coding. Two or more variants of a software developed by different teams but to a common specification are used. These variants are then used in a time or space redundant manner to achieve fault tolerance. Popular techniques which are based on the design diversity concept for fault tolerance in software are: N-version programming, recovery block, and N-self checking programming.
 
 \subsubsection{Data diversity}
-Data diversity, a technique for fault tolerance in software, was introduced by \citet{ammann1988data}. While the design diversity approaches to provide fault tolerance rely on multiple versions of the software written to the same specifications, the data diversity approach uses only one version of the software. This approach relies on the observation that a software sometime fails for certain values in the input space and this failure could be averted if there is a minor perturbation of input data which is acceptable to the software. N-copy programming, based on data diversity, has N copies of a program executing in parallel, but each copy running on a different input set produced by a diverse-data system. The diverse-data system produces a related set of points in the data space. Selection of the system output is done using an enhanced voting scheme which may not be a majority voting mechanism. This technique might not be acceptable to all programs since equivalent input data transformations might not be acceptable by the specification. However, in some cases like a real time control program, a minor perturbation in sensor values may be able to prevent a failure since sensor values are usually noisy and inaccurate.
-
-Data diversity can work well with permanent faults and is cheaper to implement than design diversity techniques. To some extent, data diversity can also deal with intermittent faults since different input data is presented and by definition, these bugs are non-deterministic and non-repeatable.
+\citet{ammann1988data} introduced the data diversity technique for fault tolerance. While the design diversity approaches to provide fault tolerance rely on multiple versions of the software written to the same specifications, the data diversity approach uses only one version of the software. This approach relies on the observation that a software sometime fails for certain values in the input space and this failure could be averted if there is a minor perturbation of input data which is acceptable to the software. N-copy programming, based on data diversity, has N copies of a program executing in parallel, but each copy running on a different input set produced by a diverse-data system. The diverse-data system produces a related set of points in the data space. Selection of the system output is done using an enhanced voting scheme which may not be a majority voting mechanism. In some cases like a real-time control program, a minor perturbation in sensor values may be able to prevent a failure since sensor values are usually noisy and inaccurate. Data diversity can work well with permanent faults and is cheaper to implement than design diversity techniques. To some extent, data diversity can also deal with intermittent faults since different input data is presented and by definition, these bugs are non-deterministic and non-repeatable \citep{kapur2011software}.
 
 \subsubsection{Environment diversity}
 \label{sec:envdiv}
 Environment diversity is the newest approach to fault tolerance in software. Although this technique has been used for long in an ad hoc manner, only recently has it gained recognition and importance. Having its basis on the observation that most software failures are transient in nature, the environment diversity approach requires re-executing the software in a different environment \citep{jalote1995framework}. Environment diversity deals effectively with intermittent faults by exploiting their definition and nature.
 
-\citet{adams1984optimizing} has proposed restarting the system as the best approach to masking software faults. Environment diversity is a generalization of restart. This has been proposed in \citet{huang1994two} as a cheap but effective technique for fault tolerance in software. Transient faults typically occur in computer systems due to design faults in software which result in unacceptable and erroneous states in the operating system environment. Therefore environment diversity attempts to provide a new or modified operating environment for the running software. Usually, this is done at the instance of a failure in the software. When the software fails, it is restarted in a different, error-free state which is achieved by some clean up operations.
+\citet{adams1984optimizing} has proposed restarting the system as the best approach to masking software faults. Transient faults typically occur in computer systems due to design faults in software which result in unacceptable and erroneous states in the operating system environment. Therefore environment diversity attempts to provide a new or modified operating environment for the running software. Usually, this is done at the instance of a failure in the software. When the software fails, it is restarted in a different, error-free state which is achieved by some clean up operations. Examples of environment diversity techniques include retry operation, restart application and rebooting the node. The retry and restart operations can be done on the same node or on a spare node.
 
-Examples of environment diversity techniques include retry operation, restart application and rebooting the node. The retry and restart operations can be done on the same node or on another spare node.
-
-Tandem's fault tolerant computer system \citep{lee1995software} is based on the process pair approach. It was noted that these failures did not recur once the application was restarted on the second processor. This was due to the fact that the second processor provided a different environment which did not trigger the same error conditions which led to the failure of the application on the first processor. Hence, in this case, hardware redundancy was used to tolerate most of the software faults. The basic observation in all these transient failures is that the same error condition is unlikely to occur if the software is re-executed in a different environment.
-
-\subsubsection{Checkpointing and Recovery}
+\subsubsection{Checkpointing and recovery}
 Checkpointing and recovery \citep{kulkarni1990effects} belongs to the category of error recovery for fault tolerance, as opposed to design diversity which belongs to error compensation, and data and environment diversities which belong to the fault treatment category. Error compensation, error recovery and fault treatment are complementary to one another and fault tolerance in software can be increased by deploying a combination of these techniques. The recovery block uses checkpoints in its implementation. \citet{garg1996minimizing} proposes and analyses the combination of software rejuvenation (preventive fault treatment) with checkpointing and recovery to reduce the chances of activating a fault and simultaneously minimizing the loss of computation when there is a failure.
 
-Checkpointing involves occasionally saving the state of a process in stable storage during normal execution. Upon failure, the process is restarted in the saved state (last saved checkpoint). This thus reduces the amount of lost work. Checkpointing and recovery was mainly intended to tolerate transient hardware failures, where the application is restarted upon repair of a hardware unit after failure. This technique has been implemented in both software and hardware.
+Checkpointing involves occasionally saving the state of a process in stable storage during normal execution. Upon failure, the process is restarted in the saved state (last saved checkpoint). Checkpointing and recovery was mainly intended to tolerate transient hardware failures, where the application is restarted upon repair of a hardware unit after failure. This technique has been implemented in both software and hardware.
 
-\clearpage
+\newpage
 \section{Fault tolerance on SpiNNaker}
+\label{sec:ft_spinnaker}
+
 The three fault-tolerant mechanisms that will be dealt with in this report are:
 \begin{itemize}
 \item Dumped packet re-insertion and network congestion,
@@ -224,8 +215,7 @@ The three fault-tolerant mechanisms that will be dealt with in this report are:
 
 \subsection{SpiNNaker architecture}
 
-\subsubsection{Overview}
-The SpiNNaker engine is a massively-parallel multi-core computing system. It will contain up to about one million ARM9 cores and 7~Tbytes of RAM distributed throughout the system in 57,000 nodes, each node being a System-in-Package (SiP) containing 18 cores plus a 128~Mbyte off-die SDRAM (Synchronous Dynamic Random Access Memory). Each core has associated with it 64~Kbytes of data tightly-coupled memory (DTCM) and 32~Kbytes of instruction tightly-coupled memory (ITCM). The cores have a variety of ways of communicating with each other and with the memory, the dominant of which is by packets. These are 5- or 9-byte (40- or 72-bit) quanta of information that are transmitted around the system under the aegis of a bespoke concurrent hardware routing system. 
+The SpiNNaker engine is a massively-parallel multi-core computing system. It will contain up to about one million ARM9 cores and 7~TB of RAM distributed throughout the system in 57,000 nodes, each node being a System-in-Package (SiP) containing 18 cores plus a 128~MB off-die SDRAM (Synchronous Dynamic Random Access Memory). Each core has associated with it 64~kB of data tightly-coupled memory (DTCM) and 32~kB of instruction tightly-coupled memory (ITCM). The cores have a variety of ways of communicating with each other and with the memory, the dominant of which is by packets. These are 5- or 9-byte (40- or 72-bit) quanta of information that are transmitted around the system under the aegis of a bespoke concurrent hardware routing system. 
 
 \begin{figure}[htbp]
 	\centering
@@ -243,7 +233,7 @@ The physical hierarchy of the system has each node containing two silicon dies -
 	\label{fig:spin5}
 \end{figure}
 
-\subsubsection{Hardware fault tolerance mechanisms in the SpiNNaker chip}
+\subsection{Hardware fault tolerance mechanisms}
 The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker chip is made up of various blocks, most of which have a certain degree of hardware fault tolerance in place. The blocks in questions are: the ARM968, the vector interrupt controller, the counter/timer, the DMA controller, the communications controller, the router, the inter-chip transmit and receiver interfaces, the SDRAM interface, the Ethernet interface, the system RAM and the boot ROM. A schematic representation of all these sub systems is shown in \textbf{Figure~\ref{fig:spin_arch}} and \textbf{Figure~\ref{fig:arm968}}.
 
 \subsubsection{Block description}
@@ -260,10 +250,10 @@ The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker
 	\item The \textbf{SDRAM  interface}  connects  the System NoC  to  an off-chip SDRAM device.  It  is  the ARM PL340, described in ARM document DDI 0331D.
 	\item \textbf{Ethernet interface} --- The  SpiNNaker  system  connects  to  a  host  machine  via  Ethernet  links.  Each  SpiNNaker  chip includes  an  Ethernet MII  interface,  although  only  a  few  of  the  chips  are  expected  to  use  this interface. These chips will require an external PHY.\\
 	The interface hardware operates at the frame level. All higher-level protocols will be implemented in software running on the local monitor processor.
-	\item The \textbf{System RAM} is an additional 32 Kbyte block of on-chip RAM used primarily by the monitor processor to enhance its program and data memory resources as it will be running more complex (though less time-critical) algorithms than the fascicle processors.\\
+	\item The \textbf{System RAM} is an additional 32~kB block of on-chip RAM used primarily by the monitor processor to enhance its program and data memory resources as it will be running more complex (though less time-critical) algorithms than the fascicle processors.\\
 	As the choice of monitor processor is made at start-up (and may change during run-time for fault-tolerance  purposes)  the  system  RAM  is  made  available  to  whichever  processor  is  monitor processor via  the System NoC. Accesses by  the Monitor Processor  to  the System RAM are non-blocking as far as SDRAM accesses by the fascicle processors are concerned.\\
 	The System RAM may also be used by  the fascicle processors to communicate with  the monitor processor and with each other, should the need arise.
-	\item The \textbf{Boot ROM} consists of a 32Kbyte on-chip ROM to provide minimal support for initial self-test and monitor processor selection. It also provides support for router initialisation for bootstrapping and system boot.
+	\item The \textbf{Boot ROM} consists of a 32~kB on-chip ROM to provide minimal support for initial self-test and monitor processor selection. It also provides support for router initialisation for bootstrapping and system boot.
 \end{itemize}
 
 \begin{figure}[t]
@@ -273,7 +263,7 @@ The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker
 	\label{fig:spin_arch}
 \end{figure}
 
-\subsubsection{Fault tolerance mechanisms on SpiNNaker}
+\subsubsection{Fault tolerance mechanisms}
 Starting by describing the fault tolerance detection mechanisms of the \textbf{ARM968} processor core, self-test routines are run at start-up and during normal operation. A chip-wide watchdog timer catches runaway software. In addition the ARM968 is able to isolate defective instruction and data RAM locations and can be mapped out by software. The system controller can also disable any incorrectly operating ARM968 cores. These detection and fault isolation mechanisms help to reconfigure the system in case a fault is detected. In the case of faulty instruction and data RAM, software can be written to avoid such locations. If on the other hand, the self-test and start-up routines detect a failure, the processor core functionality can be migrated to a neighbouring processor.
 
 Currently the \textbf{vector interrupt controller} does not provide a high degree of fault tolerance. In the case of a failed vector location, the vector interrupt controller effectively jumps to a random location. If a software mechanism was devised to detect these kind of faults, a failed vector location could be removed from service (provided there are enough vector locations available). Another solution would be to shut down the entire vector system and the interrupts run by software inspection of the IRQ and FIQ status registers.
@@ -317,6 +307,7 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 
 \clearpage
 \section{Network congestion}
+\label{sec:congestion}
 
 \subsection{Backpressure}
 Backpressure visualisation. \textbf{Figure~\ref{fig:backpressure}} generated by 'Network Tester' \citep[see][]{heathcote2015networktester}.
@@ -378,6 +369,7 @@ Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is call
 
 \clearpage
 \section{Process migration}
+\label{sec:migration}
 
 \begin{itemize}
 \item \verb|heat_demo_ft.c|:  heat demo with basic ``function migration''. The leadAp core will take out a non-working core and take over its task.
