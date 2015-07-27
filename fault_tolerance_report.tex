@@ -119,7 +119,7 @@ pdfkeywords={faulttolerance spinnaker}
 \label{sec:software_ft}
 
 \subsection{Introduction}
-This report will first outline (\textbf{Section~\ref{sec:software_ft}}) some fault tolerance basics and concepts from the field of software fault tolerance \citep{trivedi2008software} with the hope that the some of the ideas can be extended to SpiNNaker, a massively parallel processing machine. \textbf{Section~\ref{sec:ft_spinnaker}} details the various hardware blocks in the SpiNNaker chip which provide features that could be used to implement fault tolerant mechanisms to benefit the system as a whole. \textbf{Sections \ref{sec:congestion}} and~\textbf{\ref{sec:migration}} show some working examples of how fault tolerance is currently being implemented on SpiNNaker and \textbf{Section~\ref{sec:crc}} outlines a technique by \citet{grymel2013error} of how to perform 1-bit error correction when doing DMA transfers using the built-in programmable CRC unit.
+This report will first outline (\textbf{Section~\ref{sec:software_ft}}) some fault tolerance basics and concepts from the field of software fault tolerance \citep{trivedi2008software} with the hope that the some of the ideas can be extended to SpiNNaker, a massively parallel processing machine. \textbf{Section~\ref{sec:ft_spinnaker}} details the various hardware blocks in the SpiNNaker chip which provide features that could be used to implement fault tolerant mechanisms to benefit the system as a whole. \textbf{Sections \ref{sec:congestion}} and~\textbf{\ref{sec:migration}} show some working examples of how fault tolerance is currently being implemented in SpiNNaker and \textbf{Section~\ref{sec:crc}} outlines the properties of the CRC unit implemented in SpiNNaker and suggestions by \citet{grymel2013error} of how to perform 1-bit error correction when doing DMA transfers.
 
 While hardware failures have been studied extensively and varied mechanisms have been presented to increase the system availability with regard to such failures, software failures and the corresponding reliability/availability analysis has not drawn much attention from researchers. The study of software failures has now become more important since it has been recognized that computer systems outages are more due to software faults than to hardware faults \citep{gray1991high}. For a long time it was assumed that concepts of reliability and failure rate do not apply to software since software does not degrade physically as a function of time or environmental conditions. Many studies have shown that even for applications which have relatively less complex software, many failures in computer systems are due to software bugs \citep{pradhan1996fault}. Therefore, software reliability is one of the weakest links in system reliability.
 
@@ -202,7 +202,7 @@ Checkpointing and recovery \citep{kulkarni1990effects} belongs to the category o
 Checkpointing involves occasionally saving the state of a process in stable storage during normal execution. Upon failure, the process is restarted in the saved state (last saved checkpoint). Checkpointing and recovery was mainly intended to tolerate transient hardware failures, where the application is restarted upon repair of a hardware unit after failure. This technique has been implemented in both software and hardware.
 
 \newpage
-\section{Fault tolerance on SpiNNaker}
+\section{Fault tolerance in SpiNNaker}
 \label{sec:ft_spinnaker}
 
 With regards to the PRiME project the issue of fault tolerance is being currently investigated on the SpiNNaker platform while always keeping in view the issue of power reduction and optimisation. The three main fault-tolerant mechanisms that are being investigated are:
@@ -229,7 +229,7 @@ The physical hierarchy of the system has each node containing two silicon dies -
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.45\linewidth]{images/spin5.jpg}
-	\caption{48-chip Spin5 board.}
+	\caption{48-chip SpiNNaker board.}
 	\label{fig:spin5}
 \end{figure}
 
@@ -262,7 +262,7 @@ The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker
 \subsubsection{Possible fault tolerance mechanisms}
 This section outlines the various blocks in the SpiNNaker chip which could potentially be used to implement a robust fault tolerant system. At the time of writing, only the router, the vector interrupt controller and the CRC unit are being effectively used to provide a certain level of fault tolerance.
 
-The \textbf{ARM968} processor core has self-test routines that are run at start-up and during normal operation to provide a fault tolerance detection mechanism and a chip-wide watchdog timer catches runaway software. In addition, the ARM968 is able to isolate defective instruction and data RAM locations and can be mapped out by software. The system controller can also disable any incorrectly operating ARM968 cores. These detection and fault isolation mechanisms help to reconfigure the system in case a fault is detected. In the case of faulty instruction and data RAM, software can be written to avoid such locations. If on the other hand, the self-test and start-up routines detect a failure, the processor core functionality can be migrated to a neighbouring processor (see \textbf{Section~\ref{sec:migration}}).
+The \textbf{ARM968} processor core (\textbf{Figure~\ref{fig:arm968}}) has self-test routines that are run at start-up and during normal operation to provide a fault tolerance detection mechanism and a chip-wide watchdog timer catches runaway software. In addition, the ARM968 is able to isolate defective instruction and data RAM locations and can be mapped out by software. The system controller can also disable any incorrectly operating ARM968 cores. These detection and fault isolation mechanisms help to reconfigure the system in case a fault is detected. In the case of faulty instruction and data RAM, software can be written to avoid such locations. If on the other hand, the self-test and start-up routines detect a failure, the processor core functionality can be migrated to a neighbouring processor (see \textbf{Section~\ref{sec:migration}}).
 
 Currently the \textbf{vector interrupt controller} does not provide a high degree of fault tolerance. In the case of a failed vector location, the vector interrupt controller effectively jumps to a random location. If a software mechanism was devised to detect these kind of faults, a failed vector location could be removed from service (provided there are enough vector locations available). Another solution would be to shut down the entire vector system and the interrupts run by software inspection of the IRQ status registers.
 
@@ -271,7 +271,7 @@ In order to detect faults in the \textbf{counter/timer}, the second counter/time
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/arm968_subsystem.pdf}
-	\caption{ARM 968 subsystem}
+	\caption{ARM 968 subsystem.}
 	\label{fig:arm968}
 \end{figure}
 
@@ -319,7 +319,7 @@ packets.
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.4\linewidth]{images/system_architecture.pdf}
-	\caption{SpiNNaker inter-links.}
+	\caption{SpiNNaker inter-chip links.}
 	\label{fig:interchip_links}	
 \end{figure}
 
@@ -392,13 +392,17 @@ Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is call
 \section{Process migration}
 \label{sec:migration}
 
-\begin{itemize}
-\item \verb|heat_demo_ft.c|:  heat demo with basic ``function migration''. The leadAp core will take out a non-working core and take over its task.
+Process migration work in SpiNNaker is currently being implemented in the \emph{heat demo} demonstration program. The \emph{heat demo} (developed by Luis A. Plana) is an ideal environment to test process migration experiments because it consists of the computation of a set of highly parallel finite difference equations which produce reliable and repeatable results. This is in contrast to spiking neural network simulations which due to the random nature of the input spikes as well as the numerical errors that might creep in while computing the neuron differential equations, make them a poor choice for testing out different function or process migration schemes. 
 
-\item \verb|heat_demo_bt.c|: a first attempt at replacing a broken leadAp core. The strategy is slightly different from the one we discussed earlier, but simpler to implement (all cores poll at the same frequency). In this case, a broken core is taken out but there is no ``function migration'' (do no harm stage).
+Two versions of the \emph{heat demo} are available:
+\begin{itemize}
+\item \verb|heat_demo_ft.c| is a version with basic function migration capability where the \emph{leadAp} core, i.e., the core which has been assigned as the primary core out of the 16 application cores will take out a non-working core and takes over its functionality. This is done by stripping the broken cores from the routing entries. This process can be repeated till there are no more available working application cores. \verb|heat_demo_ft.c| is currently not able to deal with a crashed \emph{leadAp} core and in this case function migration will not take place.
+
+\item \verb|heat_demo_bt.c| tries to solve the problem of a broken \emph{leadAp} core by replacing it with a working application core. The strategy is slightly different from the one implemented in \verb|heat_demo_ft.c|, but simpler to implement since all the \hl{cores poll at the same frequency}. In this case, a broken core is simply taken out from the routing entries and no function migration takes place.
 \end{itemize}
 
-The heat demo is essentially a 2D heat diffusion equation solver (developed by Luis A. Plana). The heat equation is a partial differential equation that describes the variation in temperature over time in a region, given an initial temperature distribution and the boundary conditions. For a temperature $u(x,y,t)$ of two spatial variables $x$ and $y$ and the time variable $t$, the 2D heat equation is:
+\subsection{Background}
+The heat demo is essentially a 2D heat diffusion equation solver. The heat equation is a partial differential equation that describes the variation in temperature over time in a region, given an initial temperature distribution and the boundary conditions. For a temperature $u(x,y,t)$ of two spatial variables $x$ and $y$ and the time variable $t$, the 2D heat equation is:
 \[
 \dpd{u}{t} -\alpha\left( \dpd[2]{u}{x} + \dpd[2]{u}{y} \right) = 0 
 \]
@@ -420,11 +424,11 @@ u(x,y,t+1) &= u(x,y,t) + \Delta x + \Delta y
 %	\label{fig:heatdemo_iterative}
 %\end{figure}
 
-These methods are well-suited for parallel implementation following a Single Program, Multiple Data (SPMD) model in which multiple autonomous cores simultaneously execute the same program with different data, and use messages to communicate with each other. In the heat equation case, each point sends its temperature to four neighbours and receives their temperatures in each time step.
-
-Using a relaxation method to solve the heat equation is easily and efficiently mapped to SpiNNaker. In particular, the communications pattern is that which SpiNNaker is optimised for: many short messages sent concurrently to several destinations.
+These methods are well-suited for parallel implementation following a Single Program, Multiple Data (SPMD) model in which multiple autonomous cores simultaneously execute the same program with different data, and use messages to communicate with each other. In the heat equation case, each point sends its temperature to four neighbours and receives their temperatures in each time step. Using a relaxation method to solve the heat equation is easily and efficiently mapped to SpiNNaker. In particular, the communications pattern is that which SpiNNaker is optimised for: many short messages sent concurrently to several destinations.
 
 To implement the algorithm in SpiNNaker, the entire region is partitioned into sub-arrays of points and distributed across the machine. In the extreme case, every core is assigned a single point. Each core can then compute the corresponding temperatures and distribute them to its neighbours using SpiNNaker's efficient multicast communication infrastructure.
+
+In the case of \verb|heat_demo_ft.c|, if a broken core is detected the \emph{leadAp} core takes over its function with the result that two points are now computed on one core. Since the calculation of one point is very simple this doesn't result in an appreciable increase on the CPU load and the application is not slowed down. In more compute-intensive applications this might result in bottlenecks.
 
 In SpiNNaker, the topology of the problem is dissociated from the topology of the machine, i.e., the mapping of points to cores in SpiNNaker is completely flexible and neighbouring points may not be mapped to neighbouring chips. Once the routing tables have been setup by the programme, a core can send a message with its current temperature and the communications infrastructure is responsible for the delivery of that message to the correct places.
 
@@ -433,24 +437,25 @@ SpiNNaker promotes event-driven software: cores respond to events and carry out 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/heatmap2x2.png}
-	\caption{Heat map demo visualisation on a 4-chip SpiNNaker board.}	
+	\caption{Heat map demo visualisation on a 4-chip SpiNNaker board.}
+	\label{fig:heatmap}
 \end{figure}
 
-The figure shows a snapshot of the output visualizer of a 2D Heat Diffusion Solver running on a 64-core SpiNNaker board. In this example, each of the 64 application cores in SpiNNaker is assigned a single point in a ``hexagonal'' region. Each square in the plot represents the temperature at a given point in the region.
+\textbf{Figure~\ref{fig:heatmap}} shows a snapshot of the output visualizer of a 2D heat diffusion solver running on a 64-core (4-chip) SpiNNaker board. In this example, each of the 64 application cores in SpiNNaker is assigned a single point in a ``hexagonal'' region. Each square in the plot represents the temperature at a given point in the region.
 
-The user can control the temperatures of the North, South, East and West boundaries and view the evolution of temperatures over time. The figure shows a scenario in which the North and West boundaries have been set to 40~\textdegree C and the East and South boundaries to 10~\textdegree C.
-
-To test out the \verb|heat_demo_ft| functionality, start the \verb|heat_demo_ft.aplx|
-by running (from ybug) \verb|@ heat_demo_ft_1board.ybug|
-
-Then start resetting cores one-by-one by writing directly to the system
-controller register \verb|(0xe2000000:r1 = 0xe2000004)|\\
-Command: \verb|sw 0xe2000004 0x5ec00002|
-
-Note: If the core you reset happens to be the leadAp, the application will
-crash.
-
-\emph{Currently implemented on the heat demo, where a core fault is simulated by intentionally reset a core. Currently if core 1 on core (0,0) is reset or disabled no communication is possible with the host PC.}
+%The user can control the temperatures of the North, South, East and West boundaries and view the evolution of temperatures over time. The figure shows a scenario in which the North and West boundaries have been set to 40~\textdegree C and the East and South boundaries to 10~\textdegree C.
+%
+%To test out the \verb|heat_demo_ft| functionality, start the \verb|heat_demo_ft.aplx|
+%by running (from ybug) \verb|@ heat_demo_ft_1board.ybug|
+%
+%Then start resetting cores one-by-one by writing directly to the system
+%controller register \verb|(0xe2000000:r1 = 0xe2000004)|\\
+%Command: \verb|sw 0xe2000004 0x5ec00002|
+%
+%Note: If the core you reset happens to be the leadAp, the application will
+%crash.
+%
+%\emph{Currently implemented on the heat demo, where a core fault is simulated by intentionally reset a core. Currently if core 1 on core (0,0) is reset or disabled no communication is possible with the host PC.}
 
 
 \clearpage
@@ -492,10 +497,6 @@ In the choice of employed cyclic code, many factors need to be taken into accoun
 
 \subsection{Algorithms for Computing Discrete Logarithms}
 \citet{grymel2013error} developed two new approaches for computing discrete logarithms to facilitate the correction of single-bit errors based on cyclic codes. The first approach is generic in nature leading to a deterministic algorithm for group orders that equal a Mersenne number with an exponent of a power of two; this algorithm has constant space requirements and runs in the worst case in the order of the square root of the group order. It was shown how the algorithm can be improved if the discrete logarithm values occur with unequal probabilities and that certain properties hold for the associated sequences. The second approach for the computation of discrete logarithms is based on a subset of newly developed properties for finite fields of binary characteristic represented as the polynomial ring over the binary field modulo a primitive polynomial. For evaluated small fields, a deterministic efficient algorithm with linear space and linearithmic time requirements in the degree of the defining polynomial was devised.
-
-\clearpage
-\section{Conclusion}
-
 
 \newpage
 %\begin{appendices}
