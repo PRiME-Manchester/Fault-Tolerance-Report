@@ -23,7 +23,7 @@
 \usepackage{titlesec}
 \usepackage{geometry}
 \usepackage{verbments}
-%\usepackage{minted}
+\usepackage{minted}
 \usepackage{multicol}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{subcaption}
@@ -254,7 +254,7 @@ The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/spinnaker_architecture.pdf}
+	\includegraphics[width=0.65\linewidth]{images/spinnaker_architecture.pdf}
 	\caption{SpiNNaker chip subsystems.}	
 	\label{fig:spin_arch}
 \end{figure}
@@ -270,7 +270,7 @@ In order to detect faults in the \textbf{counter/timer}, the second counter/time
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/arm968_subsystem.pdf}
+	\includegraphics[width=0.55\linewidth]{images/arm968_subsystem.pdf}
 	\caption{ARM 968 subsystem.}
 	\label{fig:arm968}
 \end{figure}
@@ -299,71 +299,42 @@ To detect faults in the \textbf{system RAM}, the monitor processor could perform
 
 A fault in the \textbf{boot ROM} can be easily detected during start-up if the boot ROM fails the boot process. One can easily switch the boot ROM out of the boot area rendering it harmless. When the boot ROM is switched out of the boot area the system RAM is switched in the boot area and a neighbouring chip can initialise the system RAM with the boot code and retry initialisation.
 
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.35\linewidth]{images/system_architecture.pdf}
+	\caption{SpiNNaker inter-chip links.}
+	\label{fig:interchip_links}	
+\end{figure}
+
 \clearpage
 \section{Network congestion}
 \label{sec:congestion}
 
 \subsection{Dumped-packet reinsertion}
 
-\verb|dumpBounce.c|:  packet re-injection software that runs on a separate core.
+%\verb|dumpBounce.c|:  packet re-injection software that runs on a separate core.
  
-`Network Tester' written by \citet{heathcote2015networktester} is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network. In particular, network tester is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) which produce SpiNNaker packets which are then multicast to a fixed set of vertices.
-The following is a (non-exhaustive) list of the kinds of experiments which can be performed with `Network Tester':
+\emph{Network Tester} is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network \citep{heathcote2015networktester}. \hl{is dumpBounce.c somehow used?}. \emph{Network Tester} makes use of \verb|dumpBounce.c| developed by Luis A. Plana which is the packet re-injection `brains' that runs on a separate application core. In particular, \emph{Network Tester} is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) that produce SpiNNaker packets which are then multicast to a fixed set of vertices. The following is a list of the kinds of experiments which can be performed with \emph{Network Tester}:
 \begin{itemize}
-\item Determining how a network copes with different rates and patterns of packet generation. For example to determining the maximum speed at which a particular neural simulation may run on SpiNNaker without dropping
-packets.
-\item Determining the effectiveness of place and route algorithms by finding `hot-spots' in the network.
+\item Determine how a network copes with different rates and patterns of packet generation, in order to determine the maximum speed at which a particular neural simulation may run on SpiNNaker without dropping packets;
+\item Determining the effectiveness of place and route algorithms by finding `hot-spots' in the network;
 \item Characterising the behaviour of the network in the presence of locally and globally synchronised bursting traffic.
 \end{itemize}
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.4\linewidth]{images/system_architecture.pdf}
-	\caption{SpiNNaker inter-chip links.}
-	\label{fig:interchip_links}	
-\end{figure}
-
-\begin{figure}
-	\begin{subfigure}[htbp]{.5\linewidth}
-		\centering
+\subsection{Results}
+\begin{figure}[h]
+	\begin{subfigure}{.5\linewidth}
 		\includegraphics[width=0.9\linewidth]{images/bursting.pdf}
 		\caption{Bursting}
 		\label{fig:bursting}
 	\end{subfigure}
-	\begin{subfigure}[htbp]{.5\linewidth}
-		\centering
+	\begin{subfigure}{.5\linewidth}
 		\includegraphics[width=0.9\linewidth]{images/bursting_connaware2.pdf}
-		\caption{Bursting Connection-aware}	
+		\caption{Bursting (connection-aware)}	
 		\label{fig:bursting_aware}
 	\end{subfigure}
 	\caption{Network congestion with respect to network load.}
 \end{figure}
-
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=0.6\linewidth]{images/bursting.pdf}
-%	\caption{Bursting}
-%	\label{fig:bursting}
-%\end{figure}
-%%\caption{Network congestion with respect to network load.}
-%
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=0.6\linewidth]{images/bursting_connaware2.pdf}
-%	\caption{Bursting Connection-aware}	
-%	\label{fig:bursting_aware}
-%\end{figure}
-%%\caption{Network congestion with respect to network load.}
-
-\begin{enumerate}
-\item Backpressure (see \textbf{Figure~\ref{fig:backpressure}}) during the first bit (blue 0--0.4) resulting in a lower number of packets sent
-\item Important line is green (true measure of whether packets are being dropped or not)
-\item Number of packets sent is constant for every point (=32) along the x-axis. Network duty=0.1 means that all the packets are sent in 0.1*1ms, i.e. in a very short period of time, i.e. high network load. Network duty=1 means that the whole 1 ms is used to transmit all of the 32 packets.
-\item Dropped packets (solid red) are dropped but reinjected so not really dumped vs the dashed red line where packets are dropped and dumped.
-\item Packets sent is the same in every point calculated, only the level of bursting is changed.
-\item Same colour curves share the same axis scale.
-\item (a) uses simulated annealing ("smarter"), (b) dumb placement as that used in PACMAN
-\end{enumerate}
 
 Clearly with packet reinjection, nearly all packets which are actually sent arrive at their destination, without reinjection, things aren't so great.
 
@@ -376,17 +347,17 @@ Fun things to try: Uncomment lines 23--24 and the random network will get placed
 	\label{fig:bursting_random}
 \end{figure}
 
-\clearpage
-\subsection{Backpressure}
-Backpressure visualisation. \textbf{Figure~\ref{fig:backpressure}} generated by 'Network Tester' \citep[see][]{heathcote2015networktester}.
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.5\linewidth]{images/backpressure2.pdf}
-	\caption{Backpressure.}	
-	\label{fig:backpressure}
-\end{figure}
-
 Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is called and the packet generators will still generate bursts but they'll be at random phases to each other (i.e., not bursting all at the same time). This normally eliminates packet dropping for all but the most extreme burstiness.
+
+\begin{enumerate}
+\item Backpressure during the first bit (blue 0--0.4) resulting in a lower number of packets sent
+\item Important line is green (true measure of whether packets are being dropped or not)
+\item Number of packets sent is constant for every point (=32) along the x-axis. Network duty=0.1 means that all the packets are sent in 0.1*1ms, i.e. in a very short period of time, i.e. high network load. Network duty=1 means that the whole 1 ms is used to transmit all of the 32 packets.
+\item Dropped packets (solid red) are dropped but reinjected so not really dumped vs the dashed red line where packets are dropped and dumped.
+\item Packets sent is the same in every point calculated, only the level of bursting is changed.
+\item Same colour curves share the same axis scale.
+\item (a) uses simulated annealing ("smarter"), (b) dumb placement as that used in PACMAN
+\end{enumerate}
 
 \clearpage
 \section{Process migration}
@@ -499,10 +470,10 @@ In the choice of employed cyclic code, many factors need to be taken into accoun
 \citet{grymel2013error} developed two new approaches for computing discrete logarithms to facilitate the correction of single-bit errors based on cyclic codes. The first approach is generic in nature leading to a deterministic algorithm for group orders that equal a Mersenne number with an exponent of a power of two; this algorithm has constant space requirements and runs in the worst case in the order of the square root of the group order. It was shown how the algorithm can be improved if the discrete logarithm values occur with unequal probabilities and that certain properties hold for the associated sequences. The second approach for the computation of discrete logarithms is based on a subset of newly developed properties for finite fields of binary characteristic represented as the polynomial ring over the binary field modulo a primitive polynomial. For evaluated small fields, a deterministic efficient algorithm with linear space and linearithmic time requirements in the degree of the defining polynomial was devised.
 
 \newpage
-%\begin{appendices}
-%
-%\section{Code listings}
-%\usemintedstyle{vs}
+\begin{appendices}
+
+\section{Code listings}
+\usemintedstyle{vs}
 %\captionof{listing}{dumpBounce.c}
 %\begin{multicols}{2}
 %\inputminted[fontsize=\tiny]{c}{code/dumpBounce.c}
@@ -514,11 +485,11 @@ In the choice of employed cyclic code, many factors need to be taken into accoun
 %\inputminted[fontsize=\tiny]{python}{code/backpressure.py}
 %\end{multicols}
 %
-%\captionof{listing}{bursting.py}
-%\begin{multicols}{2}
-%\inputminted[fontsize=\tiny]{python}{code/bursting.py}
-%\end{multicols}
-%\end{appendices}
+\captionof{listing}{bursting.py}
+\begin{multicols}{2}
+\inputminted[fontsize=\tiny]{python}{code/bursting.py}
+\end{multicols}
+\end{appendices}
 
 \newpage
 \bibliographystyle{abbrvnat}
