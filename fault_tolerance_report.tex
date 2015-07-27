@@ -314,7 +314,7 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 
 %\verb|dumpBounce.c|:  packet re-injection software that runs on a separate core.
  
-\emph{Network Tester} is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network \citep{heathcote2015networktester}. \hl{is dumpBounce.c somehow used?}. \emph{Network Tester} makes use of \verb|dumpBounce.c| developed by Luis A. Plana which is the packet re-injection `brains' that runs on a separate application core. In particular, \emph{Network Tester} is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) that produce SpiNNaker packets which are then multicast to a fixed set of vertices. The following is a list of the kinds of experiments which can be performed with \emph{Network Tester}:
+\emph{Network Tester} is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network \citep{heathcote2015networktester}. \hl{Is dumpBounce.c somehow used?}. \emph{Network Tester} makes use of \verb|dumpBounce.c| developed by Luis A. Plana which is the packet re-injection module that runs on a separate application core. In particular, \emph{Network Tester} is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) that produce SpiNNaker packets which are then multicast to a fixed set of vertices. The following is a list of the kinds of experiments which can be performed with \emph{Network Tester}:
 \begin{itemize}
 \item Determine how a network copes with different rates and patterns of packet generation, in order to determine the maximum speed at which a particular neural simulation may run on SpiNNaker without dropping packets;
 \item Determining the effectiveness of place and route algorithms by finding `hot-spots' in the network;
@@ -322,23 +322,33 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 \end{itemize}
 
 \subsection{Results}
-\begin{figure}[h]
+
+\begin{figure}[b]
 	\begin{subfigure}{.5\linewidth}
+		\centering
 		\includegraphics[width=0.9\linewidth]{images/bursting.pdf}
-		\caption{Bursting}
+		\caption{Bursting (simulated annealing)}
 		\label{fig:bursting}
 	\end{subfigure}
 	\begin{subfigure}{.5\linewidth}
+		\centering
 		\includegraphics[width=0.9\linewidth]{images/bursting_connaware2.pdf}
-		\caption{Bursting (connection-aware)}	
+		\caption{Bursting (connectivity aware, PACMAN)}	
 		\label{fig:bursting_aware}
 	\end{subfigure}
 	\caption{Network congestion with respect to network load.}
+	\label{fig:congestion}
 \end{figure}
 
-Clearly with packet reinjection, nearly all packets which are actually sent arrive at their destination, without reinjection, things aren't so great.
+\textbf{Figure~\ref{fig:bursting}} shows the difference in network performance when dropped-packet reinjection is enabled compared to when it is disabled. The solid green, blue, and red lines correspond to the condition when dropped-packet reinjection is enabled, while the dashed lines correspond to dropped-packet reinjection being disabled. The `received' lines (green) are the ones which at a glance convey whether packets are being dropped and reinjected successfully, or dropped and lost forever. Clearly with packet reinjection (green, solid), nearly all packets which are actually sent arrive at their destination, without reinjection (green, dashed), things aren't so great. 
 
-Fun things to try: Uncomment lines 23--24 and the random network will get placed by what PACMAN calls ``connectivity-aware placement,'' rather than simulated annealing (the default). Interestingly, on my system this results in reinjection no-longer helping and the whole thing being even worse under bursty packets.
+In the plots of \textbf{Figure~\ref{fig:congestion}} the number of packets sent is constant (32) for every point along the $x$-axis. For example, a network duty of 0.1 means that all of the 32 packets are sent in $0.1 \cdot 1$~ms resulting in a high network load. On the other hand a network duty of 1 implies that the whole 1~ms is used to transmit all of the 32 packets.
+
+The lower number of packets sent (blue) when network duty is between 0 and 0.4 is due to backpressure effects and the dropped packets corresponding to the solid red line are dropped but reinjected so in reality they are not being lost.
+
+By uncommented lines 23--24 in \verb|bursting.py|, the random network will get placed by what PACMAN\footnote{The placer in SpiNNaker's spiking network simulator.} calls ``connectivity-aware placement,'' rather than simulated annealing (the default) resulting in the plot of \textbf{Figure~\ref{fig:bursting_aware}}. Interestingly, this results in dropped-packet reinjection no longer helping and the whole thing being even worse under bursty packets. This can be observed by noting that the solid and dashed green lines in \textbf{Figure~\ref{fig:bursting_aware}} are practically overlapping.
+
+Adding the line \verb|e.burst_phase = None| (to \verb|bursting.py|) before \verb|e.run()| is called , the packet generators will still generate bursts but they will be at random phases to each other, i.e., not bursting all at the same time. This normally eliminates packet dropping for all but the most extreme burstiness. The result of this experiment is shown in \textbf{Figure~\ref{fig:bursting_random}}
 
 \begin{figure}[htbp]
 	\centering
@@ -346,18 +356,6 @@ Fun things to try: Uncomment lines 23--24 and the random network will get placed
 	\caption{Network congestion in a bursty (random) situation.}	
 	\label{fig:bursting_random}
 \end{figure}
-
-Add the line \verb|e.burst_phase = None| somewhere before \verb|e.run()| is called and the packet generators will still generate bursts but they'll be at random phases to each other (i.e., not bursting all at the same time). This normally eliminates packet dropping for all but the most extreme burstiness.
-
-\begin{enumerate}
-\item Backpressure during the first bit (blue 0--0.4) resulting in a lower number of packets sent
-\item Important line is green (true measure of whether packets are being dropped or not)
-\item Number of packets sent is constant for every point (=32) along the x-axis. Network duty=0.1 means that all the packets are sent in 0.1*1ms, i.e. in a very short period of time, i.e. high network load. Network duty=1 means that the whole 1 ms is used to transmit all of the 32 packets.
-\item Dropped packets (solid red) are dropped but reinjected so not really dumped vs the dashed red line where packets are dropped and dumped.
-\item Packets sent is the same in every point calculated, only the level of bursting is changed.
-\item Same colour curves share the same axis scale.
-\item (a) uses simulated annealing ("smarter"), (b) dumb placement as that used in PACMAN
-\end{enumerate}
 
 \clearpage
 \section{Process migration}
@@ -367,7 +365,7 @@ Process migration work in SpiNNaker is currently being implemented in the \emph{
 
 Two versions of the \emph{heat demo} are available:
 \begin{itemize}
-\item \verb|heat_demo_ft.c| is a version with basic function migration capability where the \emph{leadAp} core, i.e., the core which has been assigned as the primary core out of the 16 application cores will take out a non-working core and takes over its functionality. This is done by stripping the broken cores from the routing entries. This process can be repeated till there are no more available working application cores. \verb|heat_demo_ft.c| is currently not able to deal with a crashed \emph{leadAp} core and in this case function migration will not take place.
+\item \verb|heat_demo_ft.c| is a version with basic function migration capability where the \emph{leadAp} core, i.e., the core which has been assigned as the primary core out of the 16 application cores will take out a non-working core and takes over its functionality. This is done by stripping the broken cores from the routing entries. This process can be repeated till there are no more available working application cores. \verb|heat_demo_ft.c| is currently not able to deal with a crashed \emph{leadAp} core and in this case function migration will not take place. \hl{Add how broken cores are detected.}
 
 \item \verb|heat_demo_bt.c| tries to solve the problem of a broken \emph{leadAp} core by replacing it with a working application core. The strategy is slightly different from the one implemented in \verb|heat_demo_ft.c|, but simpler to implement since all the \hl{cores poll at the same frequency}. In this case, a broken core is simply taken out from the routing entries and no function migration takes place.
 \end{itemize}
@@ -383,7 +381,7 @@ Relaxation methods are iterative numerical methods used to solve systems of equa
 
 \begin{align*}
 \Delta x   &= \beta_x \cdot [u(x+1,y,t) + u(x-1,y,t) - 2 \cdot u(x,y,t)] \\
-\Delta x   &= \beta_y \cdot [u(x,y+1,t) + u(x,y-1,t) - 2 \cdot u(x,y,t)] \\
+\Delta y   &= \beta_y \cdot [u(x,y+1,t) + u(x,y-1,t) - 2 \cdot u(x,y,t)] \\
 u(x,y,t+1) &= u(x,y,t) + \Delta x + \Delta y
 \end{align*}
 
@@ -468,6 +466,14 @@ In the choice of employed cyclic code, many factors need to be taken into accoun
 
 \subsection{Algorithms for Computing Discrete Logarithms}
 \citet{grymel2013error} developed two new approaches for computing discrete logarithms to facilitate the correction of single-bit errors based on cyclic codes. The first approach is generic in nature leading to a deterministic algorithm for group orders that equal a Mersenne number with an exponent of a power of two; this algorithm has constant space requirements and runs in the worst case in the order of the square root of the group order. It was shown how the algorithm can be improved if the discrete logarithm values occur with unequal probabilities and that certain properties hold for the associated sequences. The second approach for the computation of discrete logarithms is based on a subset of newly developed properties for finite fields of binary characteristic represented as the polynomial ring over the binary field modulo a primitive polynomial. For evaluated small fields, a deterministic efficient algorithm with linear space and linearithmic time requirements in the degree of the defining polynomial was devised.
+
+\newpage
+\section{Conclusion}
+Fault tolerance on Spinnaker is currently work-in-progress and lots of avenues are being investigated. As shown from the results of the \emph{Network Tester} program the dropped-packet reinjection mechanism helps to alleviate network congestion problems. Maybe grouping dropped-packet reinjection under the umbrella of fault tolerance techniques is not technically correct, but in the realm of SpiNNaker and spiking neural networks where dropped packets may or may not have an effect on the simulation's output, it is a very welcome addition.
+
+The process migration results are also promising, but a lot of work still needs to be done in order to implement similar mechanisms for when SpiNNaker is simulating spiking neural networks. It is quite a challenge to implement similar functionality as that implemented for the \emph{heat demo} without affecting the real-time behaviour of the spiking simulation. If SpiNNaker is not connected to any external devices, delaying the simulation by a few tens of milliseconds (to perform the function migration) should not be an issue. Checkpointing could also be a solution in dealing with crashed cores where the current state of a particular core is regularly saved to SDRAM and a functional core could simply take over from the last known working state of the broken core.
+
+As regards to the use of the CRC unit it remains to be seen whether 1-bit error correction can be efficiently implemented. As things stand only 1-bit error detection can happen fast enough to be of any use assuming that retransmission of the corrupted data will not affect the performance of the simulation. Assuming the 1-bit error per second calculations for the final million core machine are correct and considering the size of such a network, the inherent fault tolerance built into such a large neural network should not affect its operation. If on the other hand a simulation demands a 100\% reliability in the calculations, then error correction has to be implemented in the form of data retransmission or on-the-fly error correction if a suitable algorithm is discovered.
 
 \newpage
 \begin{appendices}
