@@ -36,7 +36,7 @@
 
 % Package that provides hyperlinks to (in this case) citations
 \usepackage[pdfauthor={Patrick Camilleri},
-pdftitle={Fault tolerance mechanism implementations in SpiNNaker},
+pdftitle={Fault tolerance mechanism implementations on SpiNNaker},
 pdfsubject={Fault tolerance},
 pdfkeywords={faulttolerance spinnaker}
 ]{hyperref} % This loads package 'url'
@@ -105,7 +105,7 @@ pdfkeywords={faulttolerance spinnaker}
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{3}
 
-\title{Fault tolerance mechanism implementations in SpiNNaker}
+\title{Fault tolerance mechanism implementations on SpiNNaker}
 \author{Patrick Camilleri}
 \date{}
 
@@ -119,7 +119,7 @@ pdfkeywords={faulttolerance spinnaker}
 \label{sec:software_ft}
 
 \subsection{Introduction}
-This report will first outline (\textbf{Section~\ref{sec:software_ft}}) some fault tolerance basics and concepts from the field of software fault tolerance \citep{trivedi2008software} with the hope that the some of the ideas can be extended to SpiNNaker, a massively parallel processing machine. \textbf{Section~\ref{sec:ft_spinnaker}} details the various hardware blocks in the SpiNNaker chip which provide features that could be used to implement fault tolerant mechanisms to benefit the system as a whole. \textbf{Sections \ref{sec:congestion}} and~\textbf{\ref{sec:migration}} show some working examples of how fault tolerance is currently being implemented in SpiNNaker and \textbf{Section~\ref{sec:crc}} outlines the properties of the CRC unit implemented in SpiNNaker and suggestions by \citet{grymel2013error} of how to perform 1-bit error correction when doing DMA transfers.
+This report will first outline (\textbf{Section~\ref{sec:software_ft}}) some fault tolerance basics and concepts from the field of software fault tolerance \citep{trivedi2008software} with the hope that the some of the ideas can be extended to SpiNNaker, a massively parallel processing machine. \textbf{Section~\ref{sec:ft_spinnaker}} details the various hardware blocks in the SpiNNaker chip which provide features that could be used to implement fault tolerant mechanisms to benefit the system as a whole. \textbf{Sections \ref{sec:congestion}} and~\textbf{\ref{sec:migration}} show some working examples of how fault tolerance is currently being implemented on SpiNNaker and \textbf{Section~\ref{sec:crc}} outlines the properties of the CRC unit implemented on SpiNNaker and suggestions by \citet{grymel2013error} of how to perform 1-bit error correction when doing DMA transfers.
 
 While hardware failures have been studied extensively and varied mechanisms have been presented to increase the system availability with regard to such failures, software failures and the corresponding reliability/availability analysis has not drawn much attention from researchers. The study of software failures has now become more important since it has been recognized that computer systems outages are more due to software faults than to hardware faults \citep{gray1991high}. For a long time it was assumed that concepts of reliability and failure rate do not apply to software since software does not degrade physically as a function of time or environmental conditions. Many studies have shown that even for applications which have relatively less complex software, many failures in computer systems are due to software bugs \citep{pradhan1996fault}. Therefore, software reliability is one of the weakest links in system reliability.
 
@@ -202,7 +202,7 @@ Checkpointing and recovery \citep{kulkarni1990effects} belongs to the category o
 Checkpointing involves occasionally saving the state of a process in stable storage during normal execution. Upon failure, the process is restarted in the saved state (last saved checkpoint). Checkpointing and recovery was mainly intended to tolerate transient hardware failures, where the application is restarted upon repair of a hardware unit after failure. This technique has been implemented in both software and hardware.
 
 \newpage
-\section{Fault tolerance in SpiNNaker}
+\section{Fault tolerance on SpiNNaker}
 \label{sec:ft_spinnaker}
 
 With regards to the PRiME project the issue of fault tolerance is being currently investigated on the SpiNNaker platform while always keeping in view the issue of power reduction and optimisation. The three main fault-tolerant mechanisms that are being investigated are:
@@ -314,7 +314,7 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 
 %\verb|dumpBounce.c|:  packet re-injection software that runs on a separate core.
  
-\emph{Network Tester} is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network \citep{heathcote2015networktester}. \hl{Is dumpBounce.c somehow used?}. \emph{Network Tester} makes use of \verb|dumpBounce.c| developed by Luis A. Plana which is the packet re-injection module that runs on a separate application core. In particular, \emph{Network Tester} is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) that produce SpiNNaker packets which are then multicast to a fixed set of vertices. The following is a list of the kinds of experiments which can be performed with \emph{Network Tester}:
+\emph{Network Tester} is a library designed to enable experimenters to quickly and easily describe and run experiments on SpiNNaker's interconnection network \citep{heathcote2015networktester}. \emph{Network Tester} is based on \verb|dumpBounce.c| developed by Luis A. Plana which is the packet re-injection module that runs on a separate application core and takes care that dropped packets are reinjected during the correct timer tick. In particular, \emph{Network Tester} is designed to make recreating traffic loads similar to typical neural software straight-forward. Such network loads feature a fixed set of vertices (cores) that produce SpiNNaker packets which are then multicast to a fixed set of vertices. The following is a list of the kinds of experiments which can be performed with \emph{Network Tester}:
 \begin{itemize}
 \item Determine how a network copes with different rates and patterns of packet generation, in order to determine the maximum speed at which a particular neural simulation may run on SpiNNaker without dropping packets;
 \item Determining the effectiveness of place and route algorithms by finding `hot-spots' in the network;
@@ -344,11 +344,11 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 
 In the plots of \textbf{Figure~\ref{fig:congestion}} the number of packets sent is constant (32) for every point along the $x$-axis. For example, a network duty of 0.1 means that all of the 32 packets are sent in $0.1 \cdot 1$~ms resulting in a high network load. On the other hand a network duty of 1 implies that the whole 1~ms is used to transmit all of the 32 packets.
 
-The lower number of packets sent (blue) when network duty is between 0 and 0.4 is due to backpressure effects and the dropped packets corresponding to the solid red line are dropped but reinjected so in reality they are not being lost.
+The lower number of packets sent (blue) corresponding to a network duty of between 0 and 0.4 is due to backpressure effects. The dropped packets corresponding to the same network duty range are not really being lost since they are dropped but reinjected.
 
 By uncommented lines 23--24 in \verb|bursting.py|, the random network will get placed by what PACMAN\footnote{The placer in SpiNNaker's spiking network simulator.} calls ``connectivity-aware placement,'' rather than simulated annealing (the default) resulting in the plot of \textbf{Figure~\ref{fig:bursting_aware}}. Interestingly, this results in dropped-packet reinjection no longer helping and the whole thing being even worse under bursty packets. This can be observed by noting that the solid and dashed green lines in \textbf{Figure~\ref{fig:bursting_aware}} are practically overlapping.
 
-Adding the line \verb|e.burst_phase = None| (to \verb|bursting.py|) before \verb|e.run()| is called , the packet generators will still generate bursts but they will be at random phases to each other, i.e., not bursting all at the same time. This normally eliminates packet dropping for all but the most extreme burstiness. The result of this experiment is shown in \textbf{Figure~\ref{fig:bursting_random}}
+Adding the line \verb|e.burst_phase = None| (to \verb|bursting.py|) before \verb|e.run()| is called , the packet generators will still generate bursts but they will be at random phases to each other, i.e., not bursting all at the same time. This normally eliminates packet dropping for all but the most extreme burstiness. The result of this experiment is presented in \textbf{Figure~\ref{fig:bursting_random}}
 
 \begin{figure}[htbp]
 	\centering
@@ -361,13 +361,13 @@ Adding the line \verb|e.burst_phase = None| (to \verb|bursting.py|) before \verb
 \section{Process migration}
 \label{sec:migration}
 
-Process migration work in SpiNNaker is currently being implemented in the \emph{heat demo} demonstration program. The \emph{heat demo} (developed by Luis A. Plana) is an ideal environment to test process migration experiments because it consists of the computation of a set of highly parallel finite difference equations which produce reliable and repeatable results. This is in contrast to spiking neural network simulations which due to the random nature of the input spikes as well as the numerical errors that might creep in while computing the neuron differential equations, make them a poor choice for testing out different function or process migration schemes. 
+Process migration work on SpiNNaker is currently being implemented in the \emph{heat demo} demonstration program. The \emph{heat demo} (developed by Luis A. Plana) is an ideal environment to test process migration experiments because it consists of the computation of a set of highly parallel finite difference equations which produce reliable and repeatable results. This is in contrast to spiking neural network simulations which due to the random nature of the input spikes as well as the numerical errors that might creep in while computing the neuron differential equations, make them a poor choice for testing out different function or process migration schemes. 
 
 Two versions of the \emph{heat demo} are available:
 \begin{itemize}
-\item \verb|heat_demo_ft.c| is a version with basic function migration capability where the \emph{leadAp} core, i.e., the core which has been assigned as the primary core out of the 16 application cores will take out a non-working core and takes over its functionality. This is done by stripping the broken cores from the routing entries. This process can be repeated till there are no more available working application cores. \verb|heat_demo_ft.c| is currently not able to deal with a crashed \emph{leadAp} core and in this case function migration will not take place. \hl{Add how broken cores are detected.}
+\item \verb|heat_demo_ft.c| is a version with basic function migration capability where the \emph{leadAp} core, i.e., the core which has been assigned as the primary core out of the 16 application cores will take out a non-working core and takes over its functionality. When a router starts dumping packets (because a crashed core cannot process incoming packets) an interrupt is generated causing the \emph{leadAp} core to intervene, stripping the broken core from the routing entries. This process can go on till there are no more available working application cores. \verb|heat_demo_ft.c| is currently not able to deal with a crashed \emph{leadAp} core and in this case function migration will not take place.
 
-\item \verb|heat_demo_bt.c| tries to solve the problem of a broken \emph{leadAp} core by replacing it with a working application core. The strategy is slightly different from the one implemented in \verb|heat_demo_ft.c|, but simpler to implement since all the \hl{cores poll at the same frequency}. In this case, a broken core is simply taken out from the routing entries and no function migration takes place.
+\item \verb|heat_demo_bt.c| tries to solve the problem of a broken \emph{leadAp} core by replacing it with a working application core. The strategy is slightly different from the one implemented in \verb|heat_demo_ft.c|, but simpler to implement since all the cores poll at the same frequency whether a packet was dumped. Since the polling happens in a staggered manner, the first operational application core to detect a dumped packet will take over and remove the entry of the crashed core from the routing entries, hence removing the reliance on the \emph{leadAp} core.
 \end{itemize}
 
 \subsection{Background}
@@ -395,9 +395,9 @@ u(x,y,t+1) &= u(x,y,t) + \Delta x + \Delta y
 
 These methods are well-suited for parallel implementation following a Single Program, Multiple Data (SPMD) model in which multiple autonomous cores simultaneously execute the same program with different data, and use messages to communicate with each other. In the heat equation case, each point sends its temperature to four neighbours and receives their temperatures in each time step. Using a relaxation method to solve the heat equation is easily and efficiently mapped to SpiNNaker. In particular, the communications pattern is that which SpiNNaker is optimised for: many short messages sent concurrently to several destinations.
 
-To implement the algorithm in SpiNNaker, the entire region is partitioned into sub-arrays of points and distributed across the machine. In the extreme case, every core is assigned a single point. Each core can then compute the corresponding temperatures and distribute them to its neighbours using SpiNNaker's efficient multicast communication infrastructure.
+To implement the algorithm on SpiNNaker, the entire region is partitioned into sub-arrays of points and distributed across the machine. In the extreme case, every core is assigned a single point. Each core can then compute the corresponding temperatures and distribute them to its neighbours using SpiNNaker's efficient multicast communication infrastructure.
 
-In the case of \verb|heat_demo_ft.c|, if a broken core is detected the \emph{leadAp} core takes over its function with the result that two points are now computed on one core. Since the calculation of one point is very simple this doesn't result in an appreciable increase on the CPU load and the application is not slowed down. In more compute-intensive applications this might result in bottlenecks.
+In the case of \verb|heat_demo_ft.c|, if a broken core is detected the \emph{leadAp} core takes over its function with the result that two points are now computed on one core. Since the calculation of one point is very simple this doesn't result in an appreciable increase on the CPU load and the application is not slowed down. In more compute-intensive applications this might result in a bottleneck and a better solution would be to migrate the functionality to a `free' core or chip.
 
 In SpiNNaker, the topology of the problem is dissociated from the topology of the machine, i.e., the mapping of points to cores in SpiNNaker is completely flexible and neighbouring points may not be mapped to neighbouring chips. Once the routing tables have been setup by the programme, a core can send a message with its current temperature and the communications infrastructure is responsible for the delivery of that message to the correct places.
 
