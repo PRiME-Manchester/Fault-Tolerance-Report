@@ -21,8 +21,8 @@ nets = [e.new_net(v, random.sample(vertices, fan_out))
         for v in vertices]
 
 # Uncomment to place the network using the (dumb) Hilbert placer.
-#from rig.place_and_route.place.hilbert import place as hilbert_place
-#e.place_and_route(place=hilbert_place)
+from rig.place_and_route.place.hilbert import place as hilbert_place
+e.place_and_route(place=hilbert_place)
 
 
 ###############################################################################
