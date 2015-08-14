@@ -6,7 +6,8 @@ import random
 
 from network_tester import Experiment, NetworkTesterError, to_csv
 
-e = Experiment(sys.argv[1])
+#e = Experiment(sys.argv[1])
+e = Experiment("192.168.240.253")
 
 ###############################################################################
 # Network description
@@ -84,6 +85,7 @@ e.record_local_multicast = True
 e.record_external_multicast = True
 e.record_dropped_multicast = True
 
+e.burst_phase = None
 # Run the experiment
 results = e.run(ignore_deadline_errors=True)
 
@@ -113,15 +115,17 @@ tr = totals[totals["reinject_packets"] == True]
 tn = totals[totals["reinject_packets"] == False]
 
 # Plot results with reinjection enabled with solid lines
-plt.plot(tr["duty"], tr["sent"], label="sent", color="b")
-plt.plot(tr["duty"], tr["received"], label="received", color="g")
-plt.plot(tr["duty"], tr["dropped_multicast"], label="dropped", color="r")
+plt.plot(tr["duty"][::-1], tr["sent"], label="sent", color="b")
+plt.plot(tr["duty"][::-1], tr["received"], label="received", color="g")
+plt.plot(tr["duty"][::-1], tr["dropped_multicast"], label="dropped", color="r")
 
 # Plot results with reinjection disabled with dashed lines
-plt.plot(tn["duty"], tn["sent"], linestyle="dashed", color="b")
-plt.plot(tn["duty"], tn["received"], linestyle="dashed", color="g")
-plt.plot(tn["duty"], tn["dropped_multicast"], linestyle="dashed", color="r")
+plt.plot(tn["duty"][::-1], tn["sent"], linestyle="dashed", color="b")
+plt.plot(tn["duty"][::-1], tn["received"], linestyle="dashed", color="g")
+plt.plot(tn["duty"][::-1], tn["dropped_multicast"], linestyle="dashed", color="r")
 
 plt.legend()
-plt.xlabel("Network duty")
+plt.xlabel("Burstiness")
 plt.show()
+
+
