@@ -85,7 +85,7 @@ e.record_local_multicast = True
 e.record_external_multicast = True
 e.record_dropped_multicast = True
 
-e.burst_phase = None
+#e.burst_phase = None
 # Run the experiment
 results = e.run(ignore_deadline_errors=True)
 
