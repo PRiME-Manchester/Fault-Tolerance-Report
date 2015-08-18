@@ -326,13 +326,13 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 \begin{figure}[b]
 	\begin{subfigure}{.5\linewidth}
 		\centering
-		\includegraphics[width=0.9\linewidth]{images/bursting2.pdf}
+		\includegraphics[width=0.9\linewidth]{images/bursting3.pdf}
 		\caption{Bursting (simulated annealing)}
 		\label{fig:bursting}
 	\end{subfigure}
 	\begin{subfigure}{.5\linewidth}
 		\centering
-		\includegraphics[width=0.9\linewidth]{images/bursting_connaware2.pdf}
+		\includegraphics[width=0.9\linewidth]{images/bursting_connaware3.pdf}
 		\caption{Bursting (connectivity aware, PACMAN)}	
 		\label{fig:bursting_aware}
 	\end{subfigure}
@@ -342,9 +342,9 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 
 \textbf{Figure~\ref{fig:bursting}} shows the difference in network performance when dropped-packet reinjection is enabled compared to when it is disabled. The solid green, blue, and red lines correspond to the condition when dropped-packet reinjection is enabled, while the dashed lines correspond to dropped-packet reinjection being disabled. The `received' lines (green) are the ones which at a glance convey whether packets are being dropped and reinjected successfully, or dropped and lost forever. Clearly with packet reinjection (green, solid), nearly all packets which are actually sent arrive at their destination, without reinjection (green, dashed), things aren't so great. 
 
-In the plots of \textbf{Figure~\ref{fig:congestion}} the number of packets sent is constant (32) for every point along the $x$-axis. For example, a network duty of 0.1 means that all of the 32 packets are sent in $0.1 \cdot 1$~ms resulting in a high network load. On the other hand a network duty of 1 implies that the whole 1~ms is used to transmit all of the 32 packets.
+In the plots of \textbf{Figure~\ref{fig:congestion}} the number of packets sent is constant (32) for every point along the $x$-axis. For example, a network load of 100~kHz means that all of the 32 packets were sent at a frequency of 100~kHz or in 0.32~s. At the low end of the scale, 32 packets are sent at a frequency of 32~kHz or within 1~s, while at the high network load end, 32 packets are being sent at a frequency of 464~kHz or within 70~ms.
 
-The lower number of packets sent (blue) corresponding to a network duty of between 0 and 0.4 is due to backpressure effects. The dropped packets corresponding to the same network duty range are not really being lost since they are dropped but reinjected.
+The lower number of packets sent (blue) corresponding to a network load between 100~kHz and 500~kHz is due to backpressure effects. The dropped packets corresponding to the same network duty range are not really being lost since they are dropped but reinjected.
 
 By uncommented lines 23--24 in \verb|bursting.py|, the random network will get placed by what PACMAN\footnote{The placer in SpiNNaker's spiking network simulator.} calls ``connectivity-aware placement,'' rather than simulated annealing (the default) resulting in the plot of \textbf{Figure~\ref{fig:bursting_aware}}. Interestingly, this results in dropped-packet reinjection no longer helping and the whole thing being even worse under bursty packets. This can be observed by noting that the solid and dashed green lines in \textbf{Figure~\ref{fig:bursting_aware}} are practically overlapping.
 
