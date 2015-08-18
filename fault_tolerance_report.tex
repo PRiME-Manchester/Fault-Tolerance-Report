@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt]{article}
+\documentclass[oneside, a4paper, 11pt]{memoir}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 %\usepackage[ngerman,english]{babel}
@@ -17,22 +17,18 @@
 
 \usepackage{microtype}
 \usepackage{graphicx}
-\usepackage{lipsum}
-%\usepackage[normalem]{ulem}
 \usepackage[round]{natbib}
-\usepackage{titlesec}
 \usepackage{geometry}
-\usepackage{verbments}
 \usepackage{minted}
-\usepackage{multicol}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{subcaption}
 \usepackage{booktabs}
-\usepackage[title]{appendix}
 
 \usepackage{pifont}
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
+
+\nouppercaseheads
 
 % Package that provides hyperlinks to (in this case) citations
 \usepackage[pdfauthor={Patrick Camilleri},
@@ -73,53 +69,64 @@ pdfkeywords={faulttolerance spinnaker}
 	arn_lev2a/.style = {treenode, text width=5.8em}
 }
 
-% Fancy title page
-\makeatletter
-\newlength\drop
-\newcommand*{\titleGM}{%
-\thispagestyle{empty}
-\begingroup% Gentle Madness
-\drop = 0.1\textheight
-\vspace*{\baselineskip}
-\vfill
-\hbox{%
-  \hspace*{0.2\textwidth}%
-  \rule{1pt}{\dimexpr\textheight-28pt\relax}%
-  \hspace*{0.05\textwidth}% 
-  \parbox[b]{0.75\textwidth}{%
-    \vbox{%
-      \vspace{\drop}
-      {\Huge\bfseries\raggedright\@title\par}\vskip2.37\baselineskip
-      {\Large\itshape PRiME Project }\\[4\baselineskip]
-      {\Large\bfseries\@author\par}
-      \vspace{0.5\textheight}
-    }% end of vbox
-  }% end of parbox
-}% end of hbox
-\vfill
-\cleardoublepage % this clears the page number from the second (empty) title page
-\null % this creates a second blank page (with page number)
-\endgroup}
-\makeatother
-
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{3}
 
+
+\makeatletter
+\newlength\drop
+\newcommand*{\titleGM}{%
+	\thispagestyle{empty}
+	\begingroup% Gentle Madness
+	\drop = 0.1\textheight
+	\vspace*{\baselineskip}
+	\vfill
+	\hbox{%
+		  \hspace*{0.1\textwidth}%
+		  \rule{1pt}{\dimexpr\textheight-28pt\relax}%
+		  \hspace*{0.05\textwidth}% 
+		  \parbox[b]{0.75\textwidth}{%
+			    \vbox{%
+				      \vspace{\drop}
+				      {\Huge\bfseries\raggedright\@title\par}\vskip2.37\baselineskip
+				      {\Large\itshape PRiME Project}\\[4\baselineskip]
+				      {\Large\bfseries\@author}\\[2\baselineskip]
+				      {\large\@date\par}
+				      \vspace{0.5\textheight}
+				    }% end of vbox
+			  }% end of parbox
+		}% end of hbox
+	\vfill
+%	\cleardoublepage % this clears the page number from the second (empty) title page
+%	\null % this creates a second blank page (with page number)
+	\endgroup}
+\makeatother
+
 \title{Fault tolerance mechanism implementations on SpiNNaker}
 \author{Patrick Camilleri}
-\date{}
+\date{18$^\text{th}$ August 2015}
+
+% change bibliography line spacing
+\setlength{\bibsep}{5pt}
 
 \begin{document}
-\maketitle
+	
+\begin{titlingpage}
+\titleGM
+\end{titlingpage}
 
+%\maketitle
+\frontmatter
 \tableofcontents
 
-\newpage
-\section{Software fault tolerance}
+\mainmatter
+\chapterstyle{hangnum}
+
+\chapter{Software fault tolerance}
 \label{sec:software_ft}
 
-\subsection{Introduction}
-This report will first outline (\textbf{Section~\ref{sec:software_ft}}) some fault tolerance basics and concepts from the field of software fault tolerance \citep{trivedi2008software} with the hope that the some of the ideas can be extended to SpiNNaker, a massively parallel processing machine. \textbf{Section~\ref{sec:ft_spinnaker}} details the various hardware blocks in the SpiNNaker chip which provide features that could be used to implement fault tolerant mechanisms to benefit the system as a whole. \textbf{Sections \ref{sec:congestion}} and~\textbf{\ref{sec:migration}} show some working examples of how fault tolerance is currently being implemented on SpiNNaker and \textbf{Section~\ref{sec:crc}} outlines the properties of the CRC unit implemented on SpiNNaker and suggestions by \citet{grymel2013error} of how to perform 1-bit error correction when doing DMA transfers.
+\section{Introduction}
+This report will first outline (\textbf{Chapter~\ref{sec:software_ft}}) some fault tolerance basics and concepts from the field of software fault tolerance \citep{trivedi2008software} with the hope that the some of the ideas can be extended to SpiNNaker, a massively parallel processing machine. \textbf{Chapter~\ref{sec:ft_spinnaker}} details the various hardware blocks in the SpiNNaker chip which provide features that could be used to implement fault tolerant mechanisms to benefit the system as a whole. \textbf{Chapters \ref{sec:congestion}} and~\textbf{\ref{sec:migration}} show some working examples of how fault tolerance is currently being implemented on SpiNNaker and \textbf{Chapter~\ref{sec:crc}} outlines the properties of the CRC unit implemented on SpiNNaker and suggestions by \citet{grymel2013error} of how to perform 1-bit error correction when doing DMA transfers.
 
 While hardware failures have been studied extensively and varied mechanisms have been presented to increase the system availability with regard to such failures, software failures and the corresponding reliability/availability analysis has not drawn much attention from researchers. The study of software failures has now become more important since it has been recognized that computer systems outages are more due to software faults than to hardware faults \citep{gray1991high}. For a long time it was assumed that concepts of reliability and failure rate do not apply to software since software does not degrade physically as a function of time or environmental conditions. Many studies have shown that even for applications which have relatively less complex software, many failures in computer systems are due to software bugs \citep{pradhan1996fault}. Therefore, software reliability is one of the weakest links in system reliability.
 
@@ -127,12 +134,12 @@ Present-day applications have strict reliability and availability demands, becau
 
 A major limitation in developing reliable software is the test and verification process. Formal verification techniques cannot be applied to large programs. Furthermore, the difficulties in verifying adherence to timing constraints for real-time systems such as SpiNNaker make the software testing and verification process harder. This limitation coupled with the very stringent requirements for fault-free operation of the software form the basis for the need for fault tolerance in software \citep{trivedi2008software}.
 
-\subsection{Classification of Software Faults}
+\section{Classification of Software Faults}
 %According to \citet{laprie1992dependability}, ``a system failure occurs when the delivered service no longer complies with the specifications, the latter being an agreed description of the system's expected function and/or service.'' Some studies have suggested that since software is not a physical entity and hence not subject to transient physical phenomena (as opposed to hardware), software faults are permanent in nature \citep{huang1994two}.
 
 Software faults can be classified into hard and soft faults. Hard faults are permanent design faults and hence almost deterministic in nature. They can be identified easily and weeded out during the testing and debugging phase of the software life cycle. Soft faults, on the other hand, belong to the class of temporary internal faults and are intermittent. Hence these faults result in transient failures, i.e., failures which may not recur if the software is restarted. Some typical situations in which intermittent faults might surface are boundaries between various software components, improper or insufficient exception handling and interdependent timing of various events. It is for this reason that intermittent faults are extremely difficult to identify through testing. Most recent studies on failure data have reported that a large proportion of software failures are transient in nature \citep{gray1990census}, caused by phenomena such as overloads or timing and exception errors \citep{chillarege1995measurement}.
 
-\subsection{Techniques for Fault Tolerance in Software}
+\section{Techniques for Fault Tolerance in Software}
 Means to cope with the existence and manifestation of faults in software can be divided into three main categories:
 
 \begin{itemize}
@@ -184,25 +191,24 @@ There are two strategies for software fault tolerance: error processing and faul
 	\end{tabular}
 \end{table}
 
-\subsubsection{Design diversity}
+\subsection{Design diversity}
 Design diversity techniques are specifically developed to tolerate design faults in software arising out of wrong specifications and incorrect coding. Two or more variants of a software developed by different teams but to a common specification are used. These variants are then used in a time or space redundant manner to achieve fault tolerance. Popular techniques which are based on the design diversity concept for fault tolerance in software are: N-version programming, recovery block, and N-self checking programming.
 
-\subsubsection{Data diversity}
+\subsection{Data diversity}
 \citet{ammann1988data} introduced the data diversity technique for fault tolerance. While the design diversity approaches to provide fault tolerance rely on multiple versions of the software written to the same specifications, the data diversity approach uses only one version of the software. This approach relies on the observation that a software sometime fails for certain values in the input space and this failure could be averted if there is a minor perturbation of input data which is acceptable to the software. N-copy programming, based on data diversity, has N copies of a program executing in parallel, but each copy running on a different input set produced by a diverse-data system. The diverse-data system produces a related set of points in the data space. Selection of the system output is done using an enhanced voting scheme which may not be a majority voting mechanism. In some cases like a real-time control program, a minor perturbation in sensor values may be able to prevent a failure since sensor values are usually noisy and inaccurate. Data diversity can work well with permanent faults and is cheaper to implement than design diversity techniques. To some extent, data diversity can also deal with intermittent faults since different input data is presented and by definition, these bugs are non-deterministic and non-repeatable \citep{kapur2011software}.
 
-\subsubsection{Environment diversity}
+\subsection{Environment diversity}
 \label{sec:envdiv}
 Environment diversity is the newest approach to fault tolerance in software. Although this technique has been used for long in an ad hoc manner, only recently has it gained recognition and importance. Having its basis on the observation that most software failures are transient in nature, the environment diversity approach requires re-executing the software in a different environment \citep{jalote1995framework}. Environment diversity deals effectively with intermittent faults by exploiting their definition and nature.
 
 \citet{adams1984optimizing} has proposed restarting the system as the best approach to masking software faults. Transient faults typically occur in computer systems due to design faults in software which result in unacceptable and erroneous states in the operating system environment. Therefore environment diversity attempts to provide a new or modified operating environment for the running software. Usually, this is done at the instance of a failure in the software. When the software fails, it is restarted in a different, error-free state which is achieved by some clean up operations. Examples of environment diversity techniques include retry operation, restart application and rebooting the node. The retry and restart operations can be done on the same node or on a spare node.
 
-\subsubsection{Checkpointing and recovery}
+\subsection{Checkpointing and recovery}
 Checkpointing and recovery \citep{kulkarni1990effects} belongs to the category of error recovery for fault tolerance, as opposed to design diversity which belongs to error compensation, and data and environment diversities which belong to the fault treatment category. Error compensation, error recovery and fault treatment are complementary to one another and fault tolerance in software can be increased by deploying a combination of these techniques. The recovery block uses checkpoints in its implementation. \citet{garg1996minimizing} proposes and analyses the combination of software rejuvenation (preventive fault treatment) with checkpointing and recovery to reduce the chances of activating a fault and simultaneously minimizing the loss of computation when there is a failure.
 
 Checkpointing involves occasionally saving the state of a process in stable storage during normal execution. Upon failure, the process is restarted in the saved state (last saved checkpoint). Checkpointing and recovery was mainly intended to tolerate transient hardware failures, where the application is restarted upon repair of a hardware unit after failure. This technique has been implemented in both software and hardware.
 
-\newpage
-\section{Fault tolerance on SpiNNaker}
+\chapter{Fault tolerance on SpiNNaker}
 \label{sec:ft_spinnaker}
 
 With regards to the PRiME project the issue of fault tolerance is being currently investigated on the SpiNNaker platform while always keeping in view the issue of power reduction and optimisation. The three main fault-tolerant mechanisms that are being investigated are:
@@ -213,7 +219,7 @@ With regards to the PRiME project the issue of fault tolerance is being currentl
 \end{itemize}
 More in-depth information and experimental results will be presented in the following sections. But first, an overview of the SpiNNaker architecture as well the various fault tolerance mechanisms at the disposal of the low-level system programmer available on the SpiNNaker chip will be presented.
 
-\subsection{SpiNNaker architecture}
+\section{SpiNNaker architecture}
 
 The SpiNNaker engine is a massively-parallel multi-core computing system. The final machine will contain up to approximately one million ARM9 cores and 7~TB of RAM distributed throughout the system in 57,000 nodes, each node being a System-in-Package (SiP) containing 18 cores plus a 128~MB off-die SDRAM (Synchronous Dynamic Random Access Memory). Each core has associated with it 64~kB of data tightly-coupled memory (DTCM) and 32~kB of instruction tightly-coupled memory (ITCM). The cores have a variety of ways of communicating with each other and with the memory, the dominant of which is by packets. These are 5- or 9-byte (40- or 72-bit) quanta of information that are transmitted around the system with the help of a concurrent hardware routing system. 
 
@@ -233,10 +239,10 @@ The physical hierarchy of the system has each node containing two silicon dies -
 	\label{fig:spin5}
 \end{figure}
 
-\subsection{Hardware fault tolerance mechanisms}
+\section{Hardware fault tolerance mechanisms}
 The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker chip is made up of various blocks, most of which have a certain degree of hardware fault tolerance in place. The blocks in being considered are: the ARM968, the Vector Interrupt Controller (VIC), the counter/timer, the DMA controller, the communications controller, the router, the inter-chip transmit and receiver interfaces, the SDRAM interface, the Ethernet interface, the system RAM and the boot ROM. A schematic representation of all these sub systems is shown in \textbf{Figure~\ref{fig:spin_arch}}.
 
-\subsubsection{Block description}
+\subsection{Block description}
 \begin{itemize}
 	\setlength\itemsep{2pt}
 	\item The \textbf{ARM968} together with the tightly-coupled instruction and data memories, form the core processing resource in SpiNNaker.
@@ -254,15 +260,15 @@ The SpiNNaker chip has been designed with fault tolerance in mind. The SpiNNaker
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.65\linewidth]{images/spinnaker_architecture.pdf}
+	\includegraphics[width=0.7\linewidth]{images/spinnaker_architecture.pdf}
 	\caption{SpiNNaker chip subsystems.}	
 	\label{fig:spin_arch}
 \end{figure}
 
-\subsubsection{Possible fault tolerance mechanisms}
+\subsection{Possible fault tolerance mechanisms}
 This section outlines the various blocks in the SpiNNaker chip which could potentially be used to implement a robust fault tolerant system. At the time of writing, only the router, the vector interrupt controller and the CRC unit are being effectively used to provide a certain level of fault tolerance.
 
-The \textbf{ARM968} processor core (\textbf{Figure~\ref{fig:arm968}}) has self-test routines that are run at start-up and during normal operation to provide a fault tolerance detection mechanism and a chip-wide watchdog timer catches runaway software. In addition, the ARM968 is able to isolate defective instruction and data RAM locations and can be mapped out by software. The system controller can also disable any incorrectly operating ARM968 cores. These detection and fault isolation mechanisms help to reconfigure the system in case a fault is detected. In the case of faulty instruction and data RAM, software can be written to avoid such locations. If on the other hand, the self-test and start-up routines detect a failure, the processor core functionality can be migrated to a neighbouring processor (see \textbf{Section~\ref{sec:migration}}).
+The \textbf{ARM968} processor core (\textbf{Figure~\ref{fig:arm968}}) has self-test routines that are run at start-up and during normal operation to provide a fault tolerance detection mechanism and a chip-wide watchdog timer catches runaway software. In addition, the ARM968 is able to isolate defective instruction and data RAM locations and can be mapped out by software. The system controller can also disable any incorrectly operating ARM968 cores. These detection and fault isolation mechanisms help to reconfigure the system in case a fault is detected. In the case of faulty instruction and data RAM, software can be written to avoid such locations. If on the other hand, the self-test and start-up routines detect a failure, the processor core functionality can be migrated to a neighbouring processor (see \textbf{Chapter~\ref{sec:migration}}).
 
 Currently the \textbf{vector interrupt controller} does not provide a high degree of fault tolerance. In the case of a failed vector location, the vector interrupt controller effectively jumps to a random location. If a software mechanism was devised to detect these kind of faults, a failed vector location could be removed from service (provided there are enough vector locations available). Another solution would be to shut down the entire vector system and the interrupts run by software inspection of the IRQ status registers.
 
@@ -270,12 +276,12 @@ In order to detect faults in the \textbf{counter/timer}, the second counter/time
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.55\linewidth]{images/arm968_subsystem.pdf}
+	\includegraphics[width=0.7\linewidth]{images/arm968_subsystem.pdf}
 	\caption{ARM 968 subsystem.}
 	\label{fig:arm968}
 \end{figure}
 
-The \textbf{DMA controller} has a CRC unit (more on this in \textbf{Section \ref{sec:crc}}) which can be used to detect errors in the data transferred by the DMA controller. If an error is detected by means of the CRC unit, the data block could be retransmitted. The DMA controller will also time-out if a transaction takes too long. If if the error rate is consistently high, fault tolerant software could be written to shut down the local processing subsystem and its functions migrated to another subsystem on the current or to another chip.
+The \textbf{DMA controller} has a CRC unit (more on this in \textbf{Chapter~\ref{sec:crc}}) which can be used to detect errors in the data transferred by the DMA controller. If an error is detected by means of the CRC unit, the data block could be retransmitted. The DMA controller will also time-out if a transaction takes too long. If if the error rate is consistently high, fault tolerant software could be written to shut down the local processing subsystem and its functions migrated to another subsystem on the current or to another chip.
 
 The \textbf{communications controller} is able to detect the following kinds of faults:
 parity of received packet, received packet framing error, and transmit buffer overrun. Since the communications controller is mission-critical to the local processing subsystem, it should be disabled and isolated and its functions migrated to another subsystem on the current or onto another chip if a failure is detected.
@@ -291,6 +297,13 @@ The router is able to detect a variety of faults, namely: packet parity errors, 
 
 The \textbf{inter-chip transmit and receive interfaces} (see \textbf{Figure~\ref{fig:interchip_links}}) can be made robust to faults by having the monitor process regularly test the link functionality. If a fault is detected the link interface can be reset by the system controller to attempt recovery from the fault, and the link interface can be isolated and an alternative route used. The interfaces are `glitch hardened' to greatly reduce the probability of a link deadlock arising as a result of a glitch on one of the inter-chip wires. Such a glitch may introduce packet errors, which will be detected and handled elsewhere, but it is very unlikely to cause deadlock.
 
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.35\linewidth]{images/system_architecture.pdf}
+	\caption{SpiNNaker inter-chip links.}
+	\label{fig:interchip_links}	
+\end{figure}
+
 The \textbf{SDRAM interface} is endowed with Delay-Locked Loop (DLL) delay lines (including a spare) which can be tested for stuck-at faults and relative timing accuracy. If a fault in the timing is detected, the SDRAM interface can be isolated and replaced by using the spare delay line.
 
 The \textbf{Ethernet MII interface} is only used in a small number of nodes, specifically one for each group of 48 chips and thus most nodes are insensitive to faults in its functionality as they will not attempt to use it.
@@ -299,18 +312,10 @@ To detect faults in the \textbf{system RAM}, the monitor processor could perform
 
 A fault in the \textbf{boot ROM} can be easily detected during start-up if the boot ROM fails the boot process. One can easily switch the boot ROM out of the boot area rendering it harmless. When the boot ROM is switched out of the boot area the system RAM is switched in the boot area and a neighbouring chip can initialise the system RAM with the boot code and retry initialisation.
 
-\begin{figure}[b]
-	\centering
-	\includegraphics[width=0.35\linewidth]{images/system_architecture.pdf}
-	\caption{SpiNNaker inter-chip links.}
-	\label{fig:interchip_links}	
-\end{figure}
-
-\clearpage
-\section{Network congestion}
+\chapter{Network congestion}
 \label{sec:congestion}
 
-\subsection{Dumped-packet reinsertion}
+\section{Dumped-packet reinsertion}
 
 %\verb|dumpBounce.c|:  packet re-injection software that runs on a separate core.
  
@@ -321,7 +326,7 @@ A fault in the \textbf{boot ROM} can be easily detected during start-up if the b
 \item Characterising the behaviour of the network in the presence of locally and globally synchronised bursting traffic.
 \end{itemize}
 
-\subsection{Results}
+\section{Results}
 
 \begin{figure}[b]
 	\begin{subfigure}{.5\linewidth}
@@ -358,7 +363,7 @@ Adding the line \verb|e.burst_phase = None| (to \verb|bursting.py|) before \verb
 \end{figure}
 
 \clearpage
-\section{Process migration}
+\chapter{Process migration}
 \label{sec:migration}
 
 Process migration work on SpiNNaker is currently being implemented in the \emph{heat demo} demonstration program. The \emph{heat demo} (developed by Luis A. Plana) is an ideal environment to test process migration experiments because it consists of the computation of a set of highly parallel finite difference equations which produce reliable and repeatable results. This is in contrast to spiking neural network simulations which due to the random nature of the input spikes as well as the numerical errors that might creep in while computing the neuron differential equations, make them a poor choice for testing out different function or process migration schemes. 
@@ -370,7 +375,7 @@ Two versions of the \emph{heat demo} are available:
 \item \verb|heat_demo_bt.c| tries to solve the problem of a broken \emph{leadAp} core by replacing it with a working application core. The strategy is slightly different from the one implemented in \verb|heat_demo_ft.c|, but simpler to implement since all the cores poll at the same frequency whether a packet was dumped. Since the polling happens in a staggered manner, the first operational application core to detect a dumped packet will take over and remove the entry of the crashed core from the routing entries, hence removing the reliance on the \emph{leadAp} core.
 \end{itemize}
 
-\subsection{Background}
+\section{Background}
 The heat demo is essentially a 2D heat diffusion equation solver. The heat equation is a partial differential equation that describes the variation in temperature over time in a region, given an initial temperature distribution and the boundary conditions. For a temperature $u(x,y,t)$ of two spatial variables $x$ and $y$ and the time variable $t$, the 2D heat equation is:
 \[
 \dpd{u}{t} -\alpha\left( \dpd[2]{u}{x} + \dpd[2]{u}{y} \right) = 0 
@@ -393,6 +398,13 @@ u(x,y,t+1) &= u(x,y,t) + \Delta x + \Delta y
 %	\label{fig:heatdemo_iterative}
 %\end{figure}
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/heatmap2x2.png}
+	\caption{Heat map demo visualisation on a 4-chip SpiNNaker board.}
+	\label{fig:heatmap}
+\end{figure}
+
 These methods are well-suited for parallel implementation following a Single Program, Multiple Data (SPMD) model in which multiple autonomous cores simultaneously execute the same program with different data, and use messages to communicate with each other. In the heat equation case, each point sends its temperature to four neighbours and receives their temperatures in each time step. Using a relaxation method to solve the heat equation is easily and efficiently mapped to SpiNNaker. In particular, the communications pattern is that which SpiNNaker is optimised for: many short messages sent concurrently to several destinations.
 
 To implement the algorithm on SpiNNaker, the entire region is partitioned into sub-arrays of points and distributed across the machine. In the extreme case, every core is assigned a single point. Each core can then compute the corresponding temperatures and distribute them to its neighbours using SpiNNaker's efficient multicast communication infrastructure.
@@ -402,13 +414,6 @@ In the case of \verb|heat_demo_ft.c|, if a broken core is detected the \emph{lea
 In SpiNNaker, the topology of the problem is dissociated from the topology of the machine, i.e., the mapping of points to cores in SpiNNaker is completely flexible and neighbouring points may not be mapped to neighbouring chips. Once the routing tables have been setup by the programme, a core can send a message with its current temperature and the communications infrastructure is responsible for the delivery of that message to the correct places.
 
 SpiNNaker promotes event-driven software: cores respond to events and carry out the necessary computations. In the mean time, the cores are in low-power mode to save energy. Polling and idle iterations are avoided. In the heat equation solver, the arrival of a neighbour's temperature and the lapse of the time interval will trigger a core into operation.
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.6\linewidth]{images/heatmap2x2.png}
-	\caption{Heat map demo visualisation on a 4-chip SpiNNaker board.}
-	\label{fig:heatmap}
-\end{figure}
 
 \textbf{Figure~\ref{fig:heatmap}} shows a snapshot of the output visualizer of a 2D heat diffusion solver running on a 64-core (4-chip) SpiNNaker board. In this example, each of the 64 application cores in SpiNNaker is assigned a single point in a ``hexagonal'' region. Each square in the plot represents the temperature at a given point in the region.
 
@@ -427,8 +432,7 @@ SpiNNaker promotes event-driven software: cores respond to events and carry out 
 %\emph{Currently implemented on the heat demo, where a core fault is simulated by intentionally reset a core. Currently if core 1 on core (0,0) is reset or disabled no communication is possible with the host PC.}
 
 
-\clearpage
-\section{CRC error correction}
+\chapter{CRC error correction}
 \label{sec:crc}
 
 The preservation of digital data integrity is of major concern for computer, communication, and storage systems. In all these applications digital data is susceptible to unintentional modification which may arise from electrical or magnetic disturbance, component failure, or the result of system design error. Depending on the specific application, data failures may result in severe consequences and thus their potential occurrence needs to be considered carefully in the underlying design of the system.
@@ -441,14 +445,14 @@ If error correction is desired, the most basic case concerns the localisation of
 
 Cyclic codes are characterised by an underlying generator polynomial. Different generator polynomials exhibit different capabilities in regard to the detection and correction of errors. Certain polynomials, for example, may be particularly well suited to the practical realisation of the error correction process. The selection of polynomial is also dependent on the length of the data that is to be protected and the anticipated error patterns. In systems where diverse applications may favour different cyclic codes, and where the requirements may change over time or be unknown at the design stage, it may be advantageous to provide full flexibility in regard to the usable cyclic code generator polynomials. SpiNNaker employs programmable cyclic code circuits to enable the efficient processing of cyclic codes.
 
-\subsection{Discrete logarithms}
+\section{Discrete logarithms}
 In mathematics, a discrete logarithm is an integer $k$ solving the equation $b^k = g$, where $b$ and $g$ are elements of a finite group. Discrete logarithms are thus the finite-group-theoretic analogue of ordinary logarithms, which solve the same equation for real numbers $b$ and $g$, where $b$ is the base of the logarithm and $g$ is the value whose logarithm is being taken \citep{wiki:discretelogs}.
 
 No efficient classical algorithm for computing general discrete logarithms $\log _b g$ is known. The naive algorithm is to raise $b$ to higher and higher powers $k$ until the desired $g$ is found. This algorithm requires running time linear in the size of the group $G$ and thus exponential in the number of digits in the size of the group.
 
 More sophisticated algorithms exist, usually inspired by similar algorithms for integer factorization. These algorithms run faster than the naive algorithm, some of them linear in the square root of the size of the group, and thus exponential in half the number of digits in the size of the group. However, none of them run in polynomial time.
 
-\subsection{Memory faults}
+\section{Memory faults}
 The large SpiNNaker system in its envisaged configuration of 57,600 nodes will incorporate approximately 7~TB of SDRAM. With such an immense amount of memory, the effect of data bit errors is significant during the operation of the machine.
 
 Memory bit errors are subdivided into two different classes: hard and soft errors. A hard error is characterised by a permanent hardware fault in a memory cell that will result in a consistent reliability issue. For instance, it may be the case that a memory cell will always provide one particular bit value during readout, no matter what value has been written to it. Soft errors are transient faults that occur randomly and may, for example, be induced through cosmic rays or the decay of radioactive atoms in the memory packaging materials. Also, a soft error may arise either directly in the memory, or along the data path during the memory read or write phase.
@@ -457,47 +461,31 @@ Recently, a large-scale study has been conducted to investigate statistics for e
 
 It may be the case that the number of expected bit errors in the SpiNNaker system will not have a significant impact on particular applications such as neural network simulations. However, it is not known to what extent neural network simulations can compensate for memory faults, and other potential applications may not tolerate bit errors at all, so appropriate measures need to be taken to deal with them in the SpiNNaker system. For this reason error-control codes are employed within SpiNNaker to provide a layer of protection against memory faults.
 
-\subsection{CRC unit}
+\section{CRC unit}
 The DMA controller of each processing subsystem in SpiNNaker is equipped with a CRC unit that allows the generation and verification of error-control codes. The circuit primarily supports cyclic codes as they offer powerful error detection and correction capabilities and because they are easily implementable in hardware \citep{costello2004error}. Programmable cyclic code circuits have the benefit of flexible adaptation of the underlying cyclic code to meet the requirements of a specific application. The main drawback of cyclic codes is the lack of efficient error correction techniques. To perform the correction of a single-bit error an instance of the generalised discrete logarithm problem needs to be solved.
 
 If, for instance, a processor initiates a DMA transfer to copy a data block from the local memory to the SDRAM, the CRC unit can be instructed to calculate (transparently and in parallel) the redundancy part for a cyclic code and, automatically, append this to the SDRAM data block. The CRC unit can be used to calculate the error syndrome for a data block retrieved from memory and signal the corresponding processing core if an integrity issue arose. The program that is executed on the processing core has to decide what action is to be taken in the event of a detected data inconsistency. A simple retransmission of the data block could correct the error if it occurred along the data path during the readout phase, however even this may not be fast enough for the `real-time' operation of a SpiNNaker neural simulation. Therefore it is necessary to consider appropriate error correction procedures in software, to recover from memory faults based on the obtained error syndrome, including when they are uncorrectable. These can range from a simple disregard of the error, through a localisation and correction of the error, to a shutdown of the relevant SpiNNaker system components for replacement if hard errors are involved.
 
 In the choice of employed cyclic code, many factors need to be taken into account for the selection of the generator polynomial. For instance, certain undiscovered subclasses of cyclic codes may allow the realisation of very efficient error correction procedures in software, or data blocks of different lengths may be stored in the SDRAM so that a polynomial offering best combined error protection for all of the block lengths should be selected. The programmable CRC circuit in SpiNNaker permits switching the generator polynomial to any of degree 32 or lower whenever required. A direct advantage is that the polynomial is adaptable to the length of the data block that is to be protected, which means that the best choice of offered error protection can be made. Another feature of the CRC circuit is that several cyclic codes of a smaller degree can be generated based on different bits of the data stream. For example, for each half-word of the data stream, a cyclic code based on a generator polynomial of degree 16 can be computed.
 
-\subsection{Algorithms for Computing Discrete Logarithms}
+\section{Algorithms for Computing Discrete Logarithms}
 \citet{grymel2013error} developed two new approaches for computing discrete logarithms to facilitate the correction of single-bit errors based on cyclic codes. The first approach is generic in nature leading to a deterministic algorithm for group orders that equal a Mersenne number with an exponent of a power of two; this algorithm has constant space requirements and runs in the worst case in the order of the square root of the group order. It was shown how the algorithm can be improved if the discrete logarithm values occur with unequal probabilities and that certain properties hold for the associated sequences. The second approach for the computation of discrete logarithms is based on a subset of newly developed properties for finite fields of binary characteristic represented as the polynomial ring over the binary field modulo a primitive polynomial. For evaluated small fields, a deterministic efficient algorithm with linear space and linearithmic time requirements in the degree of the defining polynomial was devised.
 
-\newpage
-\section{Conclusion}
+\chapter{Conclusion}
 Fault tolerance on Spinnaker is currently work-in-progress and lots of avenues are being investigated. As shown from the results of the \emph{Network Tester} program the dropped-packet reinjection mechanism helps to alleviate network congestion problems. Maybe grouping dropped-packet reinjection under the umbrella of fault tolerance techniques is not technically correct, but in the realm of SpiNNaker and spiking neural networks where dropped packets may or may not have an effect on the simulation's output, it is a very welcome addition.
 
 The process migration results are also promising, but a lot of work still needs to be done in order to implement similar mechanisms for when SpiNNaker is simulating spiking neural networks. It is quite a challenge to implement similar functionality as that implemented for the \emph{heat demo} without affecting the real-time behaviour of the spiking simulation. If SpiNNaker is not connected to any external devices, delaying the simulation by a few tens of milliseconds (to perform the function migration) should not be an issue. Checkpointing could also be a solution in dealing with crashed cores where the current state of a particular core is regularly saved to SDRAM and a functional core could simply take over from the last known working state of the broken core.
 
 As regards to the use of the CRC unit it remains to be seen whether 1-bit error correction can be efficiently implemented. As things stand only 1-bit error detection can happen fast enough to be of any use assuming that retransmission of the corrupted data will not affect the performance of the simulation. Assuming the 1-bit error per second calculations for the final million core machine are correct and considering the size of such a network, the inherent fault tolerance built into such a large neural network should not affect its operation. If on the other hand a simulation demands a 100\% reliability in the calculations, then error correction has to be implemented in the form of data retransmission or on-the-fly error correction if a suitable algorithm is discovered.
 
-\newpage
 \begin{appendices}
 
-\section{Code listings}
+\chapter{Code listings}
 \usemintedstyle{vs}
-%\captionof{listing}{dumpBounce.c}
-%\begin{multicols}{2}
-%\inputminted[fontsize=\tiny]{c}{code/dumpBounce.c}
-%\end{multicols}
-%
-%\clearpage
-%\captionof{listing}{backpressure.py}
-%\begin{multicols}{2}
-%\inputminted[fontsize=\tiny]{python}{code/backpressure.py}
-%\end{multicols}
-%
 \captionof{listing}{bursting.py}
-\begin{multicols}{2}
 \inputminted[fontsize=\tiny]{python}{code/bursting.py}
-\end{multicols}
 \end{appendices}
 
-\newpage
 \bibliographystyle{abbrvnat}
 \bibliography{fault_tolerance_report}
 \end{document}
