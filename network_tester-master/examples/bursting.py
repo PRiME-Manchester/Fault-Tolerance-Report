@@ -21,8 +21,8 @@ nets = [e.new_net(v, random.sample(vertices, fan_out))
         for v in vertices]
 
 # Uncomment to place the network using the (dumb) Hilbert placer.
-from rig.place_and_route.place.hilbert import place as hilbert_place
-e.place_and_route(place=hilbert_place)
+#from rig.place_and_route.place.hilbert import place as hilbert_place
+#e.place_and_route(place=hilbert_place)
 
 
 ###############################################################################
@@ -110,22 +110,49 @@ totals["dropped_multicast"] /= (totals["local_multicast"] + totals["external_mul
 
 # Plot with matplotlib
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
+from matplotlib.ticker import ScalarFormatter
+
 
 tr = totals[totals["reinject_packets"] == True]
 tn = totals[totals["reinject_packets"] == False]
 
-# Plot results with reinjection enabled with solid lines
-plt.plot(tr["duty"][::-1], tr["sent"], label="sent", color="b")
-plt.plot(tr["duty"][::-1], tr["received"], label="received", color="g")
-plt.plot(tr["duty"][::-1], tr["dropped_multicast"], label="dropped", color="r")
+
+axes=plt.subplot(111)
+plt.semilogx(32/tr["duty"], tr["sent"],              ".-", label="sent",     color="b")
+plt.semilogx(32/tr["duty"], tr["received"],          ".-", label="received", color="g")
+plt.semilogx(32/tr["duty"], tr["dropped_multicast"], ".-", label="dropped",  color="r")
 
 # Plot results with reinjection disabled with dashed lines
-plt.plot(tn["duty"][::-1], tn["sent"], linestyle="dashed", color="b")
-plt.plot(tn["duty"][::-1], tn["received"], linestyle="dashed", color="g")
-plt.plot(tn["duty"][::-1], tn["dropped_multicast"], linestyle="dashed", color="r")
+plt.semilogx(32/tn["duty"], tn["sent"],              ".--", color="b")
+plt.semilogx(32/tn["duty"], tn["received"],          ".--", color="g")
+plt.semilogx(32/tn["duty"], tn["dropped_multicast"], ".--", color="r")
+
+plt.xlim(30,500)
+plt.ylim(-0.1,1.1)
+plt.grid(True, which="both")
+
+axes.xaxis.set_minor_formatter(FormatStrFormatter("%d"))
+axes.xaxis.set_major_formatter(ScalarFormatter())
 
 plt.legend()
-plt.xlabel("Burstiness")
+plt.xlabel("Network Load (kHz)")
 plt.show()
+
+
+# # Original code by Jonathan
+# # Plot results with reinjection enabled with solid lines
+# plt.plot(tr["duty"][::-1], tr["sent"], label="sent", color="b")
+# plt.plot(tr["duty"][::-1], tr["received"], label="received", color="g")
+# plt.plot(tr["duty"][::-1], tr["dropped_multicast"], label="dropped", color="r")
+#
+# # Plot results with reinjection disabled with dashed lines
+# plt.plot(tn["duty"][::-1], tn["sent"], linestyle="dashed", color="b")
+# plt.plot(tn["duty"][::-1], tn["received"], linestyle="dashed", color="g")
+# plt.plot(tn["duty"][::-1], tn["dropped_multicast"], linestyle="dashed", color="r")
+#
+# plt.legend()
+# plt.xlabel("Network Load")
+# plt.show()
 
 
